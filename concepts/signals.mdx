@@ -1,0 +1,347 @@
+---
+title: "Signals"
+description: "Proactive alerts when customers need attention"
+---
+
+Signals are Trig's proactive alerting system. They surface customers who need attention right now—identifying who is off track before problems compound.
+
+## What Are Signals?
+
+Rather than waiting for customers to churn or disengage, Signals detect early warning patterns and prompt timely intervention.
+
+<Note>
+**Core concept:** Signals are point-in-time indicators that a specific action is needed across your customer base.
+</Note>
+
+Think of Signals as a heat map showing where attention is needed most. They answer: "Of all my customers, who should I focus on today, and why?"
+
+## Why Signals Matter
+
+### The Problem Signals Solve
+
+Without Signals, finding customers who need help requires manual investigation:
+- Export data to spreadsheets
+- Calculate averages and compare
+- Identify outliers
+- Build target lists
+- Hope you caught everyone
+
+This is slow, error-prone, and doesn't scale.
+
+### How Signals Change This
+
+Signals automate the detection:
+- Continuously evaluate all customers against criteria
+- Surface those who are underperforming
+- Quantify the revenue impact
+- Enable immediate action via campaigns
+
+Instead of "go find problems," Signals say "here are the problems—what do you want to do about them?"
+
+### The Insight → Action Loop
+
+```
+Lifecycle Stage → Objectives defined
+                        ↓
+              Trig calculates averages
+                        ↓
+              Identifies customers below average
+                        ↓
+              Surfaces as Signal
+                        ↓
+              User creates Campaign from Signal
+                        ↓
+              Measures intervention impact
+```
+
+## How Signals Work
+
+### The Foundation: Objectives and Averages
+
+Signals build on lifecycle stages and objectives. When you configure objectives, Trig tracks:
+- How many customers complete each objective
+- How long it takes on average
+- Which customers are still pending
+
+This creates the baseline for "normal" behaviour.
+
+### Detecting Atypical Customers
+
+Signals identify customers who deviate from normal:
+
+**Slow completers:** Customers who haven't completed an objective and have taken significantly longer than average (e.g., 2x the average completion time).
+
+```
+Objective: Connect Payment Gateway
+Average completion time: 6 days
+Signal threshold: 2x average (12 days)
+
+Signal: "15 customers have been pending 'Connect Payment Gateway'
+for more than 12 days (2x average). Revenue at risk: £47,000"
+```
+
+### The Flag System
+
+Trig continuously evaluates:
+1. For every member of an objective, calculate average time to completion
+2. For anyone who hasn't completed and exceeds threshold, set a flag
+3. Aggregate flags into Signals for display and action
+
+### From Flags to Signals
+
+```
+Individual flags:
+├── Customer A: slow on Objective 1 (flagged)
+├── Customer B: slow on Objective 1 (flagged)
+├── Customer C: slow on Objective 1 (flagged)
+└── Customer D: slow on Objective 2 (flagged)
+
+Signal 1: "3 customers slow on Objective 1"
+Signal 2: "1 customer slow on Objective 2"
+```
+
+Each Signal represents a group with a common issue addressable with a single intervention.
+
+## Signal Types
+
+### Objective Slow Completers
+
+Identifies customers taking longer than expected to complete objectives.
+
+**How it works:**
+1. Calculate average completion time for an objective
+2. Identify pending customers who exceeded threshold (e.g., 2x average)
+3. Surface as Signal with count and revenue at risk
+
+**Example Signal:**
+```
+Signal: Slow Completers - "Create First Invoice"
+Stage: Onboarding
+Customers affected: 23
+Revenue at risk: £127,000
+Average completion: 4 days
+These customers: 8+ days pending
+```
+
+**Why this matters:** Slow completers are at higher risk of:
+- Failing to realise value
+- Disengaging before activation
+- Churning before renewal
+
+### Future Signal Types (Planned)
+
+- **Low completion rate:** Objectives with completion percentage below threshold
+- **Declining engagement:** Customers whose activity has dropped significantly
+- **Expansion indicators:** Customers showing upsell-ready behaviours
+- **Churn predictors:** Patterns historically associated with churn
+
+## Viewing Signals
+
+### The Signals Dashboard
+
+**Summary metrics:**
+- Total customers at risk
+- Total revenue at risk
+- Number of active Signals
+
+**Signal feed:**
+- List of current Signals
+- Count of affected customers
+- Revenue impact
+- Related objective/stage
+
+### Navigation: Quantity → Clarity → Activity
+
+1. **Quantity:** How many Signals? Where's the biggest problem?
+2. **Clarity:** Click into a Signal to see exactly which customers and why
+3. **Activity:** Create a campaign directly from the Signal
+
+### Stage-Level View
+
+Within a lifecycle stage:
+- Objectives and completion status
+- Signals associated with each objective
+- Quick stats: how many at risk, revenue impact
+
+### Objective-Level View
+
+Drilling into an objective:
+- All members in this objective
+- Toggle to view only flagged customers
+- Create campaign targeting Signal audience
+
+## Acting on Signals
+
+### Creating Campaigns from Signals
+
+From any Signal, you can:
+
+<Steps>
+  <Step title="View affected audience">
+    See exactly which customers are flagged
+  </Step>
+  <Step title="Create a campaign">
+    Launch with audience pre-populated from Signal
+  </Step>
+  <Step title="Define intervention">
+    Configure messages for the specific issue
+  </Step>
+</Steps>
+
+### Campaign Strategy for Signals
+
+**Message relevance:** These customers are stuck on a specific objective. Address that blocker.
+
+**Timing:** They're already slow. Act quickly once the Signal surfaces.
+
+**Follow-up:** If the first intervention doesn't work, the Signal continues showing them.
+
+### Iterative Intervention
+
+Once you've created a campaign from a Signal:
+- Customers in the campaign are being addressed
+- New customers falling behind appear in future Signal refreshes
+- Add new customers to existing campaign or create new ones
+
+## Configuring for Signals
+
+### Prerequisites
+
+To generate Signals:
+
+1. **Lifecycle stages configured** with entry/exit criteria
+2. **Objectives within stages** with completion criteria
+3. **Customers in stages** actively progressing
+4. **Sufficient data** for meaningful averages
+
+### Objective Design for Effective Signals
+
+Design objectives that:
+- **Represent meaningful milestones** (not trivial clicks)
+- **Have clear completion criteria**
+- **Are achievable in reasonable time**
+- **Cover the critical path to value**
+
+### Threshold Considerations
+
+| Threshold | Sensitivity | Trade-off |
+|-----------|-------------|-----------|
+| **1.5x average** | High | Earlier alerts, more noise |
+| **2x average** | Moderate | Balanced detection |
+| **3x average** | Low | Fewer alerts, later detection |
+
+## Signal Workflow Example
+
+### Scenario: Onboarding Slow Completers
+
+**Setup:**
+- Stage: Onboarding (Days 1-30)
+- Objective: "Complete Profile Setup"
+- Average completion: 3 days
+- Threshold: 2x (6 days)
+
+**Signal appears:**
+```
+Slow Completers - Complete Profile Setup
+12 customers | £34,000 revenue at risk
+```
+
+**Investigation:**
+- 8 are self-serve plan
+- 4 are enterprise
+- Mix of industries
+
+**Action:**
+Create campaign targeting these 12:
+- Goal: profile_complete = true
+- Entry: "Here's why your profile matters and how to do it in 2 minutes..."
+- Auto-exit: 7 days
+
+**Outcome:**
+- 8 complete (success)
+- 4 exit without completing (need different approach)
+- Signal updates with new slow completers
+
+## Signals vs Other Objects
+
+| Object | Purpose |
+|--------|---------|
+| **Behaviours** | Track when customers achieve milestones (historical) |
+| **Signals** | Alert when customers are failing to achieve milestones (ongoing) |
+| **Cohorts** | Static/dynamic audience segments |
+| **Campaigns** | Intervention mechanisms |
+
+Signals detect problems. Campaigns address them.
+
+## Best Practices
+
+### Start with Core Objectives
+
+Don't Signal everything. Focus on:
+- Objectives that predict success/failure
+- Early lifecycle milestones
+- High-value customer segments
+
+### Act Quickly on Signals
+
+Signals surface customers already behind. Delay compounds the problem:
+1. Review same day
+2. Create campaign if warranted
+3. Don't wait for perfect message
+
+### Review Signal Patterns
+
+If the same Signal keeps appearing:
+- Is the objective realistic?
+- Is there a product friction point?
+- Do customers need more support?
+
+Recurring Signals may indicate systemic issues.
+
+### Don't Over-Intervene
+
+- Customers shouldn't receive too many automated messages
+- Some slowness may be acceptable (enterprise moves slower)
+- Use exclusions to prevent campaign overlap
+
+### Measure Campaign Impact
+
+Track whether Signal-driven campaigns improve outcomes:
+- Do recipients complete faster than non-recipients?
+- Does intervention reduce Signal population over time?
+- What message content works best?
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="How often do Signals refresh?">
+    Continuously as customer data updates. New slow completers appear as they cross the threshold.
+  </Accordion>
+  <Accordion title="Can I customize the threshold?">
+    Thresholds are configured by Trig. Future versions may expose configuration in the UI.
+  </Accordion>
+  <Accordion title="What if I don't have enough data for averages?">
+    You need sufficient completions for meaningful averages. Generally 10+ completions for stability.
+  </Accordion>
+  <Accordion title="Can Signals detect positive patterns?">
+    v0.1 focuses on risk detection. Positive signals (expansion opportunities) are planned.
+  </Accordion>
+  <Accordion title="How is revenue calculated?">
+    Summed from ARR/contract value of affected customers (from CRM data).
+  </Accordion>
+  <Accordion title="What happens when customers complete the objective?">
+    They're removed from the Signal. Campaign tracks this as completion.
+  </Accordion>
+</AccordionGroup>
+
+## Summary
+
+Signals transform Trig from observation to action:
+
+1. **Built on objectives** — Require lifecycle stages and objectives as foundation
+2. **Automated detection** — Continuously evaluate all customers against thresholds
+3. **Quantified impact** — Revenue at risk makes prioritisation clear
+4. **Direct to action** — Create campaigns directly from Signals
+5. **Iterative** — New customers surfaced as they fall behind
+
+Signals show you which customers need help before it's too late.

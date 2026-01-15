@@ -1,0 +1,363 @@
+---
+title: "Actions"
+description: "Execute interventions via email, Slack, and webhooks"
+---
+
+Actions are the things Trig does in response to customer activity. They're the "do something" layer of the platform—executing interventions, sending notifications, updating systems, and communicating with customers.
+
+## What Are Actions?
+
+Every campaign, behaviour, and lifecycle stage can trigger actions at key moments. Actions turn insight into intervention.
+
+**Core principle:** Trig observes customer behaviour, identifies when intervention is needed, and actions execute that intervention.
+
+## When Actions Trigger
+
+Actions fire at specific moments:
+
+### Entry Actions
+
+Fire when a customer enters a campaign, behaviour, or lifecycle stage.
+
+**Use for:**
+- Sending initial outreach
+- Notifying your team
+- Recording entry in CRM
+
+### Completion Actions (Follow-Up)
+
+Fire when a customer achieves the goal.
+
+**Use for:**
+- Congratulating customers
+- Notifying team of success
+- Recording completion in CRM
+- Triggering next-stage campaigns
+
+### Exit Actions (Fallback)
+
+Fire when a customer exits without completing.
+
+**Use for:**
+- Notifying team of intervention failure
+- Recording failure in CRM
+- Triggering escalation or alternative campaigns
+- Alerting CSMs for manual follow-up
+
+## Action Types
+
+### Message Customer
+
+Send an email directly to the customer.
+
+| Configuration | Description |
+|--------------|-------------|
+| **Sender** | Who the email appears from |
+| **Subject** | Email subject line |
+| **Body** | Email content with dynamic attributes |
+| **Format** | Plain text recommended |
+
+**Example:**
+```
+From: Anna at Autodesk
+Subject: Quick tip to get started
+
+Hi {first_name},
+
+I noticed you joined {board_name} but haven't created your
+first project yet. Here are three steps to get started—takes
+about 5 minutes.
+
+[steps]
+
+Thanks,
+Anna
+```
+
+### Send Reminder Message
+
+Send a follow-up email after a delay if the customer hasn't completed.
+
+| Configuration | Description |
+|--------------|-------------|
+| **Delay** | Wait X days before sending |
+| **Content** | Same as message customer |
+
+**Example sequence:**
+1. Entry: Send initial email
+2. Wait 5 days
+3. If not completed: Send reminder
+4. Wait 5 more days
+5. If still not completed: Exit with fallback actions
+
+### Notify Team
+
+Send a notification to your internal team via Slack.
+
+| Configuration | Description |
+|--------------|-------------|
+| **Channel** | Select Slack channel |
+| **Message** | Notification content with dynamic attributes |
+
+**Example:**
+```
+Channel: #customer-alerts
+Message: @{case_owner_email} - {organization_name} has entered
+the "At Risk" campaign. They haven't logged in for 30+ days.
+```
+
+<Tip>
+**Dynamic @-mentions:** Include an email attribute with @ to ping that person directly in Slack.
+</Tip>
+
+### Update Attribute
+
+Set or update an attribute value on the customer record.
+
+| Configuration | Description |
+|--------------|-------------|
+| **Attribute name** | Which field to update |
+| **Value** | What value to set |
+
+**Example:**
+```
+Attribute: completed_onboarding_campaign
+Value: true
+```
+
+<Warning>
+If you update an attribute that's also synced from CRM, the next sync may overwrite your update. Use Trig-specific fields.
+</Warning>
+
+## Dynamic Attributes in Messages
+
+Actions can include dynamic content from customer attributes.
+
+### How to Use
+
+In any message field, insert attribute placeholders:
+
+```
+Hi {first_name},
+
+I noticed your team at {organization_name} signed up
+{days_since_signup} days ago but hasn't {specific_action} yet.
+
+Here's how to get started: [link]
+
+Thanks,
+{sender_name}
+```
+
+### Available Attributes
+
+Any attribute on the customer record:
+- **Person attributes:** first_name, email, role
+- **Organisation attributes:** organization_name, industry, arr
+- **Trig-generated:** last_entry_to_campaign, days_in_stage
+- **CRM attributes:** case_owner_email, account_manager
+
+### Handling Missing Values
+
+If an attribute has no value, the placeholder will be empty. Test messages with real customer data to ensure correct rendering.
+
+## Email Configuration
+
+### Integration Setup
+
+Before sending emails, you need:
+1. **Domain verification:** DNS records to authorise sending
+2. **Sender configuration:** Who emails appear from
+3. **Subdomain setup:** Often use a subdomain for deliverability
+
+This is handled during onboarding.
+
+### Sender Identity
+
+Emails should appear from a real person:
+
+| Good | Bad |
+|------|-----|
+| "Anna at Autodesk" | "no-reply@autodesk.com" |
+| anna@notifications.autodesk.com | "Autodesk Marketing" |
+
+Personal senders get higher engagement.
+
+### Plain Text vs HTML
+
+<Warning>
+**Strong recommendation: Use plain text.**
+</Warning>
+
+| Plain Text | HTML/Branded |
+|------------|--------------|
+| Looks like from a real person | Looks like marketing automation |
+| Higher open rates | Lower open rates |
+| Higher response rates | Lower response rates |
+| Avoids spam filters | More likely filtered |
+
+## Slack Integration
+
+### Setup
+
+1. Authorise Trig to access your Slack workspace
+2. Wait for channel enumeration
+3. Select channels for notifications
+
+### Channel Selection
+
+Target channels like:
+- #customer-success
+- #sales-alerts
+- #trig-notifications
+
+### Message Formatting
+
+Slack messages support:
+- Dynamic attributes (same as email)
+- @-mentions using email addresses
+- Basic formatting
+
+## Using Attributes to Chain Campaigns
+
+Actions that update attributes enable campaign chaining:
+
+```
+Campaign 1: Try to get customer to do X
+├── On completion: Set "completed_campaign_1" = true
+└── On exit: Set "failed_campaign_1" = true
+
+Campaign 2: Target completers
+└── Audience: "completed_campaign_1" = true
+
+Campaign 1B: Alternative for failures
+└── Audience: "failed_campaign_1" = true
+```
+
+## Campaign Action Flow Example
+
+```
+Campaign: Onboarding Nudge
+├── Entry Actions
+│   ├── Message Customer: Welcome email with steps
+│   └── Update Attribute: entered_onboarding_nudge = true
+│
+├── Intervention (if not completed)
+│   └── Send Reminder: Wait 5 days, send follow-up
+│
+├── Completion Actions (Follow-Up)
+│   ├── Message Customer: Congratulations, here's what's next
+│   ├── Notify Team: Customer completed onboarding
+│   └── Update Attribute: completed_onboarding = true
+│
+└── Exit Actions (Fallback)
+    ├── Notify Team: Customer failed, needs manual follow-up
+    └── Update Attribute: failed_onboarding = true
+```
+
+## Action Availability by Context
+
+| Action | Entry | Completion | Exit |
+|--------|-------|------------|------|
+| Message Customer | ✓ | ✓ | ✓ |
+| Send Reminder | ✓ | — | — |
+| Notify Team | ✓* | ✓ | ✓ |
+| Update Attribute | ✓ | ✓ | ✓ |
+
+*May have constraints depending on configuration
+
+## Best Practices
+
+### Email Content
+
+**Be specific and actionable:**
+```
+Good: "Click here to complete your profile. It takes 2 minutes."
+Bad: "We noticed you haven't finished setting up your account."
+```
+
+**Include clear steps:**
+```
+Here are three steps to send your first invoice:
+1. Click "Create Invoice" in the left menu
+2. Add your client's email address
+3. Click Send
+
+That's it—you'll get a notification when they pay.
+```
+
+**Keep it short:**
+- 3-5 sentences for simple actions
+- Bullet points for multi-step instructions
+- No long paragraphs
+
+### Notification Strategy
+
+**Don't over-notify:**
+- Reserve notifications for high-value or high-risk situations
+- Use channels, not DMs, for most notifications
+- Not every entry needs a Slack notification
+
+**Route appropriately:**
+- High-value customers → Dedicated channel + @-mention
+- Routine updates → Team channel without @-mention
+- Escalations → Specific person @-mentioned
+
+### Attribute Management
+
+**Name clearly:**
+- `completed_onboarding_campaign` not `flag_1`
+- `last_intervention_date` not `date`
+
+**Don't overwrite CRM fields:**
+- Create dedicated Trig fields in your CRM
+- Coordinate with CRM admin on write-back strategy
+
+### Testing
+
+**Before going live:**
+- Test with small audience
+- Verify dynamic attributes render correctly
+- Check Slack notifications reach correct channel
+- Confirm CRM updates work
+
+**Monitor after launch:**
+- Check delivery rates
+- Watch for bounces or spam issues
+- Verify customers progressing as expected
+
+## Troubleshooting
+
+### Emails Not Sending
+
+Check:
+- Email integration configured?
+- Sender verified?
+- DNS records in place?
+- Campaign active (not paused)?
+
+### Slack Notifications Not Appearing
+
+Check:
+- Slack integration connected?
+- Channel enumeration complete?
+- Correct channel selected?
+- Bot has permission to post?
+
+### Attributes Not Updating
+
+Check:
+- Correct attribute name?
+- Attribute exists in system?
+- Action actually triggered?
+- CRM sync overwriting value?
+
+## Summary
+
+Actions are how Trig turns insight into intervention:
+
+1. **Three trigger points** — Entry, completion, and exit each serve different purposes
+2. **Four action types** — Message customer, send reminder, notify team, update attribute
+3. **Plain text wins** — Simple, personal emails outperform branded marketing
+4. **Chain with attributes** — Use attribute updates to create progressive campaign sequences
+5. **Right action, right moment** — Entry for initial outreach, completion for celebration, exit for escalation

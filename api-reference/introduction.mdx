@@ -1,33 +1,64 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Integrate with Trig programmatically'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  The Trig API allows you to programmatically interact with your customer data, campaigns, and lifecycle stages. Contact your Trig implementation team for API access.
 </Note>
 
-## Welcome
+## Overview
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+The Trig API enables you to:
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+- **Read customer data** — Access organisation and people attributes
+- **Trigger campaigns** — Programmatically add customers to campaigns
+- **Update attributes** — Set attribute values from external systems
+- **Receive webhooks** — Get notified when customers complete campaigns or behaviours
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints are authenticated using Bearer tokens.
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+```bash
+curl -X GET https://api.trig.com/v1/organisations \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
+
+## Getting Started
+
+To get API access:
+
+<Steps>
+  <Step title="Contact your implementation team">
+    Request API credentials from your Trig contact
+  </Step>
+  <Step title="Generate an API token">
+    Create a token in Settings > API
+  </Step>
+  <Step title="Test your connection">
+    Make a test request to verify authentication
+  </Step>
+</Steps>
+
+## Rate Limits
+
+| Plan | Requests per minute |
+|------|---------------------|
+| Standard | 100 |
+| Enterprise | 1,000 |
+
+## Webhooks
+
+Trig can send webhooks when customers:
+- Enter a campaign
+- Complete a campaign
+- Exit a campaign
+- Complete a behaviour
+- Enter or exit a lifecycle stage
+
+Configure webhooks in **Settings > Integrations > Webhooks**.
+
+## Need Help?
+
+Contact support@trig.com for API documentation and integration assistance.

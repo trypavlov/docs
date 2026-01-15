@@ -1,0 +1,397 @@
+---
+title: "Building Campaigns"
+description: "Create effective interventions that drive customer action"
+---
+
+This guide walks you through building campaigns in Trig—from defining your goal to launching and measuring results.
+
+## Campaign Fundamentals
+
+Every campaign needs three things:
+
+<CardGroup cols={3}>
+  <Card title="Goal" icon="bullseye">
+    What do you want customers to do?
+  </Card>
+  <Card title="Audience" icon="users">
+    Who should receive this intervention?
+  </Card>
+  <Card title="Intervention" icon="paper-plane">
+    What messages will you send?
+  </Card>
+</CardGroup>
+
+## Step 1: Define Your Goal
+
+### What Makes a Good Goal?
+
+Goals should be:
+- **Single action** — One clear thing you want them to do
+- **Measurable** — Based on an attribute or event you can track
+- **Achievable** — Something the customer can realistically complete
+
+### Goal Examples
+
+| Campaign Type | Goal |
+|--------------|------|
+| Onboarding nudge | `projects_created >= 1` |
+| Feature adoption | `feature_X_used >= 1` |
+| Expansion | `upgrade_completed = true` |
+| Churn prevention | `engagement_restored = true` |
+
+<Warning>
+**Avoid compound goals.** If you need multiple actions, create separate campaigns.
+</Warning>
+
+## Step 2: Define Your Audience
+
+### Targeting Options
+
+**Using attributes directly:**
+```
+sign_up_date > 1 day ago
+AND sign_up_date < 7 days ago
+AND invoices_created = 0
+```
+
+**Using cohorts:**
+```
+Member of cohort "New Self-Serve Users"
+```
+
+**Using Trig metadata:**
+```
+last_completed_Onboarding_Stage has any value
+AND last_completed_First_Invoice_Campaign has no value
+```
+
+### Exclusions
+
+Always consider who should NOT receive this campaign:
+
+```
+Audience:
+- sign_up_date > 3 days ago
+- invoices_created = 0
+
+Exclusions:
+- last_entered_[this_campaign] has any value  (already been through)
+- currently_member_of_[other_campaign] = true  (prevent overlap)
+```
+
+### Organisation vs People
+
+| Target | When to Use |
+|--------|-------------|
+| **Organisation** | Account-level decisions, commercial actions |
+| **People** | Individual behaviour, specific user needs to act |
+
+## Step 3: Set Duration
+
+### Auto-Exit Timing
+
+Every campaign should have an auto-exit duration:
+
+| Action Complexity | Duration |
+|------------------|----------|
+| Simple (click, view) | 3-7 days |
+| Moderate (setup step) | 7-14 days |
+| Complex (invite team, integrate) | 14-30 days |
+
+<Tip>
+**Err shorter.** If someone hasn't responded in 14 days, another email in the same campaign probably won't help—try a different approach.
+</Tip>
+
+## Step 4: Configure Entry Actions
+
+### Send Initial Email
+
+The entry email is your first touch. Make it count.
+
+**Configuration:**
+- **Sender:** A real person (e.g., "Lee at FreshBooks")
+- **Subject:** Specific and actionable
+- **Body:** Plain text, contextual, with clear steps
+
+**Example:**
+```
+Subject: Quick tip to send your first invoice
+
+Hi {first_name},
+
+I noticed your team at {organization_name} signed up recently
+but hasn't sent an invoice yet.
+
+Here's how to send your first one—takes about 5 minutes:
+
+1. Click "Create Invoice" in the left menu
+2. Add your client's email
+3. Click Send
+
+If you run into any issues, just reply to this email.
+
+Thanks,
+Lee
+```
+
+### Best Practices for Entry Emails
+
+<CardGroup cols={2}>
+  <Card title="Be specific" icon="crosshairs">
+    Reference what they have and haven't done. Show you know their situation.
+  </Card>
+  <Card title="Be actionable" icon="list-check">
+    Give 1-3 clear steps. Include links where helpful.
+  </Card>
+  <Card title="Be brief" icon="compress">
+    3-5 sentences for simple actions. No long paragraphs.
+  </Card>
+  <Card title="Be human" icon="user">
+    Plain text, from a real person, with a personal sign-off.
+  </Card>
+</CardGroup>
+
+## Step 5: Configure Follow-Up Actions
+
+### Adding Reminders
+
+If customers haven't completed after the initial email, send a follow-up:
+
+```
+Wait 3 days → Send follow-up email
+Wait 7 days → Send second follow-up (optional)
+```
+
+### Follow-Up Email Strategy
+
+**First follow-up (Day 3-5):**
+- Reference that you've reached out before
+- Try a different angle
+- Shorter than the original
+
+```
+Subject: Re: Quick tip to send your first invoice
+
+Hi {first_name},
+
+Following up on my earlier email—I wanted to make sure you
+saw the steps to send your first invoice.
+
+If you're running into any issues, just reply and I'll help.
+
+Thanks,
+Lee
+```
+
+**Second follow-up (Day 7-10):**
+- Acknowledge they might be busy
+- Offer help or a call
+- This is often your last automated touch
+
+<Note>
+**Most campaigns use 1-2 follow-ups.** More than that often means your campaign is too broad or goal is too ambitious.
+</Note>
+
+## Step 6: Configure Completion Actions
+
+### What Happens on Success
+
+When a customer achieves the goal:
+
+**Options:**
+- Send congratulations message
+- Notify your team (Slack)
+- Update CRM field
+- Route to next campaign
+
+**Example:**
+```
+Completion Actions:
+├── Message Customer: "Great job sending your first invoice!"
+├── Notify Team: "#wins - {organization_name} completed onboarding"
+└── Update Attribute: completed_onboarding_campaign = true
+```
+
+### Silent Completion
+
+Not every campaign needs a completion message. For feature adoption campaigns, silent completion is often appropriate.
+
+## Step 7: Configure Exit Actions
+
+### What Happens on Failure
+
+When a customer exits without completing:
+
+**Options:**
+- Notify team for manual follow-up
+- Update attribute for tracking
+- Route to alternative campaign
+
+**Example:**
+```
+Exit Actions:
+├── Notify Team: "@{csm_email} - {organization_name} failed onboarding, needs follow-up"
+└── Update Attribute: failed_onboarding_campaign = true
+```
+
+### Chaining to Alternate Campaigns
+
+Use exit actions to create branching journeys:
+
+```
+Campaign: Onboarding Nudge v1
+├── Completed → Route to "Feature Adoption" campaign
+└── Exited → Route to "Onboarding Nudge v2" (different approach)
+```
+
+## Step 8: Review and Launch
+
+### Pre-Launch Checklist
+
+<Check>Goal is clear and measurable</Check>
+<Check>Audience returns expected customers</Check>
+<Check>Duration is appropriate for the action</Check>
+<Check>Entry email is specific, actionable, and human</Check>
+<Check>Follow-ups are spaced appropriately</Check>
+<Check>Completion and exit actions configured</Check>
+<Check>Exclusions prevent re-entry and overlap</Check>
+
+### Launch the Campaign
+
+<Steps>
+  <Step title="Review configuration">
+    Double-check all settings
+  </Step>
+  <Step title="Check audience size">
+    Verify the number of customers who will enter
+  </Step>
+  <Step title="Launch">
+    Click **Go Live**
+  </Step>
+  <Step title="Monitor">
+    Watch the first few days for issues
+  </Step>
+</Steps>
+
+## Campaign Chaining Patterns
+
+### Success Path
+
+After completing Campaign 1, move to Campaign 2:
+
+```
+Campaign 2 Audience:
+- last_completed_Campaign_1 has any value
+- [next action criteria]
+```
+
+### Failure Path
+
+After failing Campaign 1, try Campaign 1B:
+
+```
+Campaign 1B Audience:
+- last_exited_Campaign_1 has any value
+- last_completed_Campaign_1 has no value
+```
+
+### Progressive Journey
+
+```
+Welcome → Onboarding → Feature Adoption → Expansion
+   ↓           ↓              ↓
+Retry A    Retry B        CSM Outreach
+```
+
+## Measuring Campaign Effectiveness
+
+### Key Metrics
+
+| Metric | Formula | Target |
+|--------|---------|--------|
+| **Completion rate** | Completed / (Completed + Exited) | 20-40% |
+| **Time to completion** | Avg days to complete | As fast as possible |
+| **Entry to exit rate** | Exited / Total entered | Lower is better |
+
+### What to Optimise
+
+| If... | Then... |
+|-------|---------|
+| Low completion rate | Adjust messaging, timing, or goal |
+| Long time to completion | Intervention may be too early |
+| High exit at specific point | Focus messaging there |
+| Certain segments complete more | Target them specifically |
+
+## Common Campaign Patterns
+
+### Onboarding Nudge
+
+```
+Goal: first_project_created >= 1
+Audience: signup 1-7 days ago, no project created
+Duration: 10 days
+Entry: Plain text email with steps
+Follow-up: Day 3, Day 7
+Completion: Notify team
+Exit: Route to "Onboarding Stalled" campaign
+```
+
+### Feature Adoption
+
+```
+Goal: feature_X_used >= 1
+Audience: Premium plan, never used feature X, 30+ days old
+Duration: 14 days
+Entry: Email highlighting feature value
+Follow-up: Day 5 with different angle
+Completion: Silent
+Exit: Flag for CSM
+```
+
+### Churn Prevention
+
+```
+Goal: engagement_restored = true
+Audience: renewal in 90 days, no login in 30 days
+Duration: 30 days
+Entry: Personal outreach from CSM
+Follow-up: Week 2, Week 3
+Completion: Notify sales
+Exit: Escalate to sales
+```
+
+## Troubleshooting
+
+### "Campaign isn't sending emails"
+
+- Is the campaign live (not paused)?
+- Are there customers matching the audience?
+- Is email integration configured?
+- Is the sender verified?
+
+### "Wrong customers entering"
+
+- Review audience criteria
+- Check for typos in attribute names
+- Verify date logic (before/after)
+
+### "Low completion rate"
+
+- Is the goal achievable?
+- Is messaging specific enough?
+- Is timing right (too early? too late?)
+- Are you targeting the right audience?
+
+## Summary
+
+Building effective campaigns:
+
+1. **Clear goal** — Single, measurable action
+2. **Right audience** — Specific targeting with exclusions
+3. **Appropriate duration** — Time-bounded, err shorter
+4. **Human messaging** — Plain text, specific, actionable
+5. **Strategic follow-ups** — 1-2 max, vary the angle
+6. **Complete the loop** — Actions on both completion and exit
+7. **Chain thoughtfully** — Build progressive journeys
+
+Well-designed campaigns turn insight into action and create measurable impact on customer success.

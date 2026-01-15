@@ -1,0 +1,264 @@
+---
+title: "Lifecycle Stages"
+description: "Define the phases of your customer journey"
+---
+
+Lifecycle stages represent defined periods of time during which your customers progress through sets of desirable behaviours. They are the foundational framework that enables Trig to understand the path customers take through your product.
+
+## What Are Lifecycle Stages?
+
+Think of lifecycle stages as chapters in your customer's journey. Each chapter has:
+- A beginning (entry criteria)
+- Things you expect to happen (objectives)
+- An end point (exit criteria)
+
+By tracking progression through these chapters, Trig builds a picture of what "normal" looks like—and identifies who is ahead of normal, who is behind, and what patterns exist among each group.
+
+## Why Lifecycle Stages Matter
+
+Lifecycle stages are the foundation that enables all other Trig capabilities:
+
+| Without Lifecycle Stages | With Lifecycle Stages |
+|--------------------------|----------------------|
+| Each analysis requires separate configuration | One configuration enables multiple value drivers |
+| No unified view of customer journey | Complete journey visibility across all customers |
+| Interventions are disconnected | Interventions are contextual and timely |
+| Measurement is fragmented | Impact measurement works across all stages |
+| Manual identification of at-risk customers | Automatic pattern detection and early warning |
+
+<Note>
+**The compounding effect:** Once lifecycle stages are configured, every new customer automatically progresses, data accumulates for pattern discovery, and the system continuously improves.
+</Note>
+
+## Standard Stages
+
+Most B2B SaaS companies use four stages:
+
+### Onboarding
+Initial setup and first value milestones. Typically days 0-30.
+
+**Key questions:**
+- Has the customer completed initial setup?
+- Have they experienced first value?
+- Is the team getting involved?
+
+### Adoption
+Growing usage, team expansion, feature depth. Typically months 1-3.
+
+**Key questions:**
+- Is usage growing?
+- Are more team members engaging?
+- Are they using deeper features?
+
+### Expansion
+Signals of readiness to upgrade or expand. Variable timing.
+
+**Key questions:**
+- Are they hitting usage limits?
+- Are they exploring premium features?
+- Is the team requesting more seats?
+
+### Renewal
+Pre-renewal health monitoring and risk identification. Typically 60-90 days before renewal.
+
+**Key questions:**
+- Is the account healthy?
+- Are there risk signals?
+- What's the renewal likelihood?
+
+## How Lifecycle Stages Work
+
+### Entry and Exit Criteria
+
+Every lifecycle stage needs clear boundaries:
+
+**Entry criteria** define when an organisation enters:
+- First seen date within X days
+- Completion of previous stage
+- Specific attribute value (`contract_signed = true`)
+
+**Exit criteria** define when an organisation leaves:
+- All objectives completed
+- Time-based (after 30 days regardless of completion)
+- Specific milestone achieved
+
+### Exit Strategy Options
+
+| Criteria-Based Exit | Time-Based Exit |
+|--------------------|-----------------|
+| Customers can get "stuck" if they never complete | Everyone moves forward |
+| Clear signal of completion | May exit with incomplete objectives |
+| Good for high-touch journeys | Good for high-volume PLG models |
+
+<Tip>
+**Recommendation:** Use time-based exit as a safety net, even with criteria-based completion. This prevents organisations from sitting in stages forever.
+</Tip>
+
+### Objectives Within Stages
+
+Objectives are the specific milestones that indicate healthy progression. See [Objectives](/concepts/objectives) for details.
+
+```
+Lifecycle Stage: Onboarding
+├── Objective 1: Created First Project
+├── Objective 2: Invited Team Member
+├── Objective 3: Connected Integration
+├── Objective 4: Generated First Report
+└── Objective 5: Completed Full Week of Usage
+```
+
+## Understanding "Normal"
+
+The primary purpose of lifecycle stages is to establish what normal progression looks like, then identify deviations.
+
+### How Normal Is Calculated
+
+As organisations progress through a stage, Trig calculates:
+
+| Metric | Description |
+|--------|-------------|
+| **Average time to complete each objective** | How long does the typical customer take? |
+| **Average time to complete the stage** | How long in this stage overall? |
+| **Completion rates** | What percentage complete each objective? |
+| **Completion sequence** | In what order do customers complete? |
+
+### Above and Below Average
+
+Once normal is established, every organisation is measured against it:
+
+**Above average (faster completers):**
+- Completed objectives in less time than typical
+- Often correlates with strong retention
+- Expansion opportunities
+
+**Below average (slower completers):**
+- Taking longer than typical
+- May indicate friction or disengagement
+- Intervention opportunities
+
+### Visual Representation
+
+```
+Objective 1: First Invoice Created
+├── ✓ Completed (Day 3)
+├── △ Average: Day 7
+└── Status: AHEAD (4 days faster than average)
+
+Objective 2: Payment Gateway Connected
+├── ✗ Not completed
+├── △ Average: Day 14
+└── Status: BEHIND (currently Day 21, 7 days overdue)
+```
+
+## Configuring Lifecycle Stages
+
+### Planning Questions
+
+Before creating stages, answer these for each stage:
+
+**Scope:**
+- What period of the journey does this cover?
+- How long does it typically last?
+- What comes before and after?
+
+**Entry:**
+- What triggers entry?
+- Is it time-based, event-based, or completion of previous stage?
+
+**Objectives:**
+- What 3-7 milestones define healthy progression?
+- What indicates each objective is complete?
+- What's the "aha moment"?
+
+**Exit:**
+- When does this stage end?
+- Completion-based, time-based, or hybrid?
+
+### Configuration Steps
+
+<Steps>
+  <Step title="Create the stage">
+    Navigate to **Lifecycle > Stages** and click **Create Stage**
+  </Step>
+  <Step title="Define entry criteria">
+    Specify what qualifies an organisation to enter
+  </Step>
+  <Step title="Add objectives">
+    Create 4-7 objectives with completion criteria
+  </Step>
+  <Step title="Set exit criteria">
+    Configure when organisations leave the stage
+  </Step>
+  <Step title="Set duration">
+    Add auto-exit timing as a safety net
+  </Step>
+</Steps>
+
+### Best Practices
+
+**Start with 4-5 objectives per stage.** Too few loses granularity; too many creates noise.
+
+**Define objectives you can actually track.** Only create objectives where you have data.
+
+**Align duration with business reality.** If onboarding genuinely takes 60 days, don't force it into 14.
+
+**Consider parallel stages.** Enterprise and self-serve customers may need different stage configurations.
+
+## What Lifecycle Stages Enable
+
+Once properly configured, lifecycle stages become the foundation for:
+
+### Pattern Discovery
+- Which objective completion patterns predict retention?
+- What attributes are common among fast completers?
+- Where are the drop-off points?
+
+### Early Warning
+- Who is stuck in onboarding?
+- Which organisations are below average on critical objectives?
+- What revenue is at risk?
+
+### Automated Interventions
+- Trigger campaigns when objectives are overdue
+- Send contextual messages based on stage and objective status
+- Notify internal teams when high-value accounts are at risk
+
+### Impact Measurement
+- Did the intervention improve completion?
+- Are campaign recipients completing faster?
+- Which messaging is most effective?
+
+## Multiple Concurrent Stages
+
+Organisations can be in multiple lifecycle stages at once, though this requires careful design. Common use cases:
+
+- Different stages for different products
+- Parallel tracks for different user types within the same organisation
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="What happens if an organisation never completes a stage?">
+    Without auto-exit, they remain indefinitely. Use time-based exit to ensure forward movement so you can analyse patterns of non-completion.
+  </Accordion>
+  <Accordion title="How long before 'normal' is reliable?">
+    With 50+ organisations through a stage, averages become meaningful. With 200+, patterns become statistically significant.
+  </Accordion>
+  <Accordion title="Can I change objectives after the stage is live?">
+    Yes. Adding new objectives is straightforward. Modifying existing ones may affect historical comparisons.
+  </Accordion>
+  <Accordion title="Do lifecycle stages work for B2C?">
+    The platform is optimised for B2B where organisations are the primary unit. For B2C, the "organisation" becomes the individual user.
+  </Accordion>
+</AccordionGroup>
+
+## Summary
+
+Lifecycle stages are the foundational data structure in Trig that enables everything else:
+
+1. **Represent periods of time** — Each stage is a chapter in the customer journey
+2. **Contain objectives** — Milestones that define healthy progression
+3. **Build "normal"** — Establish baselines for comparison
+4. **Enable everything** — Pattern discovery, early warning, interventions, and measurement all depend on stages
+
+**Configure lifecycle stages first. Everything else builds on top.**

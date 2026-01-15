@@ -1,97 +1,129 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Welcome to Trig"
+description: "The customer lifecycle platform that turns insight into action"
 ---
 
-## Setting up
+Trig helps B2B SaaS companies understand their customer journey, identify who needs attention, and intervene at exactly the right moment. One platform configuration enables pattern discovery, early warning, automated interventions, and impact measurement.
 
-Get your documentation site up and running in minutes.
+## How Trig Works
+
+Trig connects your CRM and product data to build a complete picture of every customer's journey. By tracking progression through lifecycle stages, Trig establishes what "normal" looks like and identifies customers who are ahead or behind.
+
+<CardGroup cols={2}>
+  <Card title="Observe" icon="eye">
+    Track customer progression through lifecycle stages with objectives that define healthy behaviour
+  </Card>
+  <Card title="Detect" icon="radar">
+    Signals automatically surface customers who need attention before problems compound
+  </Card>
+  <Card title="Intervene" icon="paper-plane">
+    Campaigns deliver timely, contextual outreach to move customers toward success
+  </Card>
+  <Card title="Measure" icon="chart-line">
+    Track completion rates and intervention impact to continuously improve
+  </Card>
+</CardGroup>
+
+## Get Started
 
 <Card
-  title="Start here"
+  title="Quickstart Guide"
   icon="rocket"
   href="/quickstart"
   horizontal
 >
-  Follow our three step quickstart guide.
+  Get launched in Trig with our step-by-step setup guide
 </Card>
 
-## Make it yours
+## Core Concepts
 
-Design a docs site that looks great and empowers your users.
+Trig is built around a set of interconnected objects that work together to power your customer success operations.
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="People & Organisations" icon="users" href="/concepts/people-and-organisations">
+    The foundational entities that represent your customers
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Lifecycle Stages" icon="stairs" href="/concepts/lifecycle-stages">
+    Define the phases of your customer journey
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Objectives" icon="bullseye" href="/concepts/objectives">
+    Track milestones within each lifecycle stage
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Behaviours" icon="fingerprint" href="/concepts/behaviours">
+    Capture milestone moments in customer activity
   </Card>
-</Columns>
+  <Card title="Cohorts" icon="layer-group" href="/concepts/cohorts">
+    Reusable audience segments for targeting
+  </Card>
+  <Card title="Campaigns" icon="envelope" href="/concepts/campaigns">
+    Orchestrate interventions to drive customer success
+  </Card>
+  <Card title="Actions" icon="bolt" href="/concepts/actions">
+    Execute interventions via email, Slack, and webhooks
+  </Card>
+  <Card title="Signals" icon="bell" href="/concepts/signals">
+    Proactive alerts when customers need attention
+  </Card>
+  <Card title="Attributes" icon="database" href="/concepts/attributes">
+    The data points that describe your customers
+  </Card>
+</CardGroup>
 
-## Create beautiful pages
+## The Trig Platform
 
-Everything you need to create world-class documentation.
+```
+┌─────────────────────────────────────────────────────────┐
+│                    DATA SOURCES                         │
+│         (CRM, Product Analytics, Data Warehouse)        │
+└────────────────────────┬────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                    CORE ENTITIES                        │
+│  ┌──────────────┐          ┌──────────────────────┐    │
+│  │    ORG       │◄────────►│      PEOPLE          │    │
+│  │  (Account)   │ contains │   (End Users)        │    │
+│  └──────────────┘          └──────────────────────┘    │
+└────────────────────────┬────────────────────────────────┘
+                         │
+         ┌───────────────┼───────────────┐
+         ▼               ▼               ▼
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│  LIFECYCLE  │  │ BEHAVIOURS  │  │  COHORTS    │
+│   STAGES    │  │             │  │             │
+│ ┌─────────┐ │  │  (Pattern   │  │ (Audience   │
+│ │Objectives│ │  │  Tracking)  │  │  Segments)  │
+│ └─────────┘ │  │             │  │             │
+└──────┬──────┘  └──────┬──────┘  └──────┬──────┘
+       │                │                │
+       └────────────────┼────────────────┘
+                        ▼
+              ┌─────────────────┐
+              │   CAMPAIGNS     │
+              │                 │
+              │ Goal + Audience │
+              │ + Interventions │
+              └────────┬────────┘
+                       │
+                       ▼
+              ┌─────────────────┐
+              │    OUTPUTS      │
+              │                 │
+              │ Emails, Slack,  │
+              │ Webhooks, Tasks │
+              └─────────────────┘
+```
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Why Trig?
 
-## Need inspiration?
+### Close the Gap Between Insight and Action
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+Most customer success tools tell you what's happening. Trig helps you do something about it. The insight that "47 customers haven't completed onboarding" becomes actionable when you can immediately target those customers with a relevant message.
+
+### Timely, Contextual Intervention
+
+The closer an intervention arrives to the moment of need, the more effective it is. Trig campaigns trigger based on real-time criteria, collapsing the gap between "customer needs help" and "customer receives help."
+
+### One Configuration, Multiple Value Drivers
+
+Without lifecycle stages, every analysis requires separate data work. With Trig's unified configuration, pattern discovery, early warning, automated interventions, and impact measurement all become possible on a shared foundation.

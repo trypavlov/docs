@@ -1,0 +1,326 @@
+---
+title: "Objectives"
+description: "Track milestones within each lifecycle stage"
+---
+
+Objectives are specific milestones or behaviours that you want to track within a lifecycle stage. They represent the things you expect customers to do as they progress—the actions that indicate healthy usage and forward momentum.
+
+## What Are Objectives?
+
+Objectives are the checkpoints along a journey. Each checkpoint answers:
+- "Has this customer done this thing yet?"
+- "How long did it take them compared to others?"
+
+<Note>
+**Key distinction:** Objectives are observational. They track whether something happened without necessarily triggering an intervention. You're building a picture of what customers are doing, how quickly, and who is ahead or behind.
+</Note>
+
+## Objectives vs Markers
+
+Within lifecycle stages, Trig distinguishes between two types:
+
+| Objectives | Markers |
+|------------|---------|
+| Things you *want* customers to do | Signals of healthy usage |
+| Milestones you've identified as important | Ongoing behaviours that correlate with success |
+| Define the destination | Indicate quality of the journey |
+
+**Objective examples:**
+- Created first project
+- Invited a team member
+- Connected payment gateway
+
+**Marker examples:**
+- Logged in more than 3 times this week
+- Session duration greater than 10 minutes
+- Returned within 24 hours
+
+## Why Objectives Matter
+
+### Building a Picture of Normal
+
+Every objective contributes to understanding what "normal" looks like:
+
+| Metric | Description |
+|--------|-------------|
+| **Average time to complete** | How long does the typical customer take? |
+| **Completion rate** | What percentage complete this objective? |
+| **Completion sequence** | In what order do customers typically complete? |
+
+This baseline builds automatically as data accumulates.
+
+### Identifying Who Needs Attention
+
+Once normal is established, every organisation can be measured:
+
+- **Faster than average** — Completed more quickly than typical
+- **Slower than average** — Taking longer, potentially stuck
+- **Not completed** — Should have completed by now but hasn't
+
+This comparison is the foundation for [Signals](/concepts/signals).
+
+### Enabling Pattern Discovery
+
+Objectives create measurement points for analysis:
+
+- "Customers who complete Objective A within 7 days have 80% higher retention"
+- "Customers who skip Objective C rarely complete Objective D"
+- "The median time to complete all onboarding objectives is 12 days"
+
+## How Objectives Work
+
+### Relationship to Lifecycle Stages
+
+Objectives always live within a lifecycle stage. They inherit their audience from the stage—if an organisation is in the stage, it's being tracked against the stage's objectives.
+
+```
+Lifecycle Stage: Onboarding
+├── Objective 1: Created First Project
+├── Objective 2: Invited Team Member
+├── Objective 3: Connected Integration
+├── Objective 4: Generated First Report
+└── Objective 5: Completed Full Week of Usage
+```
+
+### Non-Linear Completion
+
+Objectives do not need to be completed in order. Unless your business logic requires a specific sequence, customers can complete in any order.
+
+This matters because:
+- Different customers have different priorities
+- Forcing linear completion creates artificial friction
+- The insight is often *which* objectives get completed first
+
+<Tip>
+If you need to enforce sequence (Objective B requires Objective A), build that into the completion criteria.
+</Tip>
+
+### Completion Tracking
+
+When an objective is completed, Trig records:
+
+| Data Point | Description |
+|------------|-------------|
+| **Completion timestamp** | When the objective was achieved |
+| **Time from stage entry** | Days since entering the stage |
+| **Comparison to average** | Faster or slower than typical |
+
+This data becomes metadata on the organisation for filtering, targeting, and analysis.
+
+## Configuring Objectives
+
+### Anatomy of an Objective
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| **Name** | Descriptive name for the milestone | "First Invoice Created" |
+| **Audience** | Who this applies to (usually inherited) | All orgs in stage |
+| **Completion Criteria** | What indicates done | `invoices_created >= 1` |
+
+### Completion Criteria Options
+
+**Attribute-based:**
+```
+attribute = specific_value
+attribute >= X
+attribute has any value
+```
+
+**Event-based:**
+```
+event_count >= X
+event occurred
+```
+
+**Combination:**
+```
+condition_1 AND condition_2
+condition_1 OR condition_2
+```
+
+### Keep Objectives Simple
+
+<Warning>
+Each objective should track one meaningful milestone. Complex objectives with many AND conditions are harder to interpret and optimise.
+</Warning>
+
+**Too complex:**
+```
+invoices_created >= 3 AND
+payment_gateway_connected = true AND
+team_members >= 2 AND
+first_payment_received = true
+```
+
+**Better as separate objectives:**
+- First 3 Invoices Created
+- Payment Gateway Connected
+- Team Collaboration Started
+- First Payment Received
+
+### Naming Conventions
+
+Good objective names are:
+- **Descriptive** — Clear what the milestone is
+- **Action-oriented** — Describes what the customer did
+- **Threshold-inclusive** — Include numbers if relevant
+
+| Good | Bad |
+|------|-----|
+| "Created First Invoice" | "Invoice" |
+| "Using Projects (3+)" | "Projects" |
+| "Team Member Invited" | "Has team" |
+
+### Threshold Objectives
+
+Track not just whether something happened, but how much:
+
+```
+Objective: Using Manual Journal Entries (First Time)
+Completion: manual_journal_entries >= 1
+
+Objective: Using Manual Journal Entries (5+)
+Completion: manual_journal_entries >= 5
+
+Objective: Using Manual Journal Entries (20+)
+Completion: manual_journal_entries >= 20
+```
+
+This reveals:
+- How many customers use the feature at all
+- How many become moderate users
+- How many become power users
+
+## Objectives and Signals
+
+### How Signals Use Objectives
+
+The [Signals](/concepts/signals) feature analyses objective performance and identifies organisations that need attention:
+
+1. Trig calculates average time to complete each objective
+2. For each organisation, Trig compares time-in-stage to the average
+3. Organisations significantly behind are flagged as slow completers
+4. These appear in the Signals panel for review and action
+
+**Example:**
+- Average time to complete "First Invoice Created": 7 days
+- Organisation X has been in stage for 14 days, hasn't completed it
+- Organisation X appears as a slow completer
+
+### From Signal to Action
+
+1. **Signal surfaces organisations** — "47 organisations are overdue on 'First Invoice'"
+2. **You review and decide** — Worth intervening? What should we say?
+3. **Create campaign** — Target these organisations
+4. **Measure impact** — Did the intervention improve completion?
+
+## Viewing Objective Performance
+
+### Stage-Level View
+
+Within a lifecycle stage, see aggregate performance:
+
+- Total organisations in stage
+- Completion counts per objective
+- Average time to complete
+- Week-over-week trends
+
+### Organisation-Level View
+
+For an individual organisation:
+
+```
+Organisation: Acme Corp (entered Day 0, currently Day 21)
+
+Objective 1: First Invoice Created
+├── ✓ Completed (Day 3)
+├── △ Average: Day 7
+└── Status: AHEAD (4 days faster)
+
+Objective 2: Payment Gateway Connected
+├── ✗ Not completed
+├── △ Average: Day 14
+└── Status: BEHIND (7 days overdue)
+```
+
+## Objectives vs Stage Completion
+
+**Stage completion criteria** determine when an organisation exits the stage.
+
+**Objectives** track progress within the stage.
+
+### Options
+
+| Approach | Description | Trade-off |
+|----------|-------------|-----------|
+| **Objectives match completion** | Stage completes when all objectives done | Risk: orgs can get stuck forever |
+| **Time-based completion** | Stage completes after X days | Everyone moves forward, completion rates vary |
+| **Hybrid** | Time-based OR key objectives complete | Balance movement and measurement |
+
+Most implementations use time-based or hybrid.
+
+## Best Practices
+
+### Start with 4-7 Objectives Per Stage
+
+Too few = lack granularity. Too many = noise overwhelms signal.
+
+### Define Objectives You Can Track
+
+Only create objectives where you have data. Confirm:
+- The event or attribute exists
+- It's flowing into Trig correctly
+- It updates when the customer acts
+
+### Make Objectives Meaningful
+
+Objectives should represent meaningful milestones, but don't need to be important enough to email about:
+
+**Good:** "Created 6 or more pages" — Meaningful engagement indicator, worth tracking
+
+The intervention decision comes later, informed by patterns across your customer base.
+
+### Use Objectives to Find Bottlenecks
+
+If Objective A has 90% completion and Objective B has 10%, you've found a bottleneck. Design objectives to reveal where customers get stuck.
+
+### Review and Refine
+
+Once objectives are live and accumulating data:
+
+- Are any objectives never completed? (Maybe too hard)
+- Are any always completed instantly? (Maybe too easy)
+- Is there an objective that predicts success?
+- Is there an objective that predicts churn?
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="Can I add objectives after the stage is live?">
+    Yes. Existing organisations will simply have no completion data for new objectives.
+  </Accordion>
+  <Accordion title="Can I modify completion criteria after it's live?">
+    Yes, but changing criteria may affect historical interpretation. If you change "invoices >= 1" to "invoices >= 3", previously completed orgs may now show incomplete.
+  </Accordion>
+  <Accordion title="What happens if an objective is never completed?">
+    The organisation shows as incomplete. With time-based stage exit, they still move forward—just with incomplete objectives recorded.
+  </Accordion>
+  <Accordion title="How long before averages are reliable?">
+    With 50+ completions, averages become meaningful. With 200+, statistically significant.
+  </Accordion>
+  <Accordion title="Should objectives be linear?">
+    By default, non-linear. If you need enforced sequence, build dependency into completion criteria.
+  </Accordion>
+</AccordionGroup>
+
+## Summary
+
+Objectives are the measurement checkpoints within lifecycle stages:
+
+1. **Observational** — Track what happened, not what to do about it
+2. **Keep them simple** — One clear milestone per objective
+3. **Non-linear by default** — Customers can complete in any order
+4. **Build toward patterns** — Value compounds as data accumulates
+5. **Feed into Signals** — Slow completers become intervention targets
+
+Configure objectives thoughtfully, let data accumulate, and use the patterns to drive intelligent interventions.
