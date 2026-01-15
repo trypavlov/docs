@@ -1,0 +1,362 @@
+---
+title: "Attributes"
+description: "The data points that describe your customers"
+---
+
+Attributes are data points that describe your customers. They're the building blocks of everything in Trig—defining audiences, setting completion criteria, personalising messages, and tracking progress.
+
+## What Are Attributes?
+
+Think of attributes as facts you know about each customer:
+- Who they are (name, email, role)
+- What they've done (signup date, invoices created, login count)
+- Where they are in their journey (lifecycle stage, campaign membership)
+- What Trig has observed (days in stage, objectives completed)
+
+Every filter, audience, and criteria in Trig is built from attributes.
+
+## Attribute Types
+
+### Ingested Attributes
+
+Pulled from external systems into Trig.
+
+**Sources:**
+- **CRM:** HubSpot, Salesforce
+- **Data warehouse:** Snowflake, BigQuery, Redshift
+- **Product analytics:** Mixpanel, Amplitude, Segment, Pendo
+
+**Examples:**
+- `company_name` (from HubSpot)
+- `arr` (from Salesforce)
+- `signup_date` (from product database)
+- `plan_type` (from billing system)
+
+### Trig Activity Attributes (Auto-Generated)
+
+Created automatically as customers interact with Trig objects.
+
+For every campaign, behaviour, stage, and objective:
+```
+currently_member_of_[object_name]  — Are they currently in?
+last_entry_to_[object_name]        — When did they enter?
+last_exit_from_[object_name]       — When did they exit (failed)?
+last_completion_of_[object_name]   — When did they complete?
+```
+
+**Examples:**
+```
+currently_member_of_onboarding_stage = true
+last_entry_to_poc_1_campaign = 2024-10-15
+last_completion_of_create_first_invoice = 2024-10-18
+```
+
+These attributes persist forever—you can always look back at which campaigns and stages a customer has been through.
+
+### Rolled-Up Attributes
+
+Aggregated from child entities (People) to parent entities (Organisations).
+
+| Aggregation | Example |
+|-------------|---------|
+| **Sum** | Total logins across all users |
+| **Count** | Number of users matching criteria |
+| **Average** | Mean value across users |
+| **Min/Max** | Extremes across users |
+
+**Examples:**
+- `total_time_entries_created` (sum)
+- `active_user_count` (count)
+- `average_session_duration` (mean)
+
+### Calculated Attributes
+
+Derived from other attributes through computation.
+
+**Examples:**
+- `days_since_signup` (today minus signup_date)
+- `days_until_renewal` (renewal_date minus today)
+- `health_score` (composite of multiple factors)
+
+### Action-Created Attributes
+
+Set by campaign actions when customers complete or exit.
+
+**Example:**
+```
+Campaign completion action: Set completed_onboarding_campaign = true
+```
+
+## Person vs Organisation Attributes
+
+### Person Attributes
+
+Describe individual users:
+- Identity: email, user_id, name
+- Role: job_title, permissions, admin_status
+- Behaviour: last_login, feature_usage, session_count
+- Trig activity: campaign membership, behaviour completion
+
+### Organisation Attributes
+
+Describe accounts/companies:
+- Identity: company_name, domain, account_id
+- Commercial: arr, contract_value, plan_type
+- Relationship: customer_since, renewal_date, csm_owner
+- Aggregated: total_users, active_user_count
+- Trig activity: lifecycle stage, campaign outcomes
+
+### Choosing the Right Level
+
+| Scenario | Level | Why |
+|----------|-------|-----|
+| "Has this user logged in?" | Person | Individual action |
+| "Is this account healthy?" | Organisation | Account assessment |
+| "Send email to inactive user" | Person | Individual targeting |
+| "Flag accounts for CSM review" | Organisation | Account triage |
+
+## Using Attributes in Filters
+
+### Building Filters
+
+1. **Select attribute:** Choose from available attributes
+2. **Select operator:** equals, not equals, greater than, contains, has value
+3. **Set value:** The comparison value
+
+**Example:**
+```
+signup_date is after 30 days ago
+AND plan_type equals "Enterprise"
+AND currently_member_of_onboarding_stage equals true
+```
+
+### Filter Groups
+
+| Within a group | AND — All conditions must be true |
+| Between groups | OR — Any group can be true |
+
+### Common Filter Patterns
+
+**New customers:**
+```
+signup_date is after 14 days ago
+```
+
+**High-value accounts:**
+```
+arr is greater than 50000
+```
+
+**Stuck in onboarding:**
+```
+currently_member_of_onboarding_stage equals true
+AND days_in_stage is greater than 30
+```
+
+**Completed campaign but not next step:**
+```
+last_completion_of_campaign_1 has any value
+AND last_entry_to_campaign_2 has no value
+```
+
+## Attributes vs Events
+
+<Warning>
+Understanding this difference is critical for building effective campaigns.
+</Warning>
+
+### Attributes
+
+- **Nature:** Static values on a record
+- **Evaluation:** Historical (checked against existing values)
+- **Persistence:** Remain on record until changed
+
+### Events
+
+- **Nature:** Point-in-time occurrences
+- **Evaluation:** Forward-only (only new events trigger)
+- **Persistence:** Stream of discrete actions
+
+### Critical Distinction
+
+**Attributes are evaluated historically:** When you create a campaign with audience `signup_date after 30 days ago`, Trig checks existing values and immediately includes matching customers.
+
+**Events are evaluated forward-only:** When you create completion criteria `invoice_created at least 1 time`, Trig only counts NEW events from when the campaign goes live—not historical events.
+
+### Implication for Campaign Design
+
+If you want to exclude customers who have already done something:
+- **Use an attribute** (e.g., `first_invoice_date has no value`)
+- **Don't rely on event counts** for historical behaviour
+
+## Trig Activity Attributes Deep Dive
+
+### The Four Core Attributes
+
+For every Trig object, you get:
+
+| Attribute | Meaning | Use Case |
+|-----------|---------|----------|
+| `currently_member_of_[X]` | Currently in this object | Exclude from other campaigns |
+| `last_entry_to_[X]` | When they entered | Time-based targeting |
+| `last_exit_from_[X]` | When they failed | Target failed customers |
+| `last_completion_of_[X]` | When they succeeded | Target successful customers |
+
+### Using for Campaign Chaining
+
+**Campaign 1: Initial Nudge**
+- On completion: Customer has `last_completion_of_initial_nudge`
+
+**Campaign 2: Follow-Up for Completers**
+- Audience: `last_completion_of_initial_nudge` has any value
+
+**Campaign 3: Rescue for Non-Completers**
+- Audience: `last_exit_from_initial_nudge` has any value
+
+### Timing-Based Targeting
+
+```
+last_entry_to_onboarding_campaign is after 5 days ago
+AND last_entry_to_onboarding_campaign is before 3 days ago
+AND last_completion_of_onboarding_campaign has no value
+```
+
+This targets customers who entered 3-5 days ago but haven't completed—perfect for reminders.
+
+### Persistence is Powerful
+
+These attributes never disappear. Years later, you can still query:
+- "Show me everyone who completed Campaign X in Q3 2024"
+- "How many customers who failed Behaviour Y eventually churned?"
+
+## Viewing Attributes
+
+### Settings > Attributes
+
+Navigate to **Settings > Audience > Attributes** to see all available:
+- People Attributes
+- Organisation Attributes
+- Lifecycle Result Attributes
+- Objective Result Attributes
+
+### On Individual Records
+
+Click any person or organisation to see their specific values, grouped by source:
+- CRM Attributes
+- Product Attributes
+- Trig Activity Attributes
+
+## Attribute Data Types
+
+| Type | Operators | Example |
+|------|-----------|---------|
+| **String** | equals, contains, starts with | `company_name contains "Tech"` |
+| **Number** | equals, greater than, less than | `arr is greater than 50000` |
+| **Boolean** | equals, not equals | `is_paying equals true` |
+| **Date** | before, after, between | `signup_date is after 30 days ago` |
+| **Array** | contains, does not contain | `tags contains "Enterprise"` |
+
+## Common Attribute Patterns
+
+### Commercial Attributes
+
+```
+arr (Annual Recurring Revenue)
+mrr (Monthly Recurring Revenue)
+contract_value
+plan_type
+subscription_status
+renewal_date
+```
+
+### Engagement Attributes
+
+```
+last_login
+login_count
+session_duration
+feature_usage_count
+dau (Daily Active Users)
+```
+
+### Lifecycle Attributes
+
+```
+signup_date
+activation_date
+first_value_moment
+onboarding_complete
+days_as_customer
+```
+
+### Trig-Generated Attributes
+
+```
+currently_member_of_[stage/campaign/behaviour]
+last_entry_to_[stage/campaign/behaviour]
+last_completion_of_[stage/campaign/behaviour]
+days_in_[stage]
+objectives_completed_count
+```
+
+## Best Practices
+
+### Naming Conventions
+
+| Good | Bad |
+|------|-----|
+| `first_invoice_created_date` | `fic_dt` |
+| `completed_onboarding_campaign` | `flag_1` |
+
+### Keep Source of Truth Clear
+
+- Don't duplicate CRM fields manually
+- Use Trig-generated attributes for Trig activity
+- Create dedicated fields for write-back
+
+### Use Trig Attributes Liberally
+
+The auto-generated attributes are extremely valuable:
+- Use for progressive campaign targeting
+- Build exclusion logic
+- Analyse intervention outcomes
+
+### Test Your Filters
+
+Before launching campaigns:
+- Build the filter in Audience view
+- Check the resulting count
+- Spot-check individual records
+
+## Troubleshooting
+
+### "Attribute has no value"
+
+- Is data flowing from the source system?
+- Is the attribute mapped in the integration?
+- Has the customer record been synced recently?
+
+### "Filter returns unexpected results"
+
+- Are you using person vs org attributes correctly?
+- Is the operator correct (equals vs contains)?
+- Are date comparisons using the right direction?
+
+### "Trig activity attributes not appearing"
+
+- Has the campaign/stage/behaviour been set live?
+- Has anyone entered the object yet?
+- Attributes only appear after first use
+
+## Summary
+
+Attributes are the foundation of everything in Trig:
+
+1. **Three sources** — Ingested (external systems), Trig-generated (platform activity), action-created (campaign outcomes)
+2. **Two levels** — Person (individual users) and Organisation (accounts)
+3. **Attributes = historical, Events = forward** — Critical for campaign design
+4. **Trig activity attributes are powerful** — Entry/exit/completion tracking enables progressive campaigns
+5. **Roll-ups aggregate up** — Person data flows to organisation level
+6. **Persist forever** — Historical record enables long-term analysis
+
+Master attributes and you master Trig.

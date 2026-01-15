@@ -1,0 +1,339 @@
+---
+title: "Cohorts"
+description: "Reusable audience segments for targeting"
+---
+
+Cohorts are saved audience segments that persist across your Trig instance. They represent groups of organisations or people who share common characteristics, defined by filters on attributes, behaviours, stage membership, or campaign history.
+
+## What Are Cohorts?
+
+Think of cohorts as named bookmarks for audiences you care about repeatedly:
+- "Commercial license holders in teams of 5+"
+- "Self-serve accounts"
+- "Strategic customers"
+- "At-risk renewals"
+
+Rather than recreating the same filters every time, you define a cohort once and reference it wherever needed.
+
+<Note>
+**Key distinction from behaviours:** Cohorts have dynamic membership—customers can enter and leave multiple times as their attributes change.
+</Note>
+
+## Why Cohorts Matter
+
+### Reusability
+
+Without cohorts, every campaign, behaviour, or lifecycle stage requires manual filter configuration. With cohorts, you define the audience once and reference it anywhere.
+
+### Consistency
+
+When filters are defined ad-hoc in multiple places, inconsistency creeps in. One campaign might define "enterprise" as ARR > £100K, another as ARR > £150K.
+
+Cohorts enforce consistency. The definition lives in one place.
+
+### Dynamic Membership
+
+Cohorts are dynamic. As organisations meet criteria, they automatically become members. When they no longer match, they automatically leave.
+
+Your cohorts always reflect current reality.
+
+## How Cohorts Work
+
+### Filter-Based Definition
+
+A cohort is defined by one or more filter groups:
+
+**Single filter group:**
+```
+Cohort: Team Users
+Filter: team_size >= 2
+```
+
+**Multiple conditions (AND logic):**
+```
+Cohort: Active Enterprise Customers
+Filters:
+  - ARR >= 100000
+  - last_login within 30 days
+  - contract_status = active
+```
+
+**Multiple filter groups (OR logic):**
+```
+Cohort: Expansion Candidates
+Filter Group 1:
+  - seat_usage >= 90%
+Filter Group 2:
+  - premium_feature_clicks >= 5
+```
+
+### Organisation vs People Cohorts
+
+Cohorts can be created for either entity type:
+
+**Organisation cohorts:**
+- Enterprise accounts (ARR-based)
+- Self-serve vs sales-led
+- Product tier segments
+- Geographic regions
+
+**People cohorts:**
+- Admin users vs regular users
+- Power users (high activity)
+- Inactive users
+- Users with specific roles
+
+### Filter Logic
+
+| Within a filter group | AND — All conditions must be true |
+| Between filter groups | OR — Any group can be true |
+
+This allows complex logic:
+```
+(Enterprise tier AND Contract renews in 90 days)
+OR
+(Growth tier AND Contract renews in 30 days)
+```
+
+## Creating Cohorts
+
+### Where Cohorts Live
+
+Navigate to **Audience > Cohorts** to create and manage.
+
+Once created, cohorts become available:
+- As audience filters in campaigns
+- As entry criteria for lifecycle stages
+- As targeting for behaviours
+- As filters when viewing data
+- As conditions in completion criteria
+
+### Configuration
+
+<Steps>
+  <Step title="Create new cohort">
+    Click **Create Cohort** and choose organisation or people
+  </Step>
+  <Step title="Define filter groups">
+    Add conditions using available attributes
+  </Step>
+  <Step title="Name clearly">
+    Use a descriptive name that documents the criteria
+  </Step>
+  <Step title="Verify membership">
+    Check that the right customers are included
+  </Step>
+</Steps>
+
+### Available Filter Attributes
+
+**Ingested attributes:**
+- Company size, ARR, contract value
+- Industry, region, segment
+- Product tier, subscription status
+
+**Trig-generated attributes:**
+- Last entered/exited/completed lifecycle stage
+- Last entered/exited/completed behaviour
+- Last entered/exited/completed campaign
+- Current membership in stages, behaviours, campaigns
+
+**Calculated attributes:**
+- Team size (count of people)
+- Activity metrics (aggregated from individuals)
+
+## Using Cohorts
+
+### In Campaign Targeting
+
+```
+Campaign: Enterprise Renewal Outreach
+Audience: Members of cohort "Enterprise Renewal Window"
+```
+
+### In Lifecycle Stage Entry
+
+```
+Lifecycle Stage: Enterprise Onboarding
+Entry Criteria: Member of cohort "New Enterprise Customers"
+```
+
+### As Exclusions
+
+```
+Campaign: Self-Serve Activation
+Audience: All customers EXCEPT members of cohort "Sales-Led Accounts"
+```
+
+### In Completion Criteria
+
+```
+Campaign Goal: Customer joins cohort "Power Users"
+```
+
+## Common Cohort Patterns
+
+### ICP Segmentation
+
+```
+Cohort: ICP 1 - Solo Users
+Filter: team_size = 1
+
+Cohort: ICP 2 - Small Teams
+Filter: team_size >= 2 AND team_size <= 20
+
+Cohort: ICP 3 - Sales-Led Accounts
+Filter: sales_led = true OR ARR >= 50000
+```
+
+### Lifecycle-Based Cohorts
+
+```
+Cohort: Stuck in Onboarding
+Filters:
+  - currently_member_of_onboarding_stage = true
+  - days_in_stage >= 30
+  - objectives_completed < 3
+
+Cohort: Successfully Onboarded
+Filter: last_completed_onboarding_stage has any value
+```
+
+### Risk-Based Cohorts
+
+```
+Cohort: Churn Risk - Low Engagement
+Filters:
+  - last_login > 14 days ago
+  - contract_renewal within 90 days
+
+Cohort: Churn Risk - Declining Usage
+Filters:
+  - usage_this_month < 50% of last_month
+  - contract_renewal within 60 days
+```
+
+### Campaign Outcome Cohorts
+
+```
+Cohort: Completed First Invoice Campaign
+Filter: last_completed_campaign_first_invoice has any value
+
+Cohort: Failed Onboarding Campaigns
+Filters:
+  - last_exit_from_onboarding_campaign_1 has any value
+  - last_completed_onboarding_campaign_1 has no value
+```
+
+## Cohorts and Trig Metadata
+
+One of the most powerful aspects is using Trig-generated metadata as filter criteria.
+
+### Stage Membership Attributes
+
+For every lifecycle stage:
+```
+currently_member_of_[stage]
+last_entered_[stage]
+last_exited_[stage]
+last_completed_[stage]
+```
+
+### Behaviour Membership Attributes
+
+For every behaviour:
+```
+currently_member_of_[behaviour]
+last_entered_[behaviour]
+last_exited_[behaviour]
+last_completed_[behaviour]
+```
+
+### Campaign Membership Attributes
+
+For every campaign:
+```
+currently_member_of_[campaign]
+last_entered_[campaign]
+last_exited_[campaign]
+last_completed_[campaign]
+```
+
+This metadata enables powerful cohort definitions that connect different parts of the customer journey.
+
+## Best Practices
+
+### Name Cohorts Clearly
+
+| Good | Bad |
+|------|-----|
+| "Enterprise Customers (ARR > £100K)" | "Cohort 1" |
+| "At-Risk Renewals (90 days)" | "Test audience" |
+| "Stuck in Onboarding (30+ days)" | "Big customers" |
+
+Include key criteria in the name when practical.
+
+### Start with Business-Critical Segments
+
+Don't create cohorts for everything. Focus on:
+- Your ICPs (customer types you treat differently)
+- Risk segments (who needs attention)
+- Outcome segments (who succeeded, who didn't)
+
+### Use for Recurring Audiences
+
+If you find yourself building the same filter repeatedly, that's a signal to create a cohort. Rule of thumb: if you'll use this audience more than twice, make it a cohort.
+
+### Review Periodically
+
+Business definitions change. Review cohorts periodically to ensure definitions still match reality.
+
+### Consider Exclusion Cohorts
+
+Sometimes it's cleaner to define who should be excluded:
+- "Never Email" cohort
+- "Sales-Owned" cohort
+- "Churned" cohort
+
+## AI-Assisted Cohort Definition
+
+Trig includes natural language capabilities for defining cohorts:
+
+```
+"Show me all customers who upgraded in the last week
+and are behind average on payment gateway setup"
+```
+
+The system interprets this and constructs appropriate filters. Useful for exploration before formalising as permanent cohorts.
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="How often is cohort membership updated?">
+    Dynamically when queried. As attributes change, membership automatically adjusts.
+  </Accordion>
+  <Accordion title="Can I see who's in a cohort?">
+    Yes. Viewing a cohort shows current members with their attributes.
+  </Accordion>
+  <Accordion title="Can I use a cohort in another cohort's definition?">
+    Not directly. Use the underlying attributes or combine filter groups.
+  </Accordion>
+  <Accordion title="What happens if I delete a cohort that's used in campaigns?">
+    Campaigns lose that targeting criteria. Check dependencies before deleting.
+  </Accordion>
+  <Accordion title="Can cohorts span both organisations and people?">
+    No. A cohort is either organisation or people. Create separate cohorts for each type.
+  </Accordion>
+</AccordionGroup>
+
+## Summary
+
+Cohorts are persistent, reusable audience segments:
+
+1. **Define once, use everywhere** — Eliminate redundant filter configuration
+2. **Dynamic membership** — Customers automatically join and leave based on criteria
+3. **Leverage Trig metadata** — Stage, behaviour, and campaign history become filterable
+4. **Build for business segments** — Focus on audiences that drive different treatment
+5. **Name clearly** — Good names make cohorts self-documenting
+
+Well-designed cohorts become the backbone of your customer segmentation.

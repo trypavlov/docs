@@ -1,0 +1,331 @@
+---
+title: "Using Signals"
+description: "Proactively surface and act on customers who need attention"
+---
+
+This guide shows you how to use Signals to identify at-risk customers and create targeted interventions.
+
+## Understanding Signals
+
+Signals automatically surface customers who are falling behind. Rather than manually hunting for problems, Signals tell you exactly who needs attention and why.
+
+### What Signals Show You
+
+```
+Signal: Slow Completers - "Create First Invoice"
+Stage: Onboarding
+Customers affected: 23
+Revenue at risk: £127,000
+Average completion: 4 days
+These customers: 8+ days pending
+```
+
+Each Signal tells you:
+- **Which objective** customers are stuck on
+- **How many** are affected
+- **Revenue at risk** (from CRM data)
+- **How far behind** they are compared to average
+
+## Prerequisites
+
+To generate Signals, you need:
+
+<Check>Lifecycle stages configured and live</Check>
+<Check>Objectives defined with completion criteria</Check>
+<Check>Customers actively in stages</Check>
+<Check>Sufficient completions for meaningful averages (10+)</Check>
+
+## Navigating Signals
+
+### The Signals Dashboard
+
+Navigate to **Signals** in the main navigation to see:
+
+**Summary metrics:**
+- Total customers at risk
+- Total revenue at risk
+- Number of active Signals
+
+**Signal feed:**
+- List of current Signals
+- Sorted by revenue impact
+- Click any Signal to see details
+
+### Drilling Into a Signal
+
+Click on a Signal to see:
+
+1. **Which customers** are affected (list with key attributes)
+2. **How long** each has been pending
+3. **Revenue** associated with each
+4. **Quick action** to create a campaign
+
+## Acting on Signals
+
+### Reviewing the Signal
+
+Before creating a campaign, review:
+
+| Question | What to Look For |
+|----------|-----------------|
+| Is this worth acting on? | Revenue at risk, customer importance |
+| Why are they stuck? | Common attributes, patterns |
+| What intervention makes sense? | Email, CSM outreach, different approach |
+
+### Creating a Campaign from a Signal
+
+<Steps>
+  <Step title="Click the Signal">
+    From the Signals dashboard, click into the Signal you want to act on
+  </Step>
+  <Step title="Review affected customers">
+    Check the list to understand who's included
+  </Step>
+  <Step title="Click 'Create Campaign'">
+    This pre-populates the audience with the Signal's customers
+  </Step>
+  <Step title="Configure the campaign">
+    Set goal, duration, and messaging specific to this issue
+  </Step>
+  <Step title="Launch">
+    Go live to start the intervention
+  </Step>
+</Steps>
+
+### Campaign Strategy for Signals
+
+**Address the specific blocker:**
+These customers are stuck on a specific objective. Your message should directly address that issue.
+
+```
+Subject: Quick tip to connect your payment gateway
+
+Hi {first_name},
+
+I noticed you've been using FreshBooks to send invoices—great progress!
+
+The next step is connecting your payment gateway so clients can pay
+online. Here's how:
+
+1. Go to Settings > Payments
+2. Click "Connect Gateway"
+3. Follow the prompts for Stripe or PayPal
+
+Takes about 5 minutes and means faster payments.
+
+Reply if you need help!
+
+Thanks,
+Lee
+```
+
+**Keep it timely:**
+They're already behind. Act quickly once you see the Signal.
+
+**Set appropriate duration:**
+They've been slow, so give them reasonable time—but don't let it drag on.
+
+## Signal Workflow Example
+
+### Scenario: Onboarding Slow Completers
+
+**Signal appears:**
+```
+Slow Completers - Complete Profile Setup
+12 customers | £34,000 revenue at risk
+Average: 3 days | These customers: 8+ days
+```
+
+**Step 1: Review**
+- Click into the Signal
+- See the 12 customers listed
+- Notice 8 are self-serve, 4 are enterprise
+- Mix of industries and sizes
+
+**Step 2: Decide**
+Worth intervening? Yes—profile completion is a key onboarding step, and £34K revenue is significant.
+
+**Step 3: Create Campaign**
+
+```
+Campaign: Profile Completion Nudge
+Goal: profile_complete = true
+Audience: [Pre-populated from Signal]
+Duration: 7 days
+
+Entry Action: Email
+Subject: Complete your profile in 2 minutes
+
+Hi {first_name},
+
+I noticed you're getting started with [Product] but haven't
+completed your profile yet.
+
+Here's why it matters:
+- [Benefit 1]
+- [Benefit 2]
+
+Here's how (takes 2 minutes):
+1. Click your avatar → Settings
+2. Fill in the profile fields
+3. Click Save
+
+Reply if you have questions!
+```
+
+**Step 4: Launch and Monitor**
+- Go live
+- Monitor completion rate
+- Review results after 7 days
+
+**Step 5: Iterate**
+- 8 complete → Success
+- 4 exit → Need different approach? Manual CSM outreach?
+- New Signal appears next week with fresh slow completers
+
+## Patterns and Best Practices
+
+### Act Quickly on Signals
+
+Signals show customers already behind. Delay compounds the problem.
+
+| Timing | Recommendation |
+|--------|----------------|
+| Same day | Review new Signals |
+| Within 24 hours | Create campaign if warranted |
+| Within 48 hours | Campaign should be live |
+
+### Don't Over-Intervene
+
+- Customers shouldn't receive too many automated messages
+- Some slowness may be acceptable (enterprise often moves slower)
+- Use exclusions to prevent campaign overlap
+
+### Review Recurring Signals
+
+If the same Signal keeps appearing:
+
+| Question | Implication |
+|----------|-------------|
+| Is the objective realistic? | Maybe the expected timing is wrong |
+| Is there product friction? | Maybe customers struggle with this step |
+| Do they need more support? | Maybe more guidance is needed |
+
+Recurring Signals may indicate systemic issues, not just individual customer problems.
+
+### Measure Campaign Impact
+
+After running Signal-driven campaigns:
+
+- Did recipients complete faster than non-recipients?
+- Did the intervention reduce the Signal population?
+- What message content worked best?
+
+This closes the loop and validates your approach.
+
+## Prioritising Signals
+
+When you have multiple Signals, prioritise by:
+
+### Revenue at Risk
+
+Higher revenue = higher priority, generally.
+
+### Stage Importance
+
+Early lifecycle Signals (onboarding) often deserve priority—these customers haven't yet realised value.
+
+### Intervention Feasibility
+
+Some Signals are easier to act on than others. A clear onboarding step is easier to nudge than a complex integration.
+
+### Segment
+
+If you have segments that matter more (enterprise, high-value), prioritise Signals affecting those.
+
+## Advanced: Signal-Driven Workflows
+
+### Automated Campaign Triggers
+
+Instead of manually creating campaigns from Signals, you can set up campaigns that automatically target slow completers:
+
+```
+Campaign: Onboarding Objective 3 Nudge
+Audience:
+- currently_member_of_onboarding_stage = true
+- days_in_stage >= 14
+- objective_3_completed = false
+```
+
+This creates a standing campaign that catches customers as they become slow completers.
+
+### Combining Signals with Cohorts
+
+Create cohorts based on Signal-like criteria:
+
+```
+Cohort: Stuck in Onboarding
+- currently_member_of_onboarding_stage = true
+- days_in_stage >= 2x average
+- objectives_completed < 50%
+```
+
+Then use this cohort for multiple purposes:
+- Campaign targeting
+- CSM alerts
+- Executive reporting
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="How often do Signals refresh?">
+    Continuously as customer data updates. New slow completers appear as they cross the threshold.
+  </Accordion>
+  <Accordion title="What if I don't have enough data?">
+    Signals require sufficient completions for meaningful averages. Generally 10+ completions for stability. With less data, averages are less reliable.
+  </Accordion>
+  <Accordion title="Can I customize the threshold?">
+    Thresholds are configured by your Trig implementation team. Future versions may expose configuration in the UI.
+  </Accordion>
+  <Accordion title="What happens when customers complete?">
+    They're removed from the Signal. If they completed via campaign, the campaign tracks this as completion.
+  </Accordion>
+  <Accordion title="Can I see historical Signals?">
+    Current version shows active Signals. Historical tracking is planned for future releases.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+### "No Signals appearing"
+
+- Are lifecycle stages configured and live?
+- Are there objectives with completion criteria?
+- Are customers in the stages?
+- Are there enough completions for averages?
+
+### "Signal customers not entering campaign"
+
+- Does the campaign audience match the Signal criteria?
+- Are there exclusions blocking entry?
+- Is the campaign live?
+
+### "Intervention not working"
+
+- Is messaging specific to the blocker?
+- Is timing right?
+- Do customers understand what to do?
+- Is the goal achievable?
+
+## Summary
+
+Using Signals effectively:
+
+1. **Review regularly** — Check Signals daily or every few days
+2. **Act quickly** — Don't let slow completers get slower
+3. **Be specific** — Address the exact blocker in your messaging
+4. **Measure impact** — Track whether interventions improve completion
+5. **Look for patterns** — Recurring Signals may indicate systemic issues
+6. **Iterate** — Use what you learn to improve future interventions
+
+Signals transform reactive customer success into proactive intervention. Use them to catch problems before they compound.

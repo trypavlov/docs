@@ -1,80 +1,268 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get launched in Trig in four steps"
 ---
 
-## Get started in three steps
+This guide walks you through the essential setup to get Trig working for your business. By the end, you'll have lifecycle stages tracking your customer journey, objectives measuring progress, and your first campaign ready to intervene.
 
-Get your documentation site running locally and make your first customization.
+## Before You Start
 
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
-
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
+Ensure you have:
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Data Integration" icon="plug">
+    CRM (HubSpot or Salesforce) and product data sources connected
+  </Card>
+  <Card title="Customer Data" icon="database">
+    People and Organisations flowing into Trig
+  </Card>
 </CardGroup>
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+Work with your Trig implementation team to set up integrations if not already configured.
 </Note>
+
+---
+
+## Step 1: Define Your Lifecycle Stages
+
+Lifecycle stages are the foundation of everything in Trig. They represent the phases of your customer journey.
+
+### Standard Stages
+
+Most B2B SaaS companies use four stages:
+
+| Stage | Purpose | Typical Duration |
+|-------|---------|------------------|
+| **Onboarding** | Initial setup and first value milestones | Days 0-30 |
+| **Adoption** | Growing usage, team expansion, feature depth | Months 1-3 |
+| **Expansion** | Signals of readiness to upgrade or expand | Variable |
+| **Renewal** | Pre-renewal health monitoring | 60-90 days before renewal |
+
+### Create Your First Stage
+
+<Steps>
+  <Step title="Navigate to Lifecycle Stages">
+    Go to **Lifecycle > Stages** in the main navigation
+  </Step>
+  <Step title="Create a new stage">
+    Click **Create Stage** and enter:
+    - **Name:** Onboarding
+    - **Description:** Initial setup and first value milestones
+  </Step>
+  <Step title="Set entry criteria">
+    Define when organisations enter this stage:
+    ```
+    first_seen_date is within last 30 days
+    ```
+  </Step>
+  <Step title="Set exit criteria">
+    Choose time-based exit for now:
+    ```
+    Auto-exit after 30 days
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+Start with time-based exit criteria. You can refine to completion-based exit once you understand typical customer patterns.
+</Tip>
+
+---
+
+## Step 2: Add Objectives to Your Stage
+
+Objectives are the milestones that define healthy progression within a stage. They answer: "What do we want customers to do?"
+
+### Identify 4-7 Key Milestones
+
+For an Onboarding stage, consider:
+
+- Created first project
+- Invited a team member
+- Connected an integration
+- Generated first report
+- Completed a full week of usage
+
+### Create Your First Objective
+
+<Steps>
+  <Step title="Open your Onboarding stage">
+    Click into the stage you just created
+  </Step>
+  <Step title="Add an objective">
+    Click **Add Objective** and configure:
+    - **Name:** Created First Project
+    - **Completion criteria:** `projects_created >= 1`
+  </Step>
+  <Step title="Add more objectives">
+    Repeat for 3-5 additional milestones important to your business
+  </Step>
+</Steps>
+
+### What Happens Next
+
+As customers flow through your stage, Trig will:
+
+1. **Track completion** for each objective
+2. **Calculate averages** across your customer base
+3. **Identify slow completers** via Signals
+4. **Build patterns** showing what successful customers do
+
+---
+
+## Step 3: Create a Cohort for Targeting
+
+Cohorts are reusable audience segments. Create one to target customers who need intervention.
+
+### Create a "Stuck in Onboarding" Cohort
+
+<Steps>
+  <Step title="Navigate to Audience">
+    Go to **Audience > Cohorts**
+  </Step>
+  <Step title="Create new cohort">
+    Click **Create Cohort** and configure:
+    - **Name:** Stuck in Onboarding
+    - **Type:** Organisation
+  </Step>
+  <Step title="Define filter criteria">
+    ```
+    currently_member_of_onboarding_stage = true
+    AND days_in_stage >= 14
+    AND objectives_completed < 2
+    ```
+  </Step>
+  <Step title="Save the cohort">
+    This cohort will dynamically update as customers match or unmatch the criteria
+  </Step>
+</Steps>
+
+---
+
+## Step 4: Launch Your First Campaign
+
+Campaigns are where intervention happens. They target an audience with a goal and drive action through messaging.
+
+### Create an Onboarding Nudge Campaign
+
+<Steps>
+  <Step title="Navigate to Campaigns">
+    Go to **Campaigns** in the main navigation
+  </Step>
+  <Step title="Create new campaign">
+    Click **Create Campaign** and configure the basics:
+    - **Name:** Onboarding Nudge
+    - **Target type:** Organisation
+  </Step>
+  <Step title="Define the goal">
+    What do you want customers to do?
+    ```
+    projects_created >= 1
+    ```
+  </Step>
+  <Step title="Set the audience">
+    Use your cohort or define criteria directly:
+    ```
+    Member of cohort "Stuck in Onboarding"
+    ```
+  </Step>
+  <Step title="Set auto-exit duration">
+    How long before customers exit if they don't complete?
+    ```
+    14 days
+    ```
+  </Step>
+  <Step title="Configure entry action">
+    Add a **Message Customer** action with plain text email:
+
+    ```
+    Subject: Quick tip to get started with {product_name}
+
+    Hi {first_name},
+
+    I noticed your team at {organization_name} signed up recently
+    but hasn't created your first project yet.
+
+    Here's how to get started - it takes about 5 minutes:
+
+    1. Click "New Project" in the dashboard
+    2. Give your project a name
+    3. Add your first task
+
+    If you run into any issues, just reply to this email.
+
+    Thanks,
+    {sender_name}
+    ```
+  </Step>
+  <Step title="Launch the campaign">
+    Review your configuration and click **Go Live**
+  </Step>
+</Steps>
+
+<Warning>
+**Plain text emails work best.** They look personal and get 10x higher engagement than branded HTML templates.
+</Warning>
+
+---
+
+## What You've Built
+
+Congratulations! You now have a working Trig configuration:
+
+<CardGroup cols={2}>
+  <Card title="Lifecycle Stage" icon="stairs">
+    Onboarding stage tracking new customer progression
+  </Card>
+  <Card title="Objectives" icon="bullseye">
+    Key milestones measuring healthy customer behaviour
+  </Card>
+  <Card title="Cohort" icon="layer-group">
+    Reusable segment identifying customers who need help
+  </Card>
+  <Card title="Campaign" icon="envelope">
+    Automated intervention nudging stuck customers
+  </Card>
+</CardGroup>
+
+### The Virtuous Cycle
+
+With this foundation in place:
+
+1. **New customers enter** the Onboarding stage automatically
+2. **Objectives track** their progress against key milestones
+3. **Slow completers** are identified by Signals
+4. **Campaigns intervene** to get them back on track
+5. **Completion data** improves your understanding of "normal"
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Add More Stages" icon="plus" href="/concepts/lifecycle-stages">
+    Configure Adoption, Expansion, and Renewal stages
+  </Card>
+  <Card title="Build Campaign Sequences" icon="diagram-project" href="/guides/building-campaigns">
+    Chain campaigns based on outcomes for progressive journeys
+  </Card>
+  <Card title="Use Signals" icon="bell" href="/guides/using-signals">
+    Proactively surface customers who need attention
+  </Card>
+  <Card title="Define Behaviours" icon="fingerprint" href="/concepts/behaviours">
+    Track milestone moments beyond lifecycle stages
+  </Card>
+</CardGroup>
+
+---
+
+## Checklist
+
+Before moving on, confirm:
+
+<Check>Lifecycle stage created with entry and exit criteria</Check>
+<Check>4-7 objectives defined with clear completion criteria</Check>
+<Check>At least one cohort for targeting</Check>
+<Check>First campaign live with plain text email action</Check>
+<Check>Data flowing - customers entering stages and objectives tracking</Check>
