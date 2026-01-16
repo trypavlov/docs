@@ -1,0 +1,413 @@
+---
+title: "Renewal Campaigns"
+description: "Proactive renewal management that prevents churn before it happens"
+---
+
+This guide walks you through configuring a renewal campaign in Trig, with detailed explanations of why each configuration choice matters and how to think through decisions for your specific business.
+
+<Note>
+**Worked Example:** Throughout this guide, we'll follow TeamFlow, a collaborative project management tool with 2,000 customers. Their product is sticky when teams actively use it, but customers who don't achieve full team adoption often churn at renewal. With only 4 CSMs, they can't personally manage every renewal.
+</Note>
+
+## Why Proactive Renewal Management Matters
+
+### The Renewal Reality
+
+By the time a customer tells you they're not renewing, the decision was made weeks or months ago. The renewal conversation is just the notification—the actual decision happened during:
+
+- The month they stopped logging in
+- The week their champion left
+- The day they couldn't get a support issue resolved
+
+Proactive renewal management means detecting these moments early enough to intervene.
+
+### The Cost of Reactive Renewal
+
+| Approach | Detection Point | Intervention Success |
+|----------|----------------|---------------------|
+| **Reactive** | Customer says "we're not renewing" | 10-20% save rate |
+| **Proactive (late)** | 30 days before renewal, health check | 30-40% save rate |
+| **Proactive (early)** | 60+ days before, warning signs detected | 50-70% save rate |
+
+---
+
+## Step 1: Define Your Renewal Window
+
+### What You're Configuring
+
+The renewal window determines how far in advance of a customer's renewal date they enter your renewal campaign.
+
+### How to Choose Your Window
+
+Consider your typical "save" conversation timeline:
+
+| Window Length | Best For | Considerations |
+|---------------|----------|----------------|
+| **30 days** | SMB, self-serve, low-touch | Fast cycles, quick decisions |
+| **60 days** | Mid-market, moderate touch | Time for 1-2 intervention attempts |
+| **90+ days** | Enterprise, high-touch | Complex buying processes, multiple stakeholders |
+
+### Example: TeamFlow's Decision
+
+TeamFlow chose 60 days because their typical "save" conversation requires:
+
+- **Week 1:** Identify the problem (usage drop, champion left, etc.)
+- **Week 2:** Diagnostic call with the customer
+- **Weeks 3-4:** Implement solution (training, configuration change)
+- **Weeks 5-6:** Verify the solution is working
+- **Weeks 7-8:** Buffer for delays
+
+```
+Renewal Window: 60 days before renewal date
+```
+
+---
+
+## Step 2: Set Your Entry Criteria
+
+### Example Configuration
+
+```
+Entry Criteria:
+- Renewal date is within 60 days
+- Customer status = Active
+- Contract type = Annual
+```
+
+<Tip>
+**Start simple.** You can add segment-specific criteria later (e.g., different windows for enterprise vs. SMB).
+</Tip>
+
+---
+
+## Step 3: Configure Renewal Health Assessment
+
+### Healthy Renewal Indicators
+
+These signals indicate a customer is on track to renew without intervention:
+
+| Indicator | What It Means | How to Measure |
+|-----------|---------------|----------------|
+| Consistent usage | Product is embedded in workflow | DAU/WAU/MAU stable or growing |
+| Recent feature adoption | Still investing in learning | New features used in last 30 days |
+| Expanding usage | More users or use cases | Seat count increase, new team adoption |
+| Support engagement | They ask questions, they care | Support tickets with positive resolution |
+| Champion engagement | Internal advocate is active | Champion user login frequency |
+
+### TeamFlow's Healthy Indicators
+
+```
+Healthy Renewal Indicators:
+- Usage in last 14 days: Yes
+- Active users: ≥70% of licensed seats
+- Champion last login: Within 7 days
+- Open escalated tickets: 0
+```
+
+### At-Risk Renewal Indicators
+
+These warning signs signal a customer may not renew:
+
+| Warning Sign | What It Signals | How to Measure |
+|--------------|-----------------|----------------|
+| Usage decline | Decreasing engagement | 30%+ drop vs prior period |
+| Champion absence | Advocate has disengaged | No login in 30+ days |
+| Low seat utilisation | Not getting full value | <50% of seats active |
+| Support frustration | Unresolved issues | Open tickets, negative sentiment |
+| Invoice issues | Financial friction | Late payments, billing disputes |
+
+### TeamFlow's At-Risk Indicators
+
+```
+At-Risk Renewal Indicators:
+- Usage decline: >30% drop in WAU vs 30 days ago
+- Champion login: >21 days since last activity
+- Seat utilisation: <50% of licensed seats active
+- Open support tickets: >2 unresolved for >14 days
+```
+
+### Pattern Recognition
+
+TeamFlow identified four churn patterns from their data:
+
+<AccordionGroup>
+  <Accordion title="Pattern 1: The Slow Fade">
+    **Signal:** Usage drops 30%+ over 30 days
+
+    **Cause:** Often happens when a key project ends or team priorities shift
+
+    **Intervention:** Re-engage with new use case discovery
+  </Accordion>
+  <Accordion title="Pattern 2: The Champion Departure">
+    **Signal:** Primary buyer/champion stops logging in
+
+    **Cause:** Often means they've left the company or changed roles
+
+    **Intervention:** Identify and engage new stakeholder
+  </Accordion>
+  <Accordion title="Pattern 3: The Underutilised Account">
+    **Signal:** Paying for 20 seats, only 8 active users
+
+    **Cause:** Often means the rollout stalled after initial enthusiasm
+
+    **Intervention:** Adoption support, training offer
+  </Accordion>
+  <Accordion title="Pattern 4: The Frustrated Customer">
+    **Signal:** Multiple support tickets unresolved for 14+ days
+
+    **Cause:** Often means they've hit a wall and are giving up
+
+    **Intervention:** Escalation, executive attention
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Step 4: Configure At-Risk Renewal Interventions
+
+### Trigger Configuration
+
+```
+Trigger Condition:
+- Customer is within 60 days of renewal
+- AND matches any At-Risk Indicator
+- AND has not received intervention in last 30 days
+```
+
+<Note>
+**OR vs AND Logic:** TeamFlow chose OR logic—any single warning sign triggers the campaign. "We'd rather have false positives than miss a churning customer."
+</Note>
+
+---
+
+## Step 5: Write Your Intervention Message
+
+### Message Best Practices
+
+| Principle | Why It Works | Common Mistake |
+|-----------|--------------|----------------|
+| Plain text format | Feels like a real email | HTML templates scream "marketing automation" |
+| Human sender | People respond to people | "The TeamFlow Team" gets ignored |
+| Acknowledge reality | Shows you're paying attention | Pretending everything is fine |
+| Offer help, not sales | Reduces defensiveness | "Let's talk about your renewal" = instant delete |
+| Single ask | Clear next step | Multiple CTAs create paralysis |
+
+### Example Message
+
+<Tabs>
+  <Tab title="Draft 1 (Rejected)">
+    ```
+    Subject: Your TeamFlow Renewal is Coming Up
+
+    Dear {first_name},
+
+    We noticed that your annual TeamFlow subscription will be
+    renewing on {renewal_date}. We wanted to reach out to ensure
+    you have everything you need for a smooth renewal process.
+
+    Our records indicate some changes in your usage patterns
+    recently. We'd love to schedule a call to discuss how
+    TeamFlow can continue to support your team's project
+    management needs.
+
+    Please let us know if you have any questions.
+
+    Best regards,
+    The TeamFlow Customer Success Team
+    ```
+
+    **Problems:**
+    - "Dear" is formal and cold
+    - "The TeamFlow Customer Success Team" isn't a person
+    - "smooth renewal process" makes it about the transaction
+    - "changes in your usage patterns" is vague and ominous
+    - No specific ask
+  </Tab>
+  <Tab title="Draft 2 (Approved)">
+    ```
+    Subject: Quick question about your team's projects
+
+    Hi {first_name},
+
+    I noticed your team's activity in [Product] has dropped off
+    over the past few weeks. Before your renewal comes up in
+    {days_until_renewal} days, I wanted to check in.
+
+    If something's not working the way you need it to, I'd
+    genuinely like to hear about it — there might be features
+    or configurations we haven't explored that could help.
+
+    Do you have 15 minutes this week for a quick call?
+
+    Sarah
+    Customer Success
+    ```
+
+    **Why this works:**
+    - "Hi" is warm and normal
+    - Sarah is a real person (or believable persona)
+    - "dropped off" acknowledges reality without accusation
+    - Offers help, not a sales pitch
+    - Single clear ask: 15-minute call
+  </Tab>
+</Tabs>
+
+### Message Variants by Trigger
+
+| Trigger | Message Focus |
+|---------|---------------|
+| Usage drop | "I noticed activity has dropped..." |
+| Champion absent | "I haven't seen {champion} in [Product] recently..." |
+| Low adoption | "I noticed only {X} of your {Y} team members are active..." |
+| Support issues | "I saw you've had some support tickets open..." |
+
+---
+
+## Step 6: Configure Sender Identity
+
+### Options
+
+| Sender Type | Best For |
+|-------------|----------|
+| Real CSM (dynamic) | Accounts with named CSM relationships |
+| CS Persona (static) | Accounts without assigned CSMs |
+| Functional Role | Transactional communications |
+
+### TeamFlow's Decision
+
+- **High-value accounts (>$25K):** Email from actual assigned CSM
+- **All other accounts:** Email from "Sarah Chen" — a shared persona that any team member can respond as
+
+---
+
+## Step 7: Set Message Timing
+
+### Timing Considerations
+
+| Option | Trade-off |
+|--------|-----------|
+| Immediately | Maximum relevance, unpredictable timing |
+| Wait X hours | Less urgency, allows batching |
+| Next business day, specific time | Predictable, but less contextual |
+| Customer timezone optimised | Best of both, requires timezone data |
+
+### TeamFlow's Decision
+
+```
+Message Timing:
+- Within 25 minutes of trigger
+- Delivery window: 9:00 AM - 5:00 PM customer timezone
+- If trigger fires outside window, queue for next available slot
+```
+
+---
+
+## Step 8: Configure Internal Escalation
+
+### Tiered Escalation System
+
+| Tier | Trigger | Channel | Action Expected |
+|------|---------|---------|-----------------|
+| **1: Standard** | All at-risk triggers | #renewals-at-risk Slack | CSM reviews, decides on follow-up |
+| **2: High-Value** | $25K+ contracts | CSM DM + Manager | Same-day review, potential executive outreach |
+| **3: Critical** | Multiple at-risk signals + <30 days | CS Manager + VP Sales | Executive intervention, discount authority |
+
+### Sample Slack Notification
+
+```
+🚨 At-Risk Renewal Alert
+
+Customer: Acme Corp
+Contract Value: $18,000/year
+Renewal Date: March 15 (47 days)
+
+Warning Signs Detected:
+• Usage down 42% vs last month
+• Primary contact last login: 28 days ago
+
+Automated intervention sent to: john.smith@acme.com
+Subject: "Quick question about your team's projects"
+
+📊 View in Trig → [link]
+```
+
+---
+
+## Step 9: Configure Follow-Up Logic
+
+### Follow-Up Sequence
+
+| Day | Action |
+|-----|--------|
+| Day 0 | Initial intervention message sent |
+| Day 5 | If no response → Send follow-up message |
+| Day 10 | If no response → Internal escalation |
+| Day 14 | If no response → Phone call attempt (high-value) |
+
+### Follow-Up Message
+
+```
+Subject: Re: Quick question about your team's projects
+
+Hi {first_name},
+
+Just floating this back up—I'd love to help if something's
+not working the way you need.
+
+Even a quick reply with what's going on would help me point
+you in the right direction.
+
+Sarah
+```
+
+---
+
+## Step 10: Define Success Metrics
+
+### Metrics to Track
+
+| Metric | What It Measures |
+|--------|------------------|
+| **At-risk identification rate** | % of renewals flagged as at-risk |
+| **Intervention response rate** | % who reply or engage |
+| **Save rate** | % of at-risk customers who renew |
+| **False positive rate** | % flagged at-risk who would have renewed anyway |
+| **Net retention** | Overall renewal + expansion revenue |
+
+### Benchmarking
+
+| Metric | Target |
+|--------|--------|
+| At-risk identification | 20-30% of renewals |
+| Intervention response | 15-25% |
+| Save rate (with intervention) | 40-60% |
+| Save rate (without intervention) | 10-20% |
+
+---
+
+## Summary Checklist
+
+<Check>Renewal window defined (30-90 days based on sales cycle)</Check>
+<Check>Entry criteria set (active, annual contracts)</Check>
+<Check>Healthy indicators defined (4-5 positive signals)</Check>
+<Check>At-risk indicators defined (4-5 warning signs)</Check>
+<Check>Trigger logic configured (OR vs AND)</Check>
+<Check>Plain text intervention message written</Check>
+<Check>Sender identity configured</Check>
+<Check>Message timing set (business hours, customer timezone)</Check>
+<Check>Internal escalation tiers configured</Check>
+<Check>Follow-up sequence designed</Check>
+<Check>Success metrics defined</Check>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configure Onboarding Campaigns" icon="rocket" href="/use-cases/onboarding-campaigns">
+    Get customers to their "aha moment" before they give up
+  </Card>
+  <Card title="Using Signals Guide" icon="bell" href="/guides/using-signals">
+    Proactively surface and act on customers who need attention
+  </Card>
+</CardGroup>

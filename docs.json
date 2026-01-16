@@ -41,6 +41,15 @@
               "guides/building-campaigns",
               "guides/using-signals"
             ]
+          },
+          {
+            "group": "Use Cases",
+            "pages": [
+              "use-cases/onboarding-campaigns",
+              "use-cases/adoption-campaigns",
+              "use-cases/expansion-campaigns",
+              "use-cases/renewal-campaigns"
+            ]
           }
         ]
       },

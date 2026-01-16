@@ -1,0 +1,447 @@
+---
+title: "Onboarding Campaigns"
+description: "Getting customers to their 'aha moment' before they give up"
+---
+
+This guide walks you through configuring an onboarding campaign in Trig, with detailed explanations of why each configuration choice matters and how to think through decisions for your specific business.
+
+<Note>
+**Worked Example:** Throughout this guide, we'll follow TeamFlow, a collaborative project management tool. TeamFlow has discovered that the first 30 days determine everything—customers who reach their "aha moment" become long-term retained customers, while those who never quite get started churn at renewal.
+</Note>
+
+## Why Onboarding Matters
+
+### The Onboarding Truth
+
+Here's what the data consistently shows across B2B SaaS:
+
+| Onboarding Outcome | Long-term Retention |
+|-------------------|---------------------|
+| Reached "aha moment" in first week | 85-95% |
+| Reached "aha moment" in first month | 70-80% |
+| Never reached "aha moment" | 15-30% |
+
+The pattern is stark: customers who experience value quickly almost always stay. Customers who don't almost always leave.
+
+### The Silent Failure Problem
+
+The challenge with onboarding failure is that it's invisible:
+
+- Customers don't complain—they just stop logging in
+- They don't ask for help—they assume the product isn't for them
+- They don't cancel immediately—they drift until renewal and then churn
+
+By the time you notice a customer didn't onboard successfully, it's usually too late.
+
+### The Intervention Window
+
+| Stage | Intervention Window | Customer Mindset |
+|-------|---------------------|------------------|
+| **Onboarding** | Days | "I'm trying to figure this out" |
+| Adoption | Weeks | "I'm forming habits" |
+| Renewal | Months | "I've made up my mind" |
+
+A customer stuck on Day 3 is still open to help. A customer who's been stuck for 3 months has already checked out mentally.
+
+---
+
+## Step 1: Define Your Onboarding Stage
+
+### What You're Configuring
+
+The onboarding stage parameters define when customers enter onboarding, how long they have to complete it, and what success looks like.
+
+### How to Think About Onboarding Boundaries
+
+**Entry considerations:**
+- When does the customer first have access to your product?
+- Do they need prerequisites before real onboarding begins?
+- Is there a "Day 0" setup phase that should be tracked separately?
+
+**Duration considerations:**
+- How long does it typically take successful customers to onboard?
+- How long are you willing to actively nurture before considering them stalled?
+- When do diminishing returns kick in?
+
+**Exit considerations:**
+- What specific milestone(s) indicate successful onboarding?
+- When should you stop trying and either escalate or accept failure?
+
+### Example Configuration
+
+<Tabs>
+  <Tab title="TeamFlow's Decision">
+    TeamFlow analysed their customer data and found clear patterns:
+
+    - **Successful customers** typically completed onboarding in 7-14 days
+    - **Customers who took >30 days** had 3x higher churn
+    - **After Day 30**, additional onboarding effort showed minimal retention impact
+
+    TeamFlow defined success as: "Customer has at least one active project with 2+ team members collaborating"
+  </Tab>
+  <Tab title="Configuration">
+    ```
+    Stage Duration: Day 1 to Day 30 (from first login)
+
+    Entry Criteria:
+    - First login completed
+    - Account status = Active
+    - Not a demo or test account
+
+    Exit Criteria (Success):
+    - Objective #4 achieved (team actively collaborating)
+    - → Move to Adoption stage
+
+    Exit Criteria (Failure):
+    - Day 30 reached without completing Objective #4
+    - → Move to At-Risk Onboarding campaign
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Step 2: Define Your Onboarding Objectives
+
+### Objective Design Principles
+
+The best onboarding objectives are:
+
+| Principle | What It Means | Example |
+|-----------|---------------|---------|
+| **Sequential** | Each objective builds on the previous | Create project → Add task → Invite teammate |
+| **Measurable** | Binary yes/no, detectable in data | "Created a project" not "understands the product" |
+| **Value-connected** | Each moves customer closer to value | Not just setup steps—actual value realisation |
+| **Time-bounded** | Clear target date for completion | "By Day 3" not "eventually" |
+
+### Finding Your "Aha Moment"
+
+One objective should be your critical "aha moment"—the single milestone most predictive of long-term retention.
+
+To identify your "aha moment":
+1. Look at retained customers: What did they all do early on?
+2. Look at churned customers: What did they fail to do?
+3. Find the behaviour with the biggest retention gap between doers and non-doers
+
+### Example: TeamFlow's Onboarding Objectives
+
+| # | Objective | How We Measure It | Target | Why This Matters |
+|---|-----------|-------------------|--------|------------------|
+| 1 | First Login | `first_login_timestamp` exists | Day 1 | Entry point—no login, no onboarding |
+| 2 | Create First Project | `projects.count >= 1` | Day 3 | Container for all value |
+| 3 | Add First Tasks | `tasks.count >= 5` in project | Day 7 | Real work, not just exploring |
+| 4 | **Invite Team Member** ⭐ | `active_team_members >= 2` | Day 14 | **AHA MOMENT** - 4x retention impact |
+| 5 | Team Activity | `distinct_users_with_activity >= 2` | Day 21 | Confirms real collaboration |
+
+<Warning>
+**Critical "Aha Moment":** TeamFlow's data showed that customers who invited a teammate by Day 14 had 89% retention, while customers who never invited a teammate had only 31% retention—a 58 percentage point gap.
+</Warning>
+
+---
+
+## Step 3: Configure Onboarding Interventions
+
+### Intervention Design Principles
+
+- **Specificity:** One intervention per objective (don't bundle)
+- **Timing:** Intervene soon after the target date passes
+- **Helpfulness:** Focus on unblocking them, not guilting them
+- **Urgency calibration:** Earlier objectives warrant faster intervention
+- **Escalation path:** Plan for what happens if intervention doesn't work
+
+### Example Intervention Design
+
+<AccordionGroup>
+  <Accordion title="Intervention 1: No Login (Day 1 target missed)">
+    **Problem:** Customer signed up but never logged in
+
+    **Urgency:** High (they may have already forgotten about us)
+
+    **Timing:** 24 hours after signup if no login
+
+    **Goal:** Get them to log in and start exploring
+  </Accordion>
+  <Accordion title="Intervention 2: No Project (Day 3 target missed)">
+    **Problem:** Customer logged in but didn't create a project
+
+    **Urgency:** Medium-high (they're exploring but not committing)
+
+    **Timing:** Day 4 if no project created
+
+    **Goal:** Help them create their first project
+  </Accordion>
+  <Accordion title="Intervention 3: No Tasks (Day 7 target missed)">
+    **Problem:** Customer created a project but it's empty
+
+    **Urgency:** Medium (they started but got stuck)
+
+    **Timing:** Day 8 if <5 tasks
+
+    **Goal:** Help them add real work to their project
+  </Accordion>
+  <Accordion title="Intervention 4: No Teammate (Day 14 target missed) ⭐ PRIORITY">
+    **Problem:** Customer is working alone—hasn't invited anyone
+
+    **Urgency:** Highest (this is the aha moment!)
+
+    **Timing:** Day 10 (early intervention—don't wait until Day 15)
+
+    **Goal:** Make inviting a teammate feel easy and valuable
+  </Accordion>
+  <Accordion title="Intervention 5: No Team Activity (Day 21 target missed)">
+    **Problem:** Teammate was invited but isn't engaging
+
+    **Urgency:** Medium (teammate may need their own nudge)
+
+    **Timing:** Day 22 if teammate hasn't taken action
+
+    **Goal:** Get the invited teammate to participate
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Step 4: Write Your Intervention Messages
+
+### Message Philosophy
+
+Onboarding messages should feel like a helpful friend, not a marketing automation.
+
+| Feels Like Automation | Feels Like Help |
+|-----------------------|-----------------|
+| "You haven't completed your setup!" | "Need help getting your first project started?" |
+| "Don't forget to invite your team!" | "Here's a quick way to bring your teammates in" |
+| "Complete these steps to get started" | "Most teams find it useful to start with..." |
+
+### Message Structure
+
+Effective onboarding messages follow a simple structure:
+
+1. **Acknowledge where they are** (not accusatory)
+2. **Explain the benefit** of the next step (not the feature)
+3. **Make the action extremely easy** (direct link, clear CTA)
+4. **Offer help** if they're stuck (open the door)
+
+### Example Messages
+
+<Tabs>
+  <Tab title="No Login">
+    ```
+    Subject: Your [Product] account is ready
+
+    Hi {first_name},
+
+    Your [Product] account is set up and ready to go. You can log in
+    here and create your first project in about 2 minutes:
+
+    [Log In to {Product} →]
+
+    If you hit any snags getting in, just reply to this email and
+    I'll help you sort it out.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="No Project">
+    ```
+    Subject: Quick tip for getting started
+
+    Hi {first_name},
+
+    I saw you logged into [Product]—great! The fastest way to see
+    how it can help is to create a project for something you're
+    actually working on right now.
+
+    It doesn't have to be perfect. Most people start with a simple
+    project and build from there. You can create one here:
+
+    [Create Your First Project →]
+
+    If you're not sure what kind of project to start with, I'm
+    happy to share some examples from teams like yours.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="No Teammate ⭐">
+    ```
+    Subject: [Product] works better with your team
+
+    Hi {first_name},
+
+    I noticed you're using [Product] solo right now. That's a great
+    start, but here's what I've seen: teams that use [Product]
+    together spend way less time in status meetings and "where's
+    that file?" conversations.
+
+    The easiest way to try it: invite one teammate to collaborate
+    on {project_name}. Takes about 30 seconds:
+
+    [Invite a Teammate →]
+
+    They'll get an email with everything they need to jump in.
+    You can always add more people later.
+
+    If you'd prefer to keep this project private, that's totally
+    fine too—just let me know and I'll adjust your setup.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Step 5: Configure Sender Identity
+
+### Options
+
+| Sender Type | Best For |
+|-------------|----------|
+| **Real onboarding specialist** | Maximum authenticity, but scalability issues |
+| **Automated/Team sender** | Clearly automated, lower engagement |
+| **Dedicated persona** | Consistent, human-feeling, scalable |
+
+<Tip>
+**Recommendation:** Use a dedicated persona (like "Sarah Chen") for most customers, with real CSM names for enterprise accounts ($25K+) to establish relationships early.
+</Tip>
+
+---
+
+## Step 6: Set Message Timing
+
+### Timing Principles
+
+| Objective | Recommended Timing | Reasoning |
+|-----------|-------------------|-----------|
+| First login (Day 1) | 24 hours after signup | Give them a chance to log in organically |
+| Early objectives (Day 3-7) | Morning of target day +1 | Catch them when they're fresh |
+| Critical objectives (Aha moment) | Earlier than target | Don't wait—intervene proactively |
+| Later objectives (Day 14+) | Next business day | Less urgency, avoid weekends |
+
+---
+
+## Step 7: Configure Follow-Up Logic
+
+### Follow-Up Design
+
+Not every customer will respond to the first message. You need a plan for:
+
+- **Persistence:** Some customers need multiple touches
+- **Escalation:** When to involve humans
+- **Exit:** When to stop trying (to avoid annoying customers)
+
+### Example: "No Teammate" Follow-Up Sequence
+
+| Days After First Message | Action |
+|--------------------------|--------|
+| Day 0 | First message sent |
+| Day 3 | Follow-up message (different angle, offer help) |
+| Day 7 | Internal notification (human may need to intervene) |
+| Day 14 | Exit campaign → Move to "at-risk onboarding" segment |
+
+### Follow-Up Message Example
+
+```
+Subject: Quick thought on [Product]
+
+Hi {first_name},
+
+I wanted to share something I've noticed: the teams that get the
+most from [Product] usually start by inviting just one other
+person—not the whole team, just someone they work closely with.
+
+Would it help if I showed you how to set that up? I can do it
+in a 5-minute call: [Book a Quick Call →]
+
+Or if you'd prefer to just try it yourself: [Invite Someone →]
+
+Sarah
+```
+
+---
+
+## Step 8: Configure Internal Notifications
+
+### Tiered Notification System
+
+| Level | Trigger | Channel | Action Expected |
+|-------|---------|---------|-----------------|
+| **1: Logging** | All interventions sent | Dashboard log | Daily digest review |
+| **2: Reply Handling** | Customer replies | Slack DM to CS | Respond within 4 hours |
+| **3: High-Value** | $15K+ customer triggers intervention | CSM DM | Personal attention |
+| **4: Escalation** | "Aha moment" intervention failed twice | Slack channel + CSM | Consider outreach |
+| **5: Abandonment** | No login 14+ days | Leadership alert | Executive review |
+
+### Sample High-Value Alert
+
+```
+⚠️ High-Value Onboarding Alert
+
+Customer: Acme Corp ($28,000/year)
+Onboarding Day: 10
+Stuck At: No teammate invited (Objective #4)
+
+Progress:
+✅ First login (Day 1)
+✅ Created project (Day 2)
+✅ Added tasks (Day 5)
+❌ Invited teammate ← BLOCKED
+
+Intervention sent today. This is the "aha moment" objective.
+Consider personal outreach.
+
+📊 View Customer → [link]
+```
+
+---
+
+## Step 9: Define Success Metrics
+
+### Metrics to Track
+
+| Metric Type | What It Measures | Example |
+|-------------|------------------|---------|
+| **Objective Completion** | Did the intervention work? | % who complete objective after intervention |
+| **Time to Completion** | How quickly do they complete? | Days from intervention to completion |
+| **Response Rate** | Are customers engaging? | % who reply or click |
+| **Retention Correlation** | Does completion predict retention? | Retention rate by objective status |
+
+### Setting Benchmarks
+
+For your first month, focus on establishing baselines:
+
+- What % complete each objective without intervention?
+- What % complete after intervention?
+- How does timing affect completion?
+
+Then iterate: adjust messaging, timing, and targeting based on data.
+
+---
+
+## Summary Checklist
+
+<Check>Onboarding stage defined with entry/exit criteria</Check>
+<Check>4-7 objectives identified with clear completion criteria</Check>
+<Check>"Aha moment" objective identified</Check>
+<Check>Intervention triggers configured for each objective</Check>
+<Check>Plain text messages written for each intervention</Check>
+<Check>Follow-up sequences designed</Check>
+<Check>Internal escalation paths configured</Check>
+<Check>Success metrics defined</Check>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configure Adoption Campaigns" icon="seedling" href="/use-cases/adoption-campaigns">
+    Build sticky habits after customers complete onboarding
+  </Card>
+  <Card title="Building Campaigns Guide" icon="envelope" href="/guides/building-campaigns">
+    Detailed guide on campaign configuration
+  </Card>
+</CardGroup>

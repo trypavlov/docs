@@ -1,0 +1,407 @@
+---
+title: "Adoption Campaigns"
+description: "Building sticky habits before customers drift away"
+---
+
+This guide walks you through configuring an adoption campaign in Trig, with detailed explanations of why each configuration choice matters and how to think through decisions for your specific business.
+
+<Note>
+**Worked Example:** Throughout this guide, we'll follow TeamFlow, a collaborative project management tool. TeamFlow has noticed that customers who complete onboarding often plateau in the weeks that follow—some develop deep habits and become power users, others log in occasionally and eventually churn at renewal.
+</Note>
+
+## Why Adoption Matters
+
+### The Adoption Gap
+
+Most companies invest heavily in:
+
+- **Onboarding:** Getting customers to their first "aha moment"
+- **Renewal:** Saving customers who are about to churn
+
+But they neglect:
+
+- **Adoption:** The 10 months between onboarding and renewal where habits form
+
+This creates an adoption gap—a period where customers are left to their own devices, slowly disengaging while your attention is elsewhere.
+
+### The Adoption-Retention Connection
+
+| Adoption Pattern | What It Looks Like | Retention Outcome |
+|------------------|-------------------|-------------------|
+| **Deep adoption** | Daily usage, multiple features, team-wide engagement | 95%+ retention |
+| **Moderate adoption** | Weekly usage, core features only, single user focus | 70-80% retention |
+| **Shallow adoption** | Monthly or less, minimal feature use, champion only | 40-50% retention |
+| **Failed adoption** | Declining usage, abandoned features, no engagement | <20% retention |
+
+The difference between deep and shallow adoption is often 11 months of accumulated habits—or lack thereof.
+
+### The Intervention Window
+
+Adoption is the stage where small interventions have outsized impact:
+
+- **During onboarding**, customers expect guidance—it's built into the experience
+- **At renewal**, customers have already formed opinions—you're fighting inertia
+- **During adoption**, customers are still forming habits—a timely nudge can redirect their trajectory
+
+---
+
+## Step 1: Define Your Adoption Stage
+
+### How to Think About Stage Boundaries
+
+**Entry considerations:**
+- Has the customer completed your defined onboarding milestones?
+- Have they had enough time to form initial habits? (Usually 14-30 days minimum)
+- Are they past the "honeymoon period" where everything looks positive?
+
+**Duration considerations:**
+- How long does it take for usage patterns to stabilise?
+- When do you have enough data to distinguish adopters from drifters?
+- How much time before renewal do you need to intervene if adoption is failing?
+
+**Exit considerations:**
+- What does successful adoption look like in measurable terms?
+- At what point have they "graduated" to a stable, retained customer?
+
+### Example Configuration
+
+```
+Stage Duration: Day 31 to Day 180
+
+Entry Criteria:
+- Onboarding stage = Complete
+- At least one onboarding objective achieved
+- Customer status = Active
+- Not in at-risk retention campaign
+
+Exit Criteria (Success):
+- All 5 adoption objectives achieved
+- OR: Adoption health score = "Healthy" for 30+ consecutive days
+
+Exit Criteria (Failure/Escalation):
+- Adoption health score = "Critical" for 14+ consecutive days
+  → Move to at-risk retention campaign
+```
+
+---
+
+## Step 2: Define Your Adoption Objectives
+
+### Types of Adoption Objectives
+
+| Objective Type | What It Measures | Examples |
+|----------------|------------------|----------|
+| **Depth** | How much they use core features | Projects created, tasks completed |
+| **Breadth** | How many features they've adopted | Features used, integrations connected |
+| **Frequency** | How often they engage | Daily active users, weekly sessions |
+| **Team spread** | How many people are engaged | Active users as % of seats |
+| **Workflow integration** | How embedded you are | API usage, automation rules |
+
+### Example: TeamFlow's Adoption Objectives
+
+| # | Objective | How We Measure It | Target | Why This Matters |
+|---|-----------|-------------------|--------|------------------|
+| 1 | Team Activation | `active_users / licensed_seats >= 50%` | Day 45 | Team-wide adoption = 3x retention |
+| 2 | Project Velocity | `>=3 projects with >=10 tasks each` | Day 60 | Multi-project = embedded workflow |
+| 3 | Collaboration Habit | `>=5 comments/mentions per week` (3 weeks) | Day 75 | Communication hub = switching costs |
+| 4 | Feature Expansion | `>=3 advanced features used` | Day 90 | Advanced features = deeper value |
+| 5 | Workflow Integration | `>=1 integration OR automation` | Day 120 | Technical integration = hard to leave |
+
+---
+
+## Step 3: Define Health Indicators and Warning Signs
+
+### Healthy Adoption Indicators
+
+| Indicator | What It Means | How We Measure |
+|-----------|---------------|----------------|
+| Consistent weekly usage | Product is part of routine | Active days ≥3 per week, sustained 4 weeks |
+| Usage growing or stable | Engagement isn't declining | WAU trend flat or positive over 30 days |
+| Team engagement spreading | Multiple people invested | New users activated in last 30 days |
+| Feature exploration | Discovering more value | New feature used in last 30 days |
+| Champion highly active | Key advocate engaged | Primary contact active in last 7 days |
+
+### Adoption Warning Signs
+
+| Warning Sign | What It Signals | How We Measure |
+|--------------|-----------------|----------------|
+| Usage declining | Disengagement beginning | WAU down >25% vs prior 30 days |
+| Single-user dependency | No team adoption | Only 1 active user for 30+ days |
+| Feature regression | Abandoning capabilities | Previously used features unused 30+ days |
+| Champion absence | Key advocate disengaged | Primary contact no login for 14+ days |
+| Stalled objectives | Not progressing | No new objective achieved in 45+ days |
+| Login gap | Extended absence | No team logins for 7+ days |
+
+### Health Score Calculation
+
+```
+Health Score:
+
+- Excellent: ≥4 positive indicators, 0 negative indicators
+- Good: ≥3 positive indicators, ≤1 negative indicator
+- Moderate: ≥2 positive indicators, ≤2 negative indicators
+- Poor: <2 positive indicators OR ≥3 negative indicators
+- Critical: ≥4 negative indicators OR login gap >14 days
+```
+
+---
+
+## Step 4: Configure Adoption Interventions
+
+### Intervention Design
+
+Different warning signs need different interventions:
+
+<AccordionGroup>
+  <Accordion title="Intervention A: Usage Decline">
+    **Trigger:** WAU declined >25% vs prior 30-day period
+
+    **Audience Filter:**
+    - Tenure >45 days (not still in onboarding turbulence)
+    - Not already in intervention campaign (30-day cooldown)
+    - Health score ≥ "Moderate" (not yet critical)
+
+    **Timing:** Within 48 hours of trigger detection
+
+    **Goal:** Understand why and re-engage before they drift further
+  </Accordion>
+  <Accordion title="Intervention B: Single-User Rescue">
+    **Trigger:** Only 1 active user for 30+ consecutive days
+
+    **Audience Filter:**
+    - Licensed seats > 1 (excludes legitimate single-user accounts)
+    - Tenure >60 days (had time to expand)
+
+    **Timing:** Next business day, 10 AM customer timezone
+
+    **Goal:** Help them expand to team members before champion changes jobs
+  </Accordion>
+  <Accordion title="Intervention C: Champion Re-engagement">
+    **Trigger:** Primary contact no login for 14+ days
+
+    **Audience Filter:**
+    - At least one other user still active
+    - Primary contact identified in CRM
+
+    **Timing:** Within 24 hours of trigger
+
+    **Goal:** Reconnect with champion or identify new stakeholder
+  </Accordion>
+  <Accordion title="Intervention D: Stalled Progress">
+    **Trigger:** No new adoption objective achieved in 45+ days
+
+    **Audience Filter:**
+    - At least 1 objective still incomplete
+    - Tenure >60 days
+
+    **Timing:** Next business day
+
+    **Goal:** Provide guidance, training, or support to unblock them
+  </Accordion>
+  <Accordion title="Intervention E: Login Gap Emergency">
+    **Trigger:** Zero team logins for 7+ consecutive days
+
+    **Audience Filter:**
+    - Not a known holiday period
+    - Account not scheduled for churn
+
+    **Timing:** Immediate (within 25 minutes)
+
+    **Goal:** Urgent re-engagement before account goes cold
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Step 5: Write Your Intervention Messages
+
+### Message Philosophy
+
+Adoption messages are delicate. You're reaching out to someone who's disengaging—potentially frustrated, overwhelmed, or simply not finding value.
+
+| Feels Needy | Feels Helpful |
+|-------------|---------------|
+| "We noticed you haven't logged in lately" | "I wanted to share a quick tip for [their use case]" |
+| "Don't forget about us!" | "Is there anything blocking you from [objective]?" |
+| "Your team isn't using all the features" | "Teams like yours often get value from [feature]" |
+
+### Example Messages
+
+<Tabs>
+  <Tab title="Usage Decline">
+    ```
+    Subject: Quick question about your [Product] setup
+
+    Hi {first_name},
+
+    I was looking at how your team uses [Product] and noticed
+    things have slowed down a bit recently. I wanted to check
+    in—is there something that's not working the way you expected?
+
+    Sometimes teams hit a wall with [specific feature based on
+    their usage], and there are usually quick fixes. If that's
+    happening, I'd be happy to jump on a 15-minute call to sort
+    it out.
+
+    Or if priorities have just shifted, no worries—I'm here when
+    you need me.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="Single-User Rescue">
+    ```
+    Subject: Getting your team into [Product]
+
+    Hi {first_name},
+
+    I noticed you're the main person using [Product] on your team
+    right now. That's totally fine for some workflows, but most
+    teams find they get a lot more value when everyone's in the
+    same system—less status update meetings, less "where's that
+    document?" conversations.
+
+    If you'd like help getting your teammates set up, I can send
+    you a quick guide, or even join a 15-minute call to walk them
+    through it.
+
+    Want me to send that guide over?
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="Champion Re-engagement">
+    ```
+    Subject: Checking in
+
+    Hi {first_name},
+
+    I haven't seen you in [Product] recently, though I see your
+    team is still active. Just wanted to make sure everything's
+    okay and see if there's anything you need from me.
+
+    If your role has changed or someone else is now managing
+    [Product], I'm happy to connect with them instead—just let
+    me know.
+
+    Hope you're doing well.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="Stalled Progress">
+    ```
+    Subject: Getting more from [Product]
+
+    Hi {first_name},
+
+    I've been looking at how your team uses [Product], and I
+    think there are a few features you might find valuable that
+    you haven't explored yet.
+
+    Would you be interested in a quick 20-minute walkthrough?
+    I can show you specifically what would help based on how
+    your team works—no generic demo, just the stuff that's
+    relevant to you.
+
+    Let me know if you'd like to set that up.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Step 6: Configure Follow-Up Logic
+
+### Follow-Up Design Principles
+
+- **Change the angle:** Don't just repeat the same message
+- **Increase value:** Offer something new (guide, call, help)
+- **Decrease friction:** Make the action even easier
+- **Know when to stop:** After 2-3 attempts, more emails hurt more than help
+
+### Example Follow-Up Sequence (Single-User Rescue)
+
+| Day | Action |
+|-----|--------|
+| Day 0 | Initial message sent |
+| Day 10 | If still single-user → Send follow-up with training offer |
+| Day 21 | If still single-user → Internal alert (high churn risk) |
+
+---
+
+## Step 7: Configure Internal Notifications
+
+### Escalation Triggers
+
+| Trigger | Channel | Action |
+|---------|---------|--------|
+| Any adoption intervention sent | Dashboard log | Visibility |
+| High-value customer ($25K+) triggers | CSM Slack DM | Personal attention |
+| Follow-up triggered (first message didn't work) | Slack channel | Team awareness |
+| Health score drops to "Critical" | CS Manager alert | Potential escalation |
+
+### Sample Alert
+
+```
+⚠️ Adoption Alert
+
+Customer: Acme Corp ($18,000/year)
+Adoption Day: 75
+Health Score: Poor → Declining
+
+Warning Signs Detected:
+• Usage down 38% vs last month
+• Only 3 of 12 seats active
+• No new features explored in 45 days
+
+Intervention sent: "Single-User Rescue"
+Consider: Training session offer, CSM outreach
+
+📊 View in Trig → [link]
+```
+
+---
+
+## Step 8: Define Success Metrics
+
+### Metrics to Track
+
+| Metric | What It Measures |
+|--------|------------------|
+| **Objective completion rate** | % completing each adoption objective |
+| **Health score distribution** | % in each health category |
+| **Intervention response rate** | % who engage after intervention |
+| **Recovery rate** | % who improve after intervention |
+| **Correlation to renewal** | Do adoption metrics predict renewal? |
+
+---
+
+## Summary Checklist
+
+<Check>Adoption stage defined (entry after onboarding, ~6 month duration)</Check>
+<Check>5-7 adoption objectives covering depth, breadth, frequency</Check>
+<Check>Health indicators (positive signals) defined</Check>
+<Check>Warning signs (negative signals) defined</Check>
+<Check>Interventions configured for each warning sign</Check>
+<Check>Follow-up sequences designed</Check>
+<Check>Internal escalation paths configured</Check>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configure Expansion Campaigns" icon="arrow-up-right" href="/use-cases/expansion-campaigns">
+    Capture revenue growth from your happiest customers
+  </Card>
+  <Card title="Configure Renewal Campaigns" icon="rotate" href="/use-cases/renewal-campaigns">
+    Proactive renewal management that prevents churn
+  </Card>
+</CardGroup>

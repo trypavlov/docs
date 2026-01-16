@@ -1,0 +1,385 @@
+---
+title: "Expansion Campaigns"
+description: "Capturing revenue growth from your happiest customers"
+---
+
+This guide walks you through configuring an expansion campaign in Trig, with detailed explanations of why each configuration choice matters and how to think through decisions for your specific business.
+
+<Note>
+**Worked Example:** Throughout this guide, we'll follow TeamFlow, a collaborative project management tool with tiered pricing (Starter, Professional, Business, Enterprise). TeamFlow has identified that their most efficient revenue growth comes from existing customers expanding—but their small sales team can't monitor every customer for expansion signals.
+</Note>
+
+## Why Expansion Matters
+
+### The Economics of Expansion
+
+| Metric | New Customer Acquisition | Customer Expansion |
+|--------|-------------------------|-------------------|
+| Sales cycle | 30-90 days typical | Days to weeks |
+| Win rate | 15-25% typical | 40-60% typical |
+| CAC payback | 12-18 months | Often immediate |
+| Relationship | Building trust | Trust already established |
+| Product knowledge | Starting from zero | Already using and loving |
+
+Expansion revenue is often 3-5x more efficient than new customer acquisition. A customer hitting their seat limit is pre-sold—they've already decided your product works.
+
+### The Timing Problem
+
+The challenge isn't identifying that expansion opportunities exist—it's identifying them at the right moment:
+
+- **Too early:** "Want to upgrade?" feels like a sales ambush
+- **Too late:** They've already worked around the limitation or found an alternative
+- **Just right:** "I noticed you're running low on seats..." feels helpful
+
+Trig solves the timing problem by monitoring expansion signals in real-time and triggering outreach when conditions are optimal.
+
+---
+
+## Step 1: Define Your Expansion Stage
+
+### How to Think About Expansion Stage Boundaries
+
+**Entry considerations:**
+- Has the customer completed onboarding?
+- Are they healthy (not at-risk)?
+- Have they been a customer long enough to form an opinion?
+
+**Exit considerations:**
+- They expanded (success!)
+- They declined and shouldn't be asked again for X months
+- They churned (no longer relevant)
+
+### Example Configuration
+
+```
+Stage Duration: Day 60 to ongoing (continuous monitoring)
+
+Entry Criteria:
+- Onboarding stage = Complete
+- Customer tenure ≥ 60 days
+- Customer health = Good or Excellent
+- Current contract value > $0 (excludes free trials)
+
+Exit Criteria:
+- Customer completes expansion purchase (success)
+- Customer explicitly declines (90-day cooldown)
+- Customer health drops to At-Risk (moved to renewal campaign)
+```
+
+---
+
+## Step 2: Identify Your Expansion Signals
+
+### Types of Expansion Signals
+
+| Signal Category | What It Indicates | Examples |
+|-----------------|-------------------|----------|
+| **Limit-based** | Customer hitting constraints | Approaching seat limit, storage full |
+| **Usage-based** | Growing engagement | Active users increasing, feature adoption expanding |
+| **Behaviour-based** | Exploring upgrade | Viewing pricing page, clicking upgrade buttons |
+| **Milestone-based** | Business growth | Team size increased, new department added |
+| **Time-based** | Natural expansion moments | Anniversary, renewal approaching (healthy customer) |
+
+### Example: TeamFlow's Expansion Signals
+
+| Signal | How We Detect It | Expansion Opportunity | Conversion Rate |
+|--------|------------------|----------------------|-----------------|
+| Admin invite blocked | `invite_blocked_seat_limit` event | Add seats (urgent) | 72% 🔴 |
+| Seat utilisation >85% | `active_users/licensed_seats > 85%` | Add seats or upgrade tier | 58% 🔴 |
+| Integration interest | `>3 integration page views/30 days` | Upgrade to Business | 34% 🟡 |
+| Power users emerging | `3+ users with >20hrs/week usage` | Upgrade tier | 28% 🟡 |
+| Company growing | CRM headcount up >20% | Proactive expansion | 19% 🟢 |
+
+<Tip>
+**Prioritise by conversion rate.** A customer who just tried to invite someone and hit a seat cap is 72% likely to expand. That's a hot lead—act immediately.
+</Tip>
+
+---
+
+## Step 3: Define Expansion Ownership
+
+### Ownership Models
+
+| Model | How It Works | Best For |
+|-------|--------------|----------|
+| **Self-serve first** | Automated email → in-app upgrade flow | SMB, low ACV, high volume |
+| **Sales-assisted** | Signal triggers sales outreach | Mid-market, complex pricing |
+| **CSM-led** | CSM owns relationship + expansion | Enterprise, strategic accounts |
+| **Tiered hybrid** | Route based on signal type or customer value | Mixed customer base |
+
+### Example: TeamFlow's Tiered Routing
+
+| Signal Type | Owner | Motion |
+|-------------|-------|--------|
+| Seat limit (Starter/Pro) | Self-serve | Automated email → in-app upgrade |
+| Seat limit (Business+) | CSM | Personal outreach |
+| Tier upgrade interest | Self-serve | Automated email → in-app upgrade |
+| Integration interest | CSM | Discovery call, Business tier pitch |
+| Power users (SMB) | Automated | Email nurture toward tier upgrade |
+| Power users (Mid-market) | CSM | Business review, expansion discussion |
+| Enterprise signals ($25K+) | AE + CSM | Joint outreach, custom pricing |
+
+---
+
+## Step 4: Configure Expansion Triggers
+
+### Trigger Design Principles
+
+- **Specificity:** One trigger per expansion type (don't bundle seat expansion with tier upgrade)
+- **Confidence threshold:** Multiple signal instances or combined signals for higher confidence
+- **Cooldown logic:** Don't re-trigger if already in an expansion conversation
+- **Timing sensitivity:** Some signals are time-sensitive (blocked invite), others aren't
+
+### Example Trigger Configurations
+
+<AccordionGroup>
+  <Accordion title="Trigger A: Seat Expansion (Urgent)">
+    **Condition:** `invite_blocked_seat_limit` event fired
+
+    **Timing:** Immediate (within 25 minutes)
+
+    **Cooldown:** None (always trigger—this is urgent)
+
+    **Owner:** Self-serve email + in-app prompt
+  </Accordion>
+  <Accordion title="Trigger B: Seat Expansion (Proactive)">
+    **Condition:** `seat_utilisation > 85%` for 7+ consecutive days
+
+    **Timing:** Next business day, 10 AM customer timezone
+
+    **Cooldown:** 30 days since last seat expansion message
+
+    **Owner:** Self-serve email
+  </Accordion>
+  <Accordion title="Trigger C: Tier Upgrade (Feature Interest)">
+    **Condition:** `integration_page_views > 3` in last 30 days AND tier ∈ [Starter, Professional]
+
+    **Timing:** 48 hours after threshold crossed (let them explore)
+
+    **Cooldown:** 60 days since last tier upgrade message
+
+    **Owner:** CSM (mid-market) / Self-serve (SMB)
+  </Accordion>
+  <Accordion title="Trigger D: Tier Upgrade (Usage-driven)">
+    **Condition:** `power_users >= 3` for 14+ consecutive days AND tier ∈ [Starter, Professional]
+
+    **Timing:** Next business day
+
+    **Cooldown:** 60 days since last tier upgrade message
+
+    **Owner:** CSM outreach
+  </Accordion>
+  <Accordion title="Trigger E: Enterprise Expansion">
+    **Condition:** tier = Business AND `seat_utilisation > 80%` AND `contract_value > $25,000`
+
+    **Timing:** Route to AE within 24 hours
+
+    **Cooldown:** 90 days
+
+    **Owner:** AE + CSM joint outreach
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Step 5: Write Your Expansion Messages
+
+### Message Philosophy
+
+Expansion messages should feel like service, not sales.
+
+| Feels Like Sales | Feels Like Service |
+|------------------|-------------------|
+| "Your account is ready for an upgrade!" | "I noticed you're almost out of seats..." |
+| "Unlock premium features today!" | "I saw your team trying to connect Slack..." |
+| "Contact us to discuss pricing" | "Here's a quick link to add more seats" |
+
+### Example Messages
+
+<Tabs>
+  <Tab title="Seat Expansion (Urgent)">
+    This is TeamFlow's highest-converting message because it arrives at the exact moment of need.
+
+    ```
+    Subject: Quick fix for that invite issue
+
+    Hi {first_name},
+
+    I saw you tried to invite someone to [Product] but hit your
+    seat limit. Here's a quick link to add more seats so you can
+    get them in:
+
+    [Add Seats →]
+
+    Takes about 30 seconds. Let me know if you need anything else.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="Seat Expansion (Proactive)">
+    This message reaches customers before they hit the wall.
+
+    ```
+    Subject: Heads up on your [Product] seats
+
+    Hi {first_name},
+
+    Your team is using {X} of your {Y} [Product] seats—you're
+    getting close to your limit.
+
+    If you're planning to bring on more team members, you can
+    add seats anytime here: [Add Seats →]
+
+    Or if you'd like to discuss what tier makes sense as you
+    grow, just reply to this email.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="Feature Interest (Integrations)">
+    ```
+    Subject: Saw you checking out integrations
+
+    Hi {first_name},
+
+    I noticed you've been exploring [Product]'s integration
+    options. Those are available on our Business tier—they let
+    you connect [Product] to Slack, Jira, and 20+ other tools
+    your team probably uses.
+
+    Would it be helpful to see a quick demo of how the Slack
+    integration works? I can show you in 15 minutes.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="Usage-Driven Upgrade">
+    ```
+    Subject: Your team is getting serious value from [Product]
+
+    Hi {first_name},
+
+    I've been looking at how your team uses [Product], and I'm
+    impressed—you've got several people who are really power
+    users at this point.
+
+    When teams reach this level, they usually start wanting
+    things like advanced reporting, custom workflows, and
+    integrations. Those are part of our Professional tier.
+
+    Would it be worth 20 minutes to walk through what you'd get
+    with an upgrade? I can show you specifically what would help
+    based on how your team works.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+  <Tab title="Enterprise (AE Intro)">
+    ```
+    Subject: Thinking about your [Product] setup
+
+    Hi {first_name},
+
+    Your team has grown a lot on [Product] this year—you're
+    getting close to your seat limit again, and I know you've
+    mentioned wanting some capabilities we don't have in
+    Business tier.
+
+    I'd like to introduce you to {AE_name}, who works with our
+    larger customers on custom packages. They can put together
+    something that fits exactly what you need, including volume
+    pricing if you're planning to expand further.
+
+    Would you be open to a call with the three of us? I'll stay
+    involved to make sure you get what you need.
+
+    Sarah
+    Customer Success
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Step 6: Configure Internal Notifications
+
+### Routing Alerts
+
+| Signal | Routing | SLA |
+|--------|---------|-----|
+| Urgent seat expansion | Self-serve (automated) | Immediate |
+| High-value ($25K+) any signal | CSM Slack DM + AE alert | 4 hours |
+| Enterprise expansion signals | AE + CSM + Manager | 24 hours |
+| Declined expansion | Log for analysis | N/A |
+
+### Sample Alert
+
+```
+🚀 Expansion Opportunity
+
+Customer: Acme Corp ($28,000/year, Business tier)
+Signal: Seat utilisation at 92% (23/25 seats)
+
+Context:
+• Added 5 users in last 30 days
+• Using 8 of 12 advanced features
+• No support tickets in 60 days
+
+Recommended Action: CSM outreach for Enterprise conversation
+
+📊 View in Trig → [link]
+📞 Book Call → [link]
+```
+
+---
+
+## Step 7: Define Success Metrics
+
+### Metrics to Track
+
+| Metric | What It Measures |
+|--------|------------------|
+| **Signal-to-opportunity rate** | % of signals that become conversations |
+| **Opportunity-to-close rate** | % of conversations that expand |
+| **Time from signal to expansion** | How quickly do they expand? |
+| **Expansion revenue** | Total revenue from expansion campaigns |
+| **Signal accuracy** | Do signals actually predict expansion? |
+
+### Benchmarking
+
+| Signal Type | Expected Conversion |
+|-------------|---------------------|
+| Invite blocked (urgent) | 60-80% |
+| Seat utilisation >85% | 40-60% |
+| Feature interest | 25-40% |
+| Usage-driven upgrade | 20-35% |
+| Proactive (company growth) | 15-25% |
+
+---
+
+## Summary Checklist
+
+<Check>Expansion stage defined (entry after onboarding + healthy)</Check>
+<Check>Expansion signals identified with conversion data</Check>
+<Check>Ownership model defined (self-serve, CSM, hybrid)</Check>
+<Check>Triggers configured with appropriate thresholds and cooldowns</Check>
+<Check>Service-oriented messages written for each signal</Check>
+<Check>Internal routing configured for high-value opportunities</Check>
+<Check>Success metrics defined</Check>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configure Renewal Campaigns" icon="rotate" href="/use-cases/renewal-campaigns">
+    Proactive renewal management that prevents churn
+  </Card>
+  <Card title="Building Campaigns Guide" icon="envelope" href="/guides/building-campaigns">
+    Detailed guide on campaign configuration
+  </Card>
+</CardGroup>
