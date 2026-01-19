@@ -1,0 +1,249 @@
+---
+title: "FAQs"
+description: "Frequently asked questions about Trig"
+---
+
+Find answers to common questions about how Trig works, from core concepts to practical implementation.
+
+## Getting Started
+
+<AccordionGroup>
+  <Accordion title="What is Trig and what does it do?">
+    Trig is a customer lifecycle management platform for B2B SaaS companies. It helps you track customers through their journey (onboarding, adoption, expansion, renewal), identify who needs attention using Signals, and orchestrate targeted interventions through campaigns—all based on data from your CRM and product usage.
+  </Accordion>
+  <Accordion title="What data sources does Trig connect to?">
+    Trig integrates with:
+    - **CRM systems:** HubSpot, Salesforce
+    - **Data warehouses:** Snowflake, BigQuery, Redshift
+    - **Product analytics:** Mixpanel, Amplitude, Segment, Pendo
+    - **Communication tools:** Slack (for notifications), email (for customer outreach)
+  </Accordion>
+  <Accordion title="Do I need to configure lifecycle stages before using other features?">
+    Yes. Lifecycle stages are the foundation that enables everything else in Trig—pattern discovery, Signals, campaigns, and measurement all depend on stages being configured first. Start with lifecycle stages, then build on top.
+  </Accordion>
+</AccordionGroup>
+
+## Lifecycle Stages
+
+<AccordionGroup>
+  <Accordion title="What happens if an organisation never completes a stage?">
+    Without auto-exit, they remain indefinitely. Use time-based exit to ensure forward movement so you can analyse patterns of non-completion. Most implementations use time-based or hybrid exit criteria.
+  </Accordion>
+  <Accordion title="How long before 'normal' averages become reliable?">
+    With 50+ organisations through a stage, averages become meaningful. With 200+, patterns become statistically significant. The more data you accumulate, the more reliable your benchmarks.
+  </Accordion>
+  <Accordion title="Can I change objectives after the stage is live?">
+    Yes. Adding new objectives is straightforward—existing organisations will simply have no completion data for new objectives. Modifying existing objective criteria may affect historical comparisons.
+  </Accordion>
+  <Accordion title="Do lifecycle stages work for B2C?">
+    The platform is optimised for B2B where organisations are the primary unit. For B2C, the "organisation" becomes the individual user—the mechanics work, but the terminology and defaults are B2B-oriented.
+  </Accordion>
+  <Accordion title="Can organisations be in multiple lifecycle stages at once?">
+    Yes, though this requires careful design. Common use cases include different stages for different products, or parallel tracks for different user types within the same organisation.
+  </Accordion>
+</AccordionGroup>
+
+## Objectives
+
+<AccordionGroup>
+  <Accordion title="Should objectives be completed in a specific order?">
+    By default, objectives are non-linear—customers can complete them in any order. If you need to enforce sequence (Objective B requires Objective A), build that dependency into the completion criteria.
+  </Accordion>
+  <Accordion title="What happens if an objective is never completed?">
+    The organisation shows as incomplete for that objective. With time-based stage exit, they still move forward—just with incomplete objectives recorded. This data is valuable for understanding where customers struggle.
+  </Accordion>
+  <Accordion title="How many objectives should I have per stage?">
+    Start with 4-7 objectives per stage. Too few loses granularity; too many creates noise. Focus on milestones that are meaningful and trackable.
+  </Accordion>
+  <Accordion title="Can I modify completion criteria after an objective is live?">
+    Yes, but changing criteria may affect historical interpretation. If you change "invoices >= 1" to "invoices >= 3", previously completed orgs may now show incomplete.
+  </Accordion>
+</AccordionGroup>
+
+## Behaviours
+
+<AccordionGroup>
+  <Accordion title="Why can't customers re-enter behaviours?">
+    The one-and-done design preserves milestone tracking integrity. Behaviours capture "first time" moments—like the first time a customer became a power user or completed setup. Use cohorts instead for tracking recurring states.
+  </Accordion>
+  <Accordion title="How do I track something that happens multiple times?">
+    Use threshold behaviours: "First time", "5+ times", "10+ times" as separate behaviours. Or use cohorts for tracking current state that can change over time.
+  </Accordion>
+  <Accordion title="What's the difference between a behaviour and an objective?">
+    Objectives are behaviours within lifecycle stages. Same mechanics (entry criteria, completion criteria, actions), but objectives carry additional meaning for stage progression tracking and contribute to building "normal" benchmarks.
+  </Accordion>
+  <Accordion title="Do behaviour actions fire immediately?">
+    Yes. Entry, completion, and exit actions fire as soon as the condition is met.
+  </Accordion>
+  <Accordion title="Can behaviours use events from the past?">
+    Events are evaluated forward-only (only new events trigger). Attributes are evaluated historically (checked against existing values). This is a critical distinction for designing behaviours correctly.
+  </Accordion>
+  <Accordion title="Can I edit a behaviour after it's live?">
+    You can, but changing criteria affects historical interpretation. It's often better to create a new behaviour with updated criteria rather than modify an existing one.
+  </Accordion>
+</AccordionGroup>
+
+## Cohorts
+
+<AccordionGroup>
+  <Accordion title="How often is cohort membership updated?">
+    Dynamically when queried. As customer attributes change, membership automatically adjusts. Your cohorts always reflect current reality.
+  </Accordion>
+  <Accordion title="Can I see who's in a cohort?">
+    Yes. Viewing a cohort shows current members with their attributes.
+  </Accordion>
+  <Accordion title="Can I use a cohort in another cohort's definition?">
+    Not directly. Use the underlying attributes or combine filter groups to achieve similar results.
+  </Accordion>
+  <Accordion title="What happens if I delete a cohort that's used in campaigns?">
+    Campaigns lose that targeting criteria. Check dependencies before deleting any cohort.
+  </Accordion>
+  <Accordion title="Can cohorts span both organisations and people?">
+    No. A cohort is either organisation-level or people-level. Create separate cohorts for each entity type.
+  </Accordion>
+</AccordionGroup>
+
+## Campaigns
+
+<AccordionGroup>
+  <Accordion title="How long should campaigns run?">
+    Keep campaigns short and focused. 3-7 days for simple actions, 7-14 days for moderate actions, 14-30 days for complex actions. If no response in 14 days, try a different approach in a new campaign.
+  </Accordion>
+  <Accordion title="Can a customer be in multiple campaigns at once?">
+    Yes, but be careful about message volume. Use exclusion criteria to prevent overlap and avoid overwhelming customers with too many automated messages.
+  </Accordion>
+  <Accordion title="What happens if I pause a campaign?">
+    No new customers enter. Existing customers can still complete or exit normally.
+  </Accordion>
+  <Accordion title="How do I prevent re-sending to previous recipients?">
+    Use `last_entered_[campaign] has any value` in your exclusion criteria to prevent customers who've already been through the campaign from re-entering.
+  </Accordion>
+  <Accordion title="Should I use Trig's email or external systems?">
+    Either works. Trig sends directly for speed and simplicity. For complex requirements, trigger external systems via webhooks.
+  </Accordion>
+  <Accordion title="Why does Trig recommend plain text emails?">
+    Plain text emails look like they came from a real person, get 10x higher engagement, feel human even when automated, and avoid spam filters. Branded HTML templates scream "marketing automation" and get lower response rates.
+  </Accordion>
+</AccordionGroup>
+
+## Signals
+
+<AccordionGroup>
+  <Accordion title="How often do Signals refresh?">
+    Continuously as customer data updates. New slow completers appear as they cross the threshold.
+  </Accordion>
+  <Accordion title="Can I customize the Signal threshold?">
+    Thresholds are configured by your Trig implementation team. Future versions may expose configuration in the UI.
+  </Accordion>
+  <Accordion title="What if I don't have enough data for meaningful averages?">
+    You need sufficient completions for meaningful averages. Generally 10+ completions for stability, 50+ for reliable patterns. With less data, averages are less reliable.
+  </Accordion>
+  <Accordion title="Can Signals detect positive patterns?">
+    Currently Signals focus on risk detection (slow completers). Positive signals like expansion opportunities are planned for future releases.
+  </Accordion>
+  <Accordion title="How is revenue at risk calculated?">
+    Summed from ARR/contract value of affected customers (from CRM data).
+  </Accordion>
+  <Accordion title="What happens when customers complete the objective?">
+    They're removed from the Signal. If they completed via campaign, the campaign tracks this as completion.
+  </Accordion>
+  <Accordion title="Can I see historical Signals?">
+    Current version shows active Signals. Historical tracking is planned for future releases.
+  </Accordion>
+</AccordionGroup>
+
+## Attributes and Data
+
+<AccordionGroup>
+  <Accordion title="What's the difference between attributes and events?">
+    **Attributes** are static values on a record, evaluated historically (checked against existing values), and persist until changed. **Events** are point-in-time occurrences, evaluated forward-only (only new events trigger), and form a stream of discrete actions. This distinction is critical for campaign design.
+  </Accordion>
+  <Accordion title="What are Trig activity attributes?">
+    For every campaign, behaviour, stage, and objective, Trig automatically generates attributes:
+    - `currently_member_of_[object]` — Are they currently in?
+    - `last_entry_to_[object]` — When did they enter?
+    - `last_exit_from_[object]` — When did they exit (failed)?
+    - `last_completion_of_[object]` — When did they complete?
+
+    These persist forever and enable powerful campaign chaining and historical analysis.
+  </Accordion>
+  <Accordion title="Can I roll up individual user data to the organisation level?">
+    Yes. Trig supports roll-up aggregations including Sum, Count, Average, Min, and Max. For example, you can roll up total logins across all users, count of active users, or average session duration to the organisation level.
+  </Accordion>
+</AccordionGroup>
+
+## People & Organisations
+
+<AccordionGroup>
+  <Accordion title="Why does Trig focus on organisations rather than individuals?">
+    Trig is built for B2B SaaS where the fundamental commercial relationship is with an organisation. When an org leaves, that's lost revenue. Renewals and expansions happen at the account level. Individuals influence but rarely decide alone. The lifecycle journey is fundamentally an account journey.
+  </Accordion>
+  <Accordion title="When should I target People vs Organisations in campaigns?">
+    Target **People** when an individual needs to take action (complete profile, use a feature, invite teammates). Target **Organisations** when it's an account-level decision (renew contract, upgrade plan, connect integration that affects the whole team).
+  </Accordion>
+  <Accordion title="How do People connect to Organisations?">
+    Through a common identifier that links them—typically a CRM Company ID, Account ID, or a product-based Team/Workspace/Tenant ID. Every Person should be associated with an Organisation.
+  </Accordion>
+</AccordionGroup>
+
+## Email and Actions
+
+<AccordionGroup>
+  <Accordion title="What email setup is required?">
+    Before sending emails, you need domain verification (DNS records), sender configuration (who emails appear from), and subdomain setup for deliverability. This is handled during onboarding.
+  </Accordion>
+  <Accordion title="Can I use dynamic content in messages?">
+    Yes. Insert attribute placeholders like `{first_name}`, `{organization_name}`, or `{days_since_signup}` in any message field. Any attribute on the customer record can be used.
+  </Accordion>
+  <Accordion title="What happens if an attribute has no value in a message?">
+    The placeholder will be empty. Test messages with real customer data to ensure correct rendering before launching campaigns.
+  </Accordion>
+  <Accordion title="Can I send Slack notifications to specific people?">
+    Yes. Include an email attribute with @ to ping that person directly in Slack, like `@{case_owner_email}`.
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="How should I start with Trig?">
+    1. Connect your data integrations (CRM, product data)
+    2. Configure lifecycle stages with 4-7 objectives each
+    3. Let data accumulate for 2-4 weeks to build baselines
+    4. Review Signals to identify customers needing attention
+    5. Create targeted campaigns based on Signal insights
+    6. Measure and iterate based on results
+  </Accordion>
+  <Accordion title="How many follow-ups should campaigns have?">
+    Most campaigns use 1-2 follow-ups. More than that often means your campaign is too broad or the goal is too ambitious. If someone hasn't responded after 2 follow-ups, try a different approach in a new campaign.
+  </Accordion>
+  <Accordion title="What's the ideal renewal window?">
+    Depends on your sales cycle:
+    - **30 days** for SMB, self-serve, low-touch (fast cycles, quick decisions)
+    - **60 days** for mid-market (time for 1-2 intervention attempts)
+    - **90+ days** for enterprise (complex buying processes, multiple stakeholders)
+  </Accordion>
+  <Accordion title="How do I identify my 'aha moment'?">
+    Look at retained vs churned customers: What did retained customers do early on that churned customers didn't? Find the behaviour with the biggest retention gap between doers and non-doers. This is your critical "aha moment" objective.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Why are no organisations entering my stage?">
+    Check that: entry criteria are correct, data is flowing for the criteria attributes, and organisations exist that should match. Use the Audience view to test your filters.
+  </Accordion>
+  <Accordion title="Why aren't objectives completing?">
+    Verify the attribute/event name is correct, check that data is updating when customers act, and test with a known customer who should have completed.
+  </Accordion>
+  <Accordion title="Why aren't my campaigns sending emails?">
+    Check that: the campaign is live (not paused), customers match the audience criteria, email integration is configured, and the sender is verified.
+  </Accordion>
+  <Accordion title="Why are no Signals appearing?">
+    Signals require: lifecycle stages configured and live, objectives with completion criteria, customers actively in stages, and sufficient completions for averages (10+).
+  </Accordion>
+  <Accordion title="Why are Trig activity attributes not appearing?">
+    Attributes only appear after first use. Ensure the campaign/stage/behaviour has been set live and at least one customer has entered.
+  </Accordion>
+</AccordionGroup>
