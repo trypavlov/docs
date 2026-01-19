@@ -50,6 +50,12 @@
               "use-cases/expansion-campaigns",
               "use-cases/renewal-campaigns"
             ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "faqs"
+            ]
           }
         ]
       },
