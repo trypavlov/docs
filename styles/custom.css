@@ -1,0 +1,129 @@
+/**
+ * Trig Design System - Custom Styles
+ *
+ * Based on the Trig Design System color palette:
+ * - Muted, warm color tones throughout
+ * - Blue: #5A7A99 (primary interactive color)
+ * - Action color: #8F8871 (secondary interactive elements)
+ * - Body text: #2D3339 (warm charcoal)
+ * - Background: #f7f7f7 (warm off-white)
+ */
+
+:root {
+  /* Primary palette - muted steel blue */
+  --trig-blue-50: #F0F3F7;
+  --trig-blue-100: #DCE4ED;
+  --trig-blue-200: #B9C9DB;
+  --trig-blue-300: #96ADC6;
+  --trig-blue-400: #7392B0;
+  --trig-blue-500: #5A7A99;
+  --trig-blue-600: #4A6580;
+  --trig-blue-700: #3D5368;
+  --trig-blue-800: #314250;
+  --trig-blue-900: #253138;
+
+  /* Action color - warm taupe for secondary interactions */
+  --trig-action: #8F8871;
+
+  /* Body text - warm charcoal tones */
+  --trig-text: #2D3339;
+  --trig-text-light: #4B5563;
+  --trig-text-lighter: #6B7280;
+  --trig-text-lightest: #8B9298;
+
+  /* Backgrounds - warm off-whites */
+  --trig-bg: #f7f7f7;
+  --trig-bg-dark: rgba(0, 0, 0, 0.04);
+  --trig-bg-darker: rgba(0, 0, 0, 0.08);
+
+  /* Grey scale - warm neutrals */
+  --trig-grey-100: #F2F2F1;
+  --trig-grey-200: #E8E8E7;
+  --trig-grey-300: #DEDEDD;
+  --trig-grey-400: #C8C8C7;
+  --trig-grey-500: #A7A7A6;
+
+  /* Semantic colors - muted versions */
+  --trig-green-500: #5A8A62;
+  --trig-red-500: #C45D4A;
+  --trig-yellow-500: #BFA757;
+
+  /* Border/rule color */
+  --trig-rule: #EDEEEC;
+}
+
+/* Base body styles */
+body {
+  color: var(--trig-text);
+}
+
+/* Subtle background tint for main content area */
+.dark body {
+  /* Preserve dark mode functionality */
+}
+
+/* Typography refinements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--trig-text);
+  letter-spacing: -0.02em;
+}
+
+/* Links use the muted blue */
+a {
+  color: var(--trig-blue-500);
+}
+
+a:hover {
+  color: var(--trig-blue-600);
+}
+
+/* Code blocks with warm grey background */
+pre {
+  background-color: var(--trig-grey-100) !important;
+  border: 1px solid var(--trig-rule);
+}
+
+code {
+  background-color: var(--trig-grey-100);
+  color: var(--trig-text);
+}
+
+/* Blockquotes with subtle left border */
+blockquote {
+  border-left-color: var(--trig-blue-300);
+  color: var(--trig-text-light);
+}
+
+/* Tables with warm styling */
+table {
+  border-color: var(--trig-rule);
+}
+
+th {
+  background-color: var(--trig-grey-100);
+  color: var(--trig-text);
+}
+
+/* Callout/card refinements */
+.callout, [class*="callout"] {
+  border-color: var(--trig-rule);
+}
+
+/* Navigation refinements */
+nav a {
+  color: var(--trig-text-light);
+}
+
+nav a:hover {
+  color: var(--trig-blue-500);
+}
+
+/* Buttons - action color for secondary */
+button.secondary, .btn-secondary {
+  background-color: var(--trig-action);
+  color: white;
+}
+
+button.secondary:hover, .btn-secondary:hover {
+  background-color: #7A7462;
+}

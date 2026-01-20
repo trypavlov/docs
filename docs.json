@@ -3,10 +3,11 @@
   "theme": "mint",
   "name": "Trig",
   "colors": {
-    "primary": "#6366F1",
-    "light": "#818CF8",
-    "dark": "#4F46E5"
+    "primary": "#5A7A99",
+    "light": "#7392B0",
+    "dark": "#4A6580"
   },
+  "css": "/styles/custom.css",
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
