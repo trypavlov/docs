@@ -5,7 +5,7 @@ description: "Create effective interventions that drive customer action"
 
 This guide walks you through building campaigns in Trig—from defining your goal to launching and measuring results.
 
-## Campaign Fundamentals
+## Campaign fundamentals
 
 Every campaign needs three things:
 
@@ -21,16 +21,16 @@ Every campaign needs three things:
   </Card>
 </CardGroup>
 
-## Step 1: Define Your Goal
+## Step 1: Define your goal
 
-### What Makes a Good Goal?
+### What makes a good goal?
 
 Goals should be:
 - **Single action** — One clear thing you want them to do
 - **Measurable** — Based on an attribute or event you can track
 - **Achievable** — Something the customer can realistically complete
 
-### Goal Examples
+### Goal examples
 
 | Campaign Type | Goal |
 |--------------|------|
@@ -43,9 +43,9 @@ Goals should be:
 **Avoid compound goals.** If you need multiple actions, create separate campaigns.
 </Warning>
 
-## Step 2: Define Your Audience
+## Step 2: Define your audience
 
-### Targeting Options
+### Targeting options
 
 **Using attributes directly:**
 ```
@@ -79,32 +79,32 @@ Exclusions:
 - currently_member_of_[other_campaign] = true  (prevent overlap)
 ```
 
-### Organisation vs People
+### Organisation vs people
 
 | Target | When to Use |
 |--------|-------------|
 | **Organisation** | Account-level decisions, commercial actions |
 | **People** | Individual behaviour, specific user needs to act |
 
-## Step 3: Set Duration
+## Step 3: Set duration
 
-### Auto-Exit Timing
+### Auto-exit timing
 
 Every campaign should have an auto-exit duration:
 
 | Action Complexity | Duration |
 |------------------|----------|
-| Simple (click, view) | 3-7 days |
-| Moderate (setup step) | 7-14 days |
-| Complex (invite team, integrate) | 14-30 days |
+| Simple (click, view) | 3 to 7 days |
+| Moderate (setup step) | 7 to 14 days |
+| Complex (invite team, integrate) | 14 to 30 days |
 
 <Tip>
 **Err shorter.** If someone hasn't responded in 14 days, another email in the same campaign probably won't help—try a different approach.
 </Tip>
 
-## Step 4: Configure Entry Actions
+## Step 4: Configure entry actions
 
-### Send Initial Email
+### Send initial email
 
 The entry email is your first touch. Make it count.
 
@@ -134,26 +134,26 @@ Thanks,
 Lee
 ```
 
-### Best Practices for Entry Emails
+### Best practices for entry emails
 
 <CardGroup cols={2}>
   <Card title="Be specific" icon="crosshairs">
     Reference what they have and haven't done. Show you know their situation.
   </Card>
   <Card title="Be actionable" icon="list-check">
-    Give 1-3 clear steps. Include links where helpful.
+    Give 1 to 3 clear steps. Include links where helpful.
   </Card>
   <Card title="Be brief" icon="compress">
-    3-5 sentences for simple actions. No long paragraphs.
+    3 to 5 sentences for simple actions. No long paragraphs.
   </Card>
   <Card title="Be human" icon="user">
     Plain text, from a real person, with a personal sign-off.
   </Card>
 </CardGroup>
 
-## Step 5: Configure Follow-Up Actions
+## Step 5: Configure follow-up actions
 
-### Adding Reminders
+### Adding reminders
 
 If customers haven't completed after the initial email, send a follow-up:
 
@@ -162,9 +162,9 @@ Wait 3 days → Send follow-up email
 Wait 7 days → Send second follow-up (optional)
 ```
 
-### Follow-Up Email Strategy
+### Follow-up email strategy
 
-**First follow-up (Day 3-5):**
+**First follow-up (Day 3 to 5):**
 - Reference that you've reached out before
 - Try a different angle
 - Shorter than the original
@@ -183,18 +183,18 @@ Thanks,
 Lee
 ```
 
-**Second follow-up (Day 7-10):**
+**Second follow-up (Day 7 to 10):**
 - Acknowledge they might be busy
 - Offer help or a call
 - This is often your last automated touch
 
 <Note>
-**Most campaigns use 1-2 follow-ups.** More than that often means your campaign is too broad or goal is too ambitious.
+**Most campaigns use 1 to 2 follow-ups.** More than that often means your campaign is too broad or goal is too ambitious.
 </Note>
 
-## Step 6: Configure Completion Actions
+## Step 6: Configure completion actions
 
-### What Happens on Success
+### What happens on success
 
 When a customer achieves the goal:
 
@@ -212,13 +212,13 @@ Completion Actions:
 └── Update Attribute: completed_onboarding_campaign = true
 ```
 
-### Silent Completion
+### Silent completion
 
 Not every campaign needs a completion message. For feature adoption campaigns, silent completion is often appropriate.
 
-## Step 7: Configure Exit Actions
+## Step 7: Configure exit actions
 
-### What Happens on Failure
+### What happens on failure
 
 When a customer exits without completing:
 
@@ -234,7 +234,7 @@ Exit Actions:
 └── Update Attribute: failed_onboarding_campaign = true
 ```
 
-### Chaining to Alternate Campaigns
+### Chaining to alternate campaigns
 
 Use exit actions to create branching journeys:
 
@@ -244,9 +244,9 @@ Campaign: Onboarding Nudge v1
 └── Exited → Route to "Onboarding Nudge v2" (different approach)
 ```
 
-## Step 8: Review and Launch
+## Step 8: Review and launch
 
-### Pre-Launch Checklist
+### Pre-launch checklist
 
 <Check>Goal is clear and measurable</Check>
 <Check>Audience returns expected customers</Check>
@@ -256,7 +256,7 @@ Campaign: Onboarding Nudge v1
 <Check>Completion and exit actions configured</Check>
 <Check>Exclusions prevent re-entry and overlap</Check>
 
-### Launch the Campaign
+### Launch the campaign
 
 <Steps>
   <Step title="Review configuration">
@@ -273,9 +273,9 @@ Campaign: Onboarding Nudge v1
   </Step>
 </Steps>
 
-## Campaign Chaining Patterns
+## Campaign chaining patterns
 
-### Success Path
+### Success path
 
 After completing Campaign 1, move to Campaign 2:
 
@@ -285,7 +285,7 @@ Campaign 2 Audience:
 - [next action criteria]
 ```
 
-### Failure Path
+### Failure path
 
 After failing Campaign 1, try Campaign 1B:
 
@@ -295,7 +295,7 @@ Campaign 1B Audience:
 - last_completed_Campaign_1 has no value
 ```
 
-### Progressive Journey
+### Progressive journey
 
 ```
 Welcome → Onboarding → Feature Adoption → Expansion
@@ -303,17 +303,17 @@ Welcome → Onboarding → Feature Adoption → Expansion
 Retry A    Retry B        CSM Outreach
 ```
 
-## Measuring Campaign Effectiveness
+## Measuring campaign effectiveness
 
-### Key Metrics
+### Key metrics
 
 | Metric | Formula | Target |
 |--------|---------|--------|
-| **Completion rate** | Completed / (Completed + Exited) | 20-40% |
+| **Completion rate** | Completed / (Completed + Exited) | 20 to 40% |
 | **Time to completion** | Avg days to complete | As fast as possible |
 | **Entry to exit rate** | Exited / Total entered | Lower is better |
 
-### What to Optimise
+### What to optimise
 
 | If... | Then... |
 |-------|---------|
@@ -322,13 +322,13 @@ Retry A    Retry B        CSM Outreach
 | High exit at specific point | Focus messaging there |
 | Certain segments complete more | Target them specifically |
 
-## Common Campaign Patterns
+## Common campaign patterns
 
-### Onboarding Nudge
+### Onboarding nudge
 
 ```
 Goal: first_project_created >= 1
-Audience: signup 1-7 days ago, no project created
+Audience: signup 1 to 7 days ago, no project created
 Duration: 10 days
 Entry: Plain text email with steps
 Follow-up: Day 3, Day 7
@@ -336,7 +336,7 @@ Completion: Notify team
 Exit: Route to "Onboarding Stalled" campaign
 ```
 
-### Feature Adoption
+### Feature adoption
 
 ```
 Goal: feature_X_used >= 1
@@ -348,7 +348,7 @@ Completion: Silent
 Exit: Flag for CSM
 ```
 
-### Churn Prevention
+### Churn prevention
 
 ```
 Goal: engagement_restored = true
@@ -390,7 +390,7 @@ Building effective campaigns:
 2. **Right audience** — Specific targeting with exclusions
 3. **Appropriate duration** — Time-bounded, err shorter
 4. **Human messaging** — Plain text, specific, actionable
-5. **Strategic follow-ups** — 1-2 max, vary the angle
+5. **Strategic follow-ups** — 1 to 2 max, vary the angle
 6. **Complete the loop** — Actions on both completion and exit
 7. **Chain thoughtfully** — Build progressive journeys
 

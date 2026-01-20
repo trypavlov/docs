@@ -5,7 +5,7 @@ description: "Orchestrate interventions to drive customer success"
 
 Campaigns are the intervention layer of Trig. They orchestrate outreach to customers who meet specific criteria, with the goal of driving them toward a desired behaviour.
 
-## What Are Campaigns?
+## What are campaigns?
 
 Unlike lifecycle stages (which observe) and behaviours (which track milestones), campaigns actively intervene—sending messages, notifying teams, and measuring whether the intervention worked.
 
@@ -15,15 +15,15 @@ Unlike lifecycle stages (which observe) and behaviours (which track milestones),
 
 Think of campaigns as targeted nudges. You've identified customers who should do something but haven't. The campaign reaches out, encourages the action, and measures results.
 
-## Why Campaigns Matter
+## Why campaigns matter
 
-### Closing the Gap Between Insight and Action
+### Closing the gap between insight and action
 
 Lifecycle stages and behaviours tell you what's happening. Campaigns let you do something about it.
 
 The insight that "47 customers haven't completed onboarding objective 3" becomes actionable when you can immediately target those 47 with a relevant message.
 
-### Timely, Contextual Intervention
+### Timely, contextual intervention
 
 The closer an intervention arrives to the moment of need, the more effective it is:
 
@@ -34,7 +34,7 @@ The closer an intervention arrives to the moment of need, the more effective it 
 | Within 24 hours | Good—still relatively fresh |
 | 48+ hours | Declining—customer has moved on |
 
-### Measurable Impact
+### Measurable impact
 
 Every campaign tracks:
 - How many entered
@@ -45,9 +45,9 @@ Every campaign tracks:
 
 This creates clear attribution for intervention effectiveness.
 
-## How Campaigns Work
+## How campaigns work
 
-### The Campaign Lifecycle
+### The campaign lifecycle
 
 ```
 Audience Match → Entry → Intervention → Outcome
@@ -63,7 +63,7 @@ Audience Match → Entry → Intervention → Outcome
 3. **Intervention:** Messages sent, follow-ups occur
 4. **Outcome:** Goal achieved (completion) or time expires (exit)
 
-### Completion vs Exit
+### Completion vs exit
 
 **Completion:** The customer achieved the goal. This is the positive outcome.
 
@@ -76,32 +76,32 @@ last_exited_[campaign]     — Timestamp if exited without completing
 last_entered_[campaign]    — When they entered
 ```
 
-### Time-Bounded by Design
+### Time-bounded by design
 
 <Warning>
 Campaigns should have an auto-exit duration. Without one, customers who never achieve the goal remain indefinitely—breaking your ability to analyse and iterate.
 </Warning>
 
 **Duration guidelines:**
-- Simple actions (click a link): 3-7 days
-- Moderate actions (complete setup step): 7-14 days
-- Complex actions (invite team, integrate system): 14-30 days
+- Simple actions (click a link): 3 to 7 days
+- Moderate actions (complete setup step): 7 to 14 days
+- Complex actions (invite team, integrate system): 14 to 30 days
 
-## Configuring Campaigns
+## Configuring campaigns
 
-### Anatomy of a Campaign
+### Anatomy of a campaign
 
 | Component | Description | Example |
 |-----------|-------------|---------|
 | **Goal** | What you want customers to do | `invoices_created >= 1` |
-| **Audience** | Who should receive this | New users, signed up 1-7 days ago |
+| **Audience** | Who should receive this | New users, signed up 1 to 7 days ago |
 | **Duration** | How long before auto-exit | 14 days |
 | **Entry Actions** | What happens when they enter | Send initial email |
 | **Intervention** | Follow-up messages/actions | Follow-up email after 3 days |
 | **Completion Actions** | What happens on success | Notify team, update CRM |
 | **Exit Actions** | What happens on failure | Flag for follow-up campaign |
 
-### Defining the Goal
+### Defining the goal
 
 The goal is the completion criteria—what must be true for success.
 
@@ -127,7 +127,7 @@ last_completed_[behaviour] has any value
 Keep goals focused on a single, clear action. Multiple actions = separate campaigns.
 </Tip>
 
-### Defining the Audience
+### Defining the audience
 
 **Basic criteria:**
 ```
@@ -153,11 +153,11 @@ Audience:
 - **Relative vs absolute dates:** Relative dates mean audience constantly refreshes
 - **Exclusions:** Use `last_entered_[campaign] has any value` to exclude customers who've already been through
 
-## Campaign Actions
+## Campaign actions
 
 See [Actions](/concepts/actions) for detailed action configuration.
 
-### Entry Actions
+### Entry actions
 
 Fire when a customer enters:
 - **Send email:** Plain text message to the customer
@@ -165,7 +165,7 @@ Fire when a customer enters:
 - **Update attribute:** Set value on customer record
 - **Fire webhook:** Call external endpoint
 
-### Follow-Up Actions
+### Follow-up actions
 
 After entry, schedule follow-up:
 ```
@@ -173,9 +173,9 @@ Wait 3 days → Send follow-up email
 Wait 7 days → Send second follow-up
 ```
 
-Most campaigns use 1-2 follow-ups. More often indicates the campaign is too broad.
+Most campaigns use 1 to 2 follow-ups. More often indicates the campaign is too broad.
 
-### Completion Actions
+### Completion actions
 
 When goal is achieved:
 - Celebratory message
@@ -183,16 +183,16 @@ When goal is achieved:
 - Update CRM
 - Route to next campaign
 
-### Exit Actions
+### Exit actions
 
 When customer exits without completing:
 - Notification to team
 - Update attribute to mark failure
 - Route to alternate campaign
 
-## Email Best Practices
+## Email best practices
 
-### Plain Text Over Branded
+### Plain text over branded
 
 <Warning>
 **Trig strongly recommends plain text emails.** They look personal, get 10x higher engagement, and feel human even when automated.
@@ -204,7 +204,7 @@ When customer exits without completing:
 - Higher response rates
 - Avoids spam filters
 
-### Contextual and Specific
+### Contextual and specific
 
 **Good:**
 ```
@@ -232,19 +232,19 @@ FreshBooks is the #1 invoicing solution for small businesses...
 
 The good example is contextual, specific, actionable, and personal.
 
-### Short and Actionable
+### Short and actionable
 
 - Lead with the action you want them to take
-- Provide 1-3 clear steps
+- Provide 1 to 3 clear steps
 - Include relevant links
 - Offer help if needed
 - Sign off personally
 
-## Chaining Campaigns
+## Chaining campaigns
 
 One of Trig's powerful capabilities is chaining campaigns based on outcomes.
 
-### Success Path
+### Success path
 
 ```
 Campaign 2 Audience:
@@ -252,7 +252,7 @@ Campaign 2 Audience:
 - [next action criteria]
 ```
 
-### Failure Path
+### Failure path
 
 ```
 Campaign 1B Audience:
@@ -260,7 +260,7 @@ Campaign 1B Audience:
 - last_completed_Campaign_1 has no value
 ```
 
-### Progressive Context
+### Progressive context
 
 ```
 Customer: Acme Corp
@@ -274,16 +274,16 @@ Campaign History:
 
 This history enables highly targeted messaging.
 
-## Targeting: Organisations vs People
+## Targeting: organisations vs people
 
-### Organisation-Level Campaigns
+### Organisation-level campaigns
 
 Target the account:
 - Intervention goes to contacts associated with the organisation
 - Useful for account-based actions
 - Multiple people may receive messages
 
-### Individual-Level Campaigns
+### Individual-level campaigns
 
 Target specific people:
 - Intervention goes to that individual
@@ -292,9 +292,9 @@ Target specific people:
 
 Choose based on what action you're driving. "Invite team members" targets individuals. "Renew contract" targets organisations.
 
-## Measuring Effectiveness
+## Measuring effectiveness
 
-### Key Metrics
+### Key metrics
 
 | Metric | Formula |
 |--------|---------|
@@ -311,9 +311,9 @@ Use campaign data to improve:
 - High exit at specific point → Focus messaging there
 - Certain segments complete more → Target them specifically
 
-## Common Campaign Patterns
+## Common campaign patterns
 
-### Onboarding Nudge
+### Onboarding nudge
 
 ```
 Goal: first_project_created >= 1
@@ -327,7 +327,7 @@ Follow-up: Day 3, Day 7
 Exit: Route to "Onboarding Stalled" campaign
 ```
 
-### Feature Adoption
+### Feature adoption
 
 ```
 Goal: feature_X_used >= 1
@@ -341,7 +341,7 @@ Completion: Silent success
 Exit: Flag for CSM follow-up
 ```
 
-### Churn Prevention
+### Churn prevention
 
 ```
 Goal: engagement_restored = true
@@ -353,11 +353,11 @@ Entry: Personal outreach from CSM
 Exit: Escalate to sales
 ```
 
-## Common Questions
+## Common questions
 
 <AccordionGroup>
   <Accordion title="How long should campaigns run?">
-    Keep campaigns short and focused. 7-14 days for most use cases. If no response in 14 days, try a different approach in a new campaign.
+    Keep campaigns short and focused. 7 to 14 days for most use cases. If no response in 14 days, try a different approach in a new campaign.
   </Accordion>
   <Accordion title="Can a customer be in multiple campaigns?">
     Yes, but be careful about message volume. Use exclusion criteria to prevent overlap.

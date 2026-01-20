@@ -5,7 +5,7 @@ description: "Define the phases of your customer journey"
 
 Lifecycle stages represent defined periods of time during which your customers progress through sets of desirable behaviours. They are the foundational framework that enables Trig to understand the path customers take through your product.
 
-## What Are Lifecycle Stages?
+## What are lifecycle stages?
 
 Think of lifecycle stages as chapters in your customer's journey. Each chapter has:
 - A beginning (entry criteria)
@@ -14,7 +14,7 @@ Think of lifecycle stages as chapters in your customer's journey. Each chapter h
 
 By tracking progression through these chapters, Trig builds a picture of what "normal" looks like—and identifies who is ahead of normal, who is behind, and what patterns exist among each group.
 
-## Why Lifecycle Stages Matter
+## Why lifecycle stages matter
 
 Lifecycle stages are the foundation that enables all other Trig capabilities:
 
@@ -30,7 +30,7 @@ Lifecycle stages are the foundation that enables all other Trig capabilities:
 **The compounding effect:** Once lifecycle stages are configured, every new customer automatically progresses, data accumulates for pattern discovery, and the system continuously improves.
 </Note>
 
-## Standard Stages
+## Standard stages
 
 Most B2B SaaS companies use four stages:
 
@@ -66,9 +66,9 @@ Pre-renewal health monitoring and risk identification. Typically 60-90 days befo
 - Are there risk signals?
 - What's the renewal likelihood?
 
-## How Lifecycle Stages Work
+## How lifecycle stages work
 
-### Entry and Exit Criteria
+### Entry and exit criteria
 
 Every lifecycle stage needs clear boundaries:
 
@@ -82,7 +82,7 @@ Every lifecycle stage needs clear boundaries:
 - Time-based (after 30 days regardless of completion)
 - Specific milestone achieved
 
-### Exit Strategy Options
+### Exit strategy options
 
 | Criteria-Based Exit | Time-Based Exit |
 |--------------------|-----------------|
@@ -94,7 +94,7 @@ Every lifecycle stage needs clear boundaries:
 **Recommendation:** Use time-based exit as a safety net, even with criteria-based completion. This prevents organisations from sitting in stages forever.
 </Tip>
 
-### Objectives Within Stages
+### Objectives within stages
 
 Objectives are the specific milestones that indicate healthy progression. See [Objectives](/concepts/objectives) for details.
 
@@ -107,11 +107,11 @@ Lifecycle Stage: Onboarding
 └── Objective 5: Completed Full Week of Usage
 ```
 
-## Understanding "Normal"
+## Understanding "normal"
 
 The primary purpose of lifecycle stages is to establish what normal progression looks like, then identify deviations.
 
-### How Normal Is Calculated
+### How normal is calculated
 
 As organisations progress through a stage, Trig calculates:
 
@@ -122,7 +122,7 @@ As organisations progress through a stage, Trig calculates:
 | **Completion rates** | What percentage complete each objective? |
 | **Completion sequence** | In what order do customers complete? |
 
-### Above and Below Average
+### Above and below average
 
 Once normal is established, every organisation is measured against it:
 
@@ -136,7 +136,7 @@ Once normal is established, every organisation is measured against it:
 - May indicate friction or disengagement
 - Intervention opportunities
 
-### Visual Representation
+### Visual representation
 
 ```
 Objective 1: First Invoice Created
@@ -150,9 +150,9 @@ Objective 2: Payment Gateway Connected
 └── Status: BEHIND (currently Day 21, 7 days overdue)
 ```
 
-## Configuring Lifecycle Stages
+## Configuring lifecycle stages
 
-### Planning Questions
+### Planning questions
 
 Before creating stages, answer these for each stage:
 
@@ -166,7 +166,7 @@ Before creating stages, answer these for each stage:
 - Is it time-based, event-based, or completion of previous stage?
 
 **Objectives:**
-- What 3-7 milestones define healthy progression?
+- What 3 to 7 milestones define healthy progression?
 - What indicates each objective is complete?
 - What's the "aha moment"?
 
@@ -174,7 +174,7 @@ Before creating stages, answer these for each stage:
 - When does this stage end?
 - Completion-based, time-based, or hybrid?
 
-### Configuration Steps
+### Configuration steps
 
 <Steps>
   <Step title="Create the stage">
@@ -184,7 +184,7 @@ Before creating stages, answer these for each stage:
     Specify what qualifies an organisation to enter
   </Step>
   <Step title="Add objectives">
-    Create 4-7 objectives with completion criteria
+    Create 4 to 7 objectives with completion criteria
   </Step>
   <Step title="Set exit criteria">
     Configure when organisations leave the stage
@@ -194,9 +194,9 @@ Before creating stages, answer these for each stage:
   </Step>
 </Steps>
 
-### Best Practices
+### Best practices
 
-**Start with 4-5 objectives per stage.** Too few loses granularity; too many creates noise.
+**Start with 4 to 5 objectives per stage.** Too few loses granularity; too many creates noise.
 
 **Define objectives you can actually track.** Only create objectives where you have data.
 
@@ -204,38 +204,38 @@ Before creating stages, answer these for each stage:
 
 **Consider parallel stages.** Enterprise and self-serve customers may need different stage configurations.
 
-## What Lifecycle Stages Enable
+## What lifecycle stages enable
 
 Once properly configured, lifecycle stages become the foundation for:
 
-### Pattern Discovery
+### Pattern discovery
 - Which objective completion patterns predict retention?
 - What attributes are common among fast completers?
 - Where are the drop-off points?
 
-### Early Warning
+### Early warning
 - Who is stuck in onboarding?
 - Which organisations are below average on critical objectives?
 - What revenue is at risk?
 
-### Automated Interventions
+### Automated interventions
 - Trigger campaigns when objectives are overdue
 - Send contextual messages based on stage and objective status
 - Notify internal teams when high-value accounts are at risk
 
-### Impact Measurement
+### Impact measurement
 - Did the intervention improve completion?
 - Are campaign recipients completing faster?
 - Which messaging is most effective?
 
-## Multiple Concurrent Stages
+## Multiple concurrent stages
 
 Organisations can be in multiple lifecycle stages at once, though this requires careful design. Common use cases:
 
 - Different stages for different products
 - Parallel tracks for different user types within the same organisation
 
-## Common Questions
+## Common questions
 
 <AccordionGroup>
   <Accordion title="What happens if an organisation never completes a stage?">
