@@ -10,6 +10,15 @@
   "css": "/styles/custom.css",
   "favicon": "/favicon.svg",
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Support",
+          "icon": "envelope",
+          "href": "mailto:support@trig.com"
+        }
+      ]
+    },
     "tabs": [
       {
         "tab": "Documentation",
@@ -62,6 +71,7 @@
       },
       {
         "tab": "API Reference",
+        "hidden": true,
         "groups": [
           {
             "group": "API Documentation",
@@ -71,16 +81,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Support",
-          "href": "mailto:support@trig.com",
-          "icon": "envelope"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",

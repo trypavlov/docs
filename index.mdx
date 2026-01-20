@@ -26,12 +26,7 @@ Trig connects your CRM and product data to build a complete picture of every cus
 
 ## Get Started
 
-<Card
-  title="Quickstart Guide"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
+<Card title="Quickstart Guide" icon="rocket" horizontal href="/quickstart">
   Get launched in Trig with our step-by-step setup guide
 </Card>
 
@@ -71,48 +66,7 @@ Trig is built around a set of interconnected objects that work together to power
 
 ## The Trig Platform
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    DATA SOURCES                         │
-│         (CRM, Product Analytics, Data Warehouse)        │
-└────────────────────────┬────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────┐
-│                    CORE ENTITIES                        │
-│  ┌──────────────┐          ┌──────────────────────┐    │
-│  │    ORG       │◄────────►│      PEOPLE          │    │
-│  │  (Account)   │ contains │   (End Users)        │    │
-│  └──────────────┘          └──────────────────────┘    │
-└────────────────────────┬────────────────────────────────┘
-                         │
-         ┌───────────────┼───────────────┐
-         ▼               ▼               ▼
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│  LIFECYCLE  │  │ BEHAVIOURS  │  │  COHORTS    │
-│   STAGES    │  │             │  │             │
-│ ┌─────────┐ │  │  (Pattern   │  │ (Audience   │
-│ │Objectives│ │  │  Tracking)  │  │  Segments)  │
-│ └─────────┘ │  │             │  │             │
-└──────┬──────┘  └──────┬──────┘  └──────┬──────┘
-       │                │                │
-       └────────────────┼────────────────┘
-                        ▼
-              ┌─────────────────┐
-              │   CAMPAIGNS     │
-              │                 │
-              │ Goal + Audience │
-              │ + Interventions │
-              └────────┬────────┘
-                       │
-                       ▼
-              ┌─────────────────┐
-              │    OUTPUTS      │
-              │                 │
-              │ Emails, Slack,  │
-              │ Webhooks, Tasks │
-              └─────────────────┘
-```
+![Trig Platform Objects 1](/images/trig-platform-objects_1.png)
 
 ## Why Trig?
 
