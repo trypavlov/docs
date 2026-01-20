@@ -1,6 +1,22 @@
 # Trig Documentation Style Guide
 
-This guide ensures all documentation speaks in Trig's voice. When writing or editing docs, follow these principles.
+This guide ensures all documentation speaks in Trig's voice and follows the Trig Design System. When writing or editing docs, follow these principles.
+
+## Design System
+
+This documentation uses the Trig Design System. The color palette uses muted, warm tones:
+
+### Color Palette
+- **Primary blue**: #5A7A99 (links, buttons, interactive elements)
+- **Action color**: #8F8871 (secondary interactive elements)
+- **Body text**: #2D3339 (warm charcoal)
+- **Background**: #f7f7f7 (warm off-white)
+
+### Key Principles
+- Muted, sophisticated colors - no harsh or vibrant tones
+- Warm undertones throughout (greys have warm, not cool, undertones)
+- High contrast for readability
+- Consistent with brand identity
 
 ## Voice Principles
 
