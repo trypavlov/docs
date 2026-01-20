@@ -1,6 +1,47 @@
 # Trig Documentation Style Guide
 
-This guide ensures all documentation speaks in Trig's voice. When writing or editing docs, follow these principles.
+This guide ensures all documentation speaks in Trig's voice and follows the Pavlov design system. When writing or editing docs, follow these principles.
+
+## Design System
+
+This documentation uses the **Pavlov Design System**. Key styling rules:
+
+### Colors (Muted, Warm Palette)
+
+The color palette uses muted, warm tones exclusively. No bright or neon colors.
+
+| Color Role | Hex Value | Usage |
+|------------|-----------|-------|
+| Primary | #5A7A99 | Links, CTAs, interactive elements |
+| Primary Light | #7392B0 | Hover states, highlights |
+| Primary Dark | #4A6580 | Active states, emphasis |
+| Background | #f7f7f7 | Page background |
+| Text Primary | #2D3339 | Headings, main content |
+| Text Secondary | #4B5563 | Descriptions, body text |
+| Text Muted | #8B9298 | Disabled, tertiary info |
+| Border | #EDEEEC | Cards, dividers, inputs |
+| Success | #5A8A62 | Success messages (muted sage) |
+| Warning | #B87A52 | Warning messages (muted terracotta) |
+| Error | #C45D4A | Error messages (muted red) |
+
+### Typography
+
+| Element | Weight | Usage |
+|---------|--------|-------|
+| Headings | 600 (Bold) | All h1-h6, with tight letter-spacing |
+| Body text | 300 (Light) | Paragraphs, lists, descriptions |
+| Labels/UI | 500 (Medium) | Form labels, buttons, emphasis |
+| Strong | 500 (Medium) | Bold text within paragraphs |
+
+### Design Principles
+
+From the Pavlov design system:
+
+1. **Muted colors only** - No bright/neon colors. Our blue is steel blue, not electric blue. Our red is terracotta, not fire engine red.
+2. **Warm undertones** - All colors have a slight yellow/brown shift for sophistication
+3. **Subtle borders** - Use `#EDEEEC` for borders, never dark borders on light backgrounds
+4. **Consistent spacing** - Follow Tailwind spacing scale (2, 4, 6, 8)
+5. **No arbitrary values** - Use design tokens, not hex codes in content
 
 ## Voice Principles
 
