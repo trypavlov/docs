@@ -5,7 +5,7 @@ description: "Track milestones within each lifecycle stage"
 
 Objectives are specific milestones or behaviours that you want to track within a lifecycle stage. They represent the things you expect customers to do as they progress—the actions that indicate healthy usage and forward momentum.
 
-## What Are Objectives?
+## What are objectives?
 
 Objectives are the checkpoints along a journey. Each checkpoint answers:
 - "Has this customer done this thing yet?"
@@ -15,7 +15,7 @@ Objectives are the checkpoints along a journey. Each checkpoint answers:
 **Key distinction:** Objectives are observational. They track whether something happened without necessarily triggering an intervention. You're building a picture of what customers are doing, how quickly, and who is ahead or behind.
 </Note>
 
-## Objectives vs Markers
+## Objectives vs markers
 
 Within lifecycle stages, Trig distinguishes between two types:
 
@@ -35,9 +35,9 @@ Within lifecycle stages, Trig distinguishes between two types:
 - Session duration greater than 10 minutes
 - Returned within 24 hours
 
-## Why Objectives Matter
+## Why objectives matter
 
-### Building a Picture of Normal
+### Building a picture of normal
 
 Every objective contributes to understanding what "normal" looks like:
 
@@ -49,7 +49,7 @@ Every objective contributes to understanding what "normal" looks like:
 
 This baseline builds automatically as data accumulates.
 
-### Identifying Who Needs Attention
+### Identifying who needs attention
 
 Once normal is established, every organisation can be measured:
 
@@ -59,7 +59,7 @@ Once normal is established, every organisation can be measured:
 
 This comparison is the foundation for [Signals](/concepts/signals).
 
-### Enabling Pattern Discovery
+### Enabling pattern discovery
 
 Objectives create measurement points for analysis:
 
@@ -67,9 +67,9 @@ Objectives create measurement points for analysis:
 - "Customers who skip Objective C rarely complete Objective D"
 - "The median time to complete all onboarding objectives is 12 days"
 
-## How Objectives Work
+## How objectives work
 
-### Relationship to Lifecycle Stages
+### Relationship to lifecycle stages
 
 Objectives always live within a lifecycle stage. They inherit their audience from the stage—if an organisation is in the stage, it's being tracked against the stage's objectives.
 
@@ -82,7 +82,7 @@ Lifecycle Stage: Onboarding
 └── Objective 5: Completed Full Week of Usage
 ```
 
-### Non-Linear Completion
+### Non-linear completion
 
 Objectives do not need to be completed in order. Unless your business logic requires a specific sequence, customers can complete in any order.
 
@@ -95,7 +95,7 @@ This matters because:
 If you need to enforce sequence (Objective B requires Objective A), build that into the completion criteria.
 </Tip>
 
-### Completion Tracking
+### Completion tracking
 
 When an objective is completed, Trig records:
 
@@ -107,9 +107,9 @@ When an objective is completed, Trig records:
 
 This data becomes metadata on the organisation for filtering, targeting, and analysis.
 
-## Configuring Objectives
+## Configuring objectives
 
-### Anatomy of an Objective
+### Anatomy of an objective
 
 | Field | Description | Example |
 |-------|-------------|---------|
@@ -117,7 +117,7 @@ This data becomes metadata on the organisation for filtering, targeting, and ana
 | **Audience** | Who this applies to (usually inherited) | All orgs in stage |
 | **Completion Criteria** | What indicates done | `invoices_created >= 1` |
 
-### Completion Criteria Options
+### Completion criteria options
 
 **Attribute-based:**
 ```
@@ -138,7 +138,7 @@ condition_1 AND condition_2
 condition_1 OR condition_2
 ```
 
-### Keep Objectives Simple
+### Keep objectives simple
 
 <Warning>
 Each objective should track one meaningful milestone. Complex objectives with many AND conditions are harder to interpret and optimise.
@@ -158,7 +158,7 @@ first_payment_received = true
 - Team Collaboration Started
 - First Payment Received
 
-### Naming Conventions
+### Naming conventions
 
 Good objective names are:
 - **Descriptive** — Clear what the milestone is
@@ -171,7 +171,7 @@ Good objective names are:
 | "Using Projects (3+)" | "Projects" |
 | "Team Member Invited" | "Has team" |
 
-### Threshold Objectives
+### Threshold objectives
 
 Track not just whether something happened, but how much:
 
@@ -191,9 +191,9 @@ This reveals:
 - How many become moderate users
 - How many become power users
 
-## Objectives and Signals
+## Objectives and signals
 
-### How Signals Use Objectives
+### How signals use objectives
 
 The [Signals](/concepts/signals) feature analyses objective performance and identifies organisations that need attention:
 
@@ -207,16 +207,16 @@ The [Signals](/concepts/signals) feature analyses objective performance and iden
 - Organisation X has been in stage for 14 days, hasn't completed it
 - Organisation X appears as a slow completer
 
-### From Signal to Action
+### From signal to action
 
 1. **Signal surfaces organisations** — "47 organisations are overdue on 'First Invoice'"
 2. **You review and decide** — Worth intervening? What should we say?
 3. **Create campaign** — Target these organisations
 4. **Measure impact** — Did the intervention improve completion?
 
-## Viewing Objective Performance
+## Viewing objective performance
 
-### Stage-Level View
+### Stage-level view
 
 Within a lifecycle stage, see aggregate performance:
 
@@ -225,7 +225,7 @@ Within a lifecycle stage, see aggregate performance:
 - Average time to complete
 - Week-over-week trends
 
-### Organisation-Level View
+### Organisation-level view
 
 For an individual organisation:
 
@@ -243,7 +243,7 @@ Objective 2: Payment Gateway Connected
 └── Status: BEHIND (7 days overdue)
 ```
 
-## Objectives vs Stage Completion
+## Objectives vs stage completion
 
 **Stage completion criteria** determine when an organisation exits the stage.
 
@@ -259,20 +259,20 @@ Objective 2: Payment Gateway Connected
 
 Most implementations use time-based or hybrid.
 
-## Best Practices
+## Best practices
 
-### Start with 4-7 Objectives Per Stage
+### Start with 4 to 7 objectives per stage
 
 Too few = lack granularity. Too many = noise overwhelms signal.
 
-### Define Objectives You Can Track
+### Define objectives you can track
 
 Only create objectives where you have data. Confirm:
 - The event or attribute exists
 - It's flowing into Trig correctly
 - It updates when the customer acts
 
-### Make Objectives Meaningful
+### Make objectives meaningful
 
 Objectives should represent meaningful milestones, but don't need to be important enough to email about:
 
@@ -280,11 +280,11 @@ Objectives should represent meaningful milestones, but don't need to be importan
 
 The intervention decision comes later, informed by patterns across your customer base.
 
-### Use Objectives to Find Bottlenecks
+### Use objectives to find bottlenecks
 
 If Objective A has 90% completion and Objective B has 10%, you've found a bottleneck. Design objectives to reveal where customers get stuck.
 
-### Review and Refine
+### Review and refine
 
 Once objectives are live and accumulating data:
 
@@ -293,7 +293,7 @@ Once objectives are live and accumulating data:
 - Is there an objective that predicts success?
 - Is there an objective that predicts churn?
 
-## Common Questions
+## Common questions
 
 <AccordionGroup>
   <Accordion title="Can I add objectives after the stage is live?">

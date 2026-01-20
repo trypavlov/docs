@@ -5,17 +5,17 @@ description: "Execute interventions via email, Slack, and webhooks"
 
 Actions are the things Trig does in response to customer activity. They're the "do something" layer of the platform—executing interventions, sending notifications, updating systems, and communicating with customers.
 
-## What Are Actions?
+## What are actions?
 
 Every campaign, behaviour, and lifecycle stage can trigger actions at key moments. Actions turn insight into intervention.
 
 **Core principle:** Trig observes customer behaviour, identifies when intervention is needed, and actions execute that intervention.
 
-## When Actions Trigger
+## When actions trigger
 
 Actions fire at specific moments:
 
-### Entry Actions
+### Entry actions
 
 Fire when a customer enters a campaign, behaviour, or lifecycle stage.
 
@@ -24,7 +24,7 @@ Fire when a customer enters a campaign, behaviour, or lifecycle stage.
 - Notifying your team
 - Recording entry in CRM
 
-### Completion Actions (Follow-Up)
+### Completion actions (follow-up)
 
 Fire when a customer achieves the goal.
 
@@ -34,7 +34,7 @@ Fire when a customer achieves the goal.
 - Recording completion in CRM
 - Triggering next-stage campaigns
 
-### Exit Actions (Fallback)
+### Exit actions (fallback)
 
 Fire when a customer exits without completing.
 
@@ -44,9 +44,9 @@ Fire when a customer exits without completing.
 - Triggering escalation or alternative campaigns
 - Alerting CSMs for manual follow-up
 
-## Action Types
+## Action types
 
-### Message Customer
+### Message customer
 
 Send an email directly to the customer.
 
@@ -74,7 +74,7 @@ Thanks,
 Anna
 ```
 
-### Send Reminder Message
+### Send reminder message
 
 Send a follow-up email after a delay if the customer hasn't completed.
 
@@ -90,7 +90,7 @@ Send a follow-up email after a delay if the customer hasn't completed.
 4. Wait 5 more days
 5. If still not completed: Exit with fallback actions
 
-### Notify Team
+### Notify team
 
 Send a notification to your internal team via Slack.
 
@@ -110,7 +110,7 @@ the "At Risk" campaign. They haven't logged in for 30+ days.
 **Dynamic @-mentions:** Include an email attribute with @ to ping that person directly in Slack.
 </Tip>
 
-### Update Attribute
+### Update attribute
 
 Set or update an attribute value on the customer record.
 
@@ -129,11 +129,11 @@ Value: true
 If you update an attribute that's also synced from CRM, the next sync may overwrite your update. Use Trig-specific fields.
 </Warning>
 
-## Dynamic Attributes in Messages
+## Dynamic attributes in messages
 
 Actions can include dynamic content from customer attributes.
 
-### How to Use
+### How to use
 
 In any message field, insert attribute placeholders:
 
@@ -149,7 +149,7 @@ Thanks,
 {sender_name}
 ```
 
-### Available Attributes
+### Available attributes
 
 Any attribute on the customer record:
 - **Person attributes:** first_name, email, role
@@ -157,13 +157,13 @@ Any attribute on the customer record:
 - **Trig-generated:** last_entry_to_campaign, days_in_stage
 - **CRM attributes:** case_owner_email, account_manager
 
-### Handling Missing Values
+### Handling missing values
 
 If an attribute has no value, the placeholder will be empty. Test messages with real customer data to ensure correct rendering.
 
-## Email Configuration
+## Email configuration
 
-### Integration Setup
+### Integration setup
 
 Before sending emails, you need:
 1. **Domain verification:** DNS records to authorise sending
@@ -172,7 +172,7 @@ Before sending emails, you need:
 
 This is handled during onboarding.
 
-### Sender Identity
+### Sender identity
 
 Emails should appear from a real person:
 
@@ -183,7 +183,7 @@ Emails should appear from a real person:
 
 Personal senders get higher engagement.
 
-### Plain Text vs HTML
+### Plain text vs HTML
 
 <Warning>
 **Strong recommendation: Use plain text.**
@@ -196,7 +196,7 @@ Personal senders get higher engagement.
 | Higher response rates | Lower response rates |
 | Avoids spam filters | More likely filtered |
 
-## Slack Integration
+## Slack integration
 
 ### Setup
 
@@ -204,21 +204,21 @@ Personal senders get higher engagement.
 2. Wait for channel enumeration
 3. Select channels for notifications
 
-### Channel Selection
+### Channel selection
 
 Target channels like:
 - #customer-success
 - #sales-alerts
 - #trig-notifications
 
-### Message Formatting
+### Message formatting
 
 Slack messages support:
 - Dynamic attributes (same as email)
 - @-mentions using email addresses
 - Basic formatting
 
-## Using Attributes to Chain Campaigns
+## Using attributes to chain campaigns
 
 Actions that update attributes enable campaign chaining:
 
@@ -234,7 +234,7 @@ Campaign 1B: Alternative for failures
 └── Audience: "failed_campaign_1" = true
 ```
 
-## Campaign Action Flow Example
+## Campaign action flow example
 
 ```
 Campaign: Onboarding Nudge
@@ -255,7 +255,7 @@ Campaign: Onboarding Nudge
     └── Update Attribute: failed_onboarding = true
 ```
 
-## Action Availability by Context
+## Action availability by context
 
 | Action | Entry | Completion | Exit |
 |--------|-------|------------|------|
@@ -266,9 +266,9 @@ Campaign: Onboarding Nudge
 
 *May have constraints depending on configuration
 
-## Best Practices
+## Best practices
 
-### Email Content
+### Email content
 
 **Be specific and actionable:**
 ```
@@ -287,11 +287,11 @@ That's it—you'll get a notification when they pay.
 ```
 
 **Keep it short:**
-- 3-5 sentences for simple actions
+- 3 to 5 sentences for simple actions
 - Bullet points for multi-step instructions
 - No long paragraphs
 
-### Notification Strategy
+### Notification strategy
 
 **Don't over-notify:**
 - Reserve notifications for high-value or high-risk situations
@@ -303,7 +303,7 @@ That's it—you'll get a notification when they pay.
 - Routine updates → Team channel without @-mention
 - Escalations → Specific person @-mentioned
 
-### Attribute Management
+### Attribute management
 
 **Name clearly:**
 - `completed_onboarding_campaign` not `flag_1`
@@ -328,7 +328,7 @@ That's it—you'll get a notification when they pay.
 
 ## Troubleshooting
 
-### Emails Not Sending
+### Emails not sending
 
 Check:
 - Email integration configured?
@@ -336,7 +336,7 @@ Check:
 - DNS records in place?
 - Campaign active (not paused)?
 
-### Slack Notifications Not Appearing
+### Slack notifications not appearing
 
 Check:
 - Slack integration connected?
@@ -344,7 +344,7 @@ Check:
 - Correct channel selected?
 - Bot has permission to post?
 
-### Attributes Not Updating
+### Attributes not updating
 
 Check:
 - Correct attribute name?

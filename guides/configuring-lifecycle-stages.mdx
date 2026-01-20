@@ -5,7 +5,7 @@ description: "Step-by-step guide to setting up your customer journey"
 
 This guide walks you through configuring lifecycle stages for your business—from planning your customer journey to launching live stages with objectives.
 
-## Before You Start
+## Before you start
 
 ### Prerequisites
 
@@ -14,21 +14,21 @@ Ensure you have:
 - **Organisations in Trig** — Customer accounts visible in the Audience view
 - **Internal alignment** — Agreement on what your customer journey looks like
 
-### Planning Questions
+### Planning questions
 
 Before creating stages, answer these for each stage of your journey:
 
 | Question | Example Answer |
 |----------|---------------|
-| What period does this stage cover? | Days 1-30 after signup |
+| What period does this stage cover? | Days 1 to 30 after signup |
 | What happens in this stage? | Initial setup, first value |
 | How do customers enter? | First seen date within 30 days |
 | How do customers exit? | After 30 days OR all objectives complete |
-| What 4-7 milestones matter? | Created project, invited team, connected integration |
+| What 4 to 7 milestones matter? | Created project, invited team, connected integration |
 
-## Step 1: Map Your Customer Journey
+## Step 1: Map your customer journey
 
-### Identify Your Stages
+### Identify your stages
 
 Most B2B SaaS companies use four stages:
 
@@ -46,24 +46,24 @@ For each stage, define:
     What triggers entry? Time-based, event-based, or completion of previous stage?
   </Step>
   <Step title="Objectives">
-    What 4-7 milestones define healthy progression?
+    What 4 to 7 milestones define healthy progression?
   </Step>
   <Step title="Exit">
     When does this stage end? Completion-based, time-based, or hybrid?
   </Step>
 </Steps>
 
-### Example: Onboarding Stage
+### Example: Onboarding stage
 
 | Attribute | Value |
 |-----------|-------|
 | **Name** | Onboarding |
-| **Duration** | Days 0-30 |
+| **Duration** | Days 0 to 30 |
 | **Entry criteria** | `first_seen_date` within last 30 days |
 | **Exit criteria** | Time-based: Auto-exit after 30 days |
 | **Objectives** | Created first project, Invited team member, Connected integration, Generated first report |
 
-## Step 2: Create Your First Stage
+## Step 2: Create your first stage
 
 <Steps>
   <Step title="Navigate to Lifecycle Stages">
@@ -95,9 +95,9 @@ For each stage, define:
 **Start with time-based exit.** You can refine to completion-based exit once you understand typical customer patterns.
 </Tip>
 
-## Step 3: Add Objectives
+## Step 3: Add objectives
 
-### Identify 4-7 Key Milestones
+### Identify 4 to 7 key milestones
 
 For each stage, identify the actions that indicate healthy progression:
 
@@ -108,7 +108,7 @@ For each stage, identify the actions that indicate healthy progression:
 - Generated first report
 - Completed a full week of usage
 
-### Create Each Objective
+### Create each objective
 
 <Steps>
   <Step title="Open your stage">
@@ -120,11 +120,11 @@ For each stage, identify the actions that indicate healthy progression:
     - **Completion criteria:** `projects_created >= 1`
   </Step>
   <Step title="Repeat">
-    Add 3-5 additional objectives with clear completion criteria
+    Add 3 to 5 additional objectives with clear completion criteria
   </Step>
 </Steps>
 
-### Completion Criteria Examples
+### Completion criteria examples
 
 | Objective | Criteria |
 |-----------|----------|
@@ -134,7 +134,7 @@ For each stage, identify the actions that indicate healthy progression:
 | Generated First Report | `reports_generated >= 1` |
 | Completed Full Week | `days_with_activity >= 7` |
 
-### Objective Best Practices
+### Objective best practices
 
 <Warning>
 **Keep objectives simple.** Each objective should track one clear milestone. Complex objectives with multiple AND conditions are harder to interpret.
@@ -154,9 +154,9 @@ Criteria: projects_created >= 1 AND team_members >= 2 AND integrations >= 1
 
 Better as three separate objectives.
 
-## Step 4: Configure Additional Stages
+## Step 4: Configure additional stages
 
-### Create Adoption Stage
+### Create Adoption stage
 
 | Attribute | Value |
 |-----------|-------|
@@ -165,7 +165,7 @@ Better as three separate objectives.
 | **Exit** | Auto-exit after 90 days |
 | **Objectives** | Feature depth, Team growth, Regular usage |
 
-### Create Expansion Stage
+### Create Expansion stage
 
 | Attribute | Value |
 |-----------|-------|
@@ -174,7 +174,7 @@ Better as three separate objectives.
 | **Exit** | Ongoing (no auto-exit) |
 | **Objectives** | Premium feature exploration, Seat utilisation, Upgrade signals |
 
-### Create Renewal Stage
+### Create Renewal stage
 
 | Attribute | Value |
 |-----------|-------|
@@ -183,30 +183,30 @@ Better as three separate objectives.
 | **Exit** | Renewal complete or churned |
 | **Objectives** | Engagement maintained, Health score stable, Renewal confirmed |
 
-## Step 5: Validate Before Launch
+## Step 5: Validate before launch
 
-### Check Data Availability
+### Check data availability
 
 For each objective, confirm:
 - The event or attribute exists in your data
 - It's flowing into Trig correctly
 - It updates when customers take the action
 
-### Review Audience Size
+### Review audience size
 
 In the stage configuration:
 - Check how many organisations would enter
 - Verify this matches your expectations
 - Spot-check individual organisations
 
-### Test with Sample Organisations
+### Test with sample organisations
 
-Look at 3-5 specific organisations:
+Look at 3 to 5 specific organisations:
 - Would they enter this stage correctly?
 - Would objectives mark complete when expected?
 - Are there edge cases you haven't considered?
 
-## Step 6: Launch Your Stages
+## Step 6: Launch your stages
 
 <Steps>
   <Step title="Review configuration">
@@ -223,9 +223,9 @@ Look at 3-5 specific organisations:
   </Step>
 </Steps>
 
-## After Launch
+## After launch
 
-### Monitor Key Metrics
+### Monitor key metrics
 
 In the first few weeks, watch:
 
@@ -236,9 +236,9 @@ In the first few weeks, watch:
 | **Average times** | Are averages building as data accumulates? |
 | **Edge cases** | Any organisations stuck unexpectedly? |
 
-### Refine Based on Data
+### Refine based on data
 
-After 2-4 weeks, review:
+After 2 to 4 weeks, review:
 
 - **Objectives with 0% completion:** Maybe too hard or wrong criteria
 - **Objectives with 100% instant completion:** Maybe too easy or automatic
@@ -253,9 +253,9 @@ Lifecycle stages improve over time:
 - Remove objectives that provide no signal
 - Refine exit criteria based on observed patterns
 
-## Common Configuration Patterns
+## Common configuration patterns
 
-### PLG / Self-Serve
+### PLG / self-serve
 
 ```
 Stage: Onboarding
@@ -270,7 +270,7 @@ Objectives:
 - Invited first team member
 ```
 
-### Sales-Led / Enterprise
+### Sales-led / enterprise
 
 ```
 Stage: Onboarding
@@ -324,7 +324,7 @@ Objectives vary by segment:
 Configuring lifecycle stages:
 
 1. **Plan first** — Map your journey, identify stages and objectives
-2. **Start simple** — One stage with 4-5 objectives, time-based exit
+2. **Start simple** — One stage with 4 to 5 objectives, time-based exit
 3. **Verify data** — Ensure attributes exist and flow correctly
 4. **Launch and monitor** — Watch initial data, catch issues early
 5. **Iterate** — Refine based on observed patterns

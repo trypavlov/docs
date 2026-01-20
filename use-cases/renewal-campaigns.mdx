@@ -9,9 +9,9 @@ This guide walks you through configuring a renewal campaign in Trig, with detail
 **Worked Example:** Throughout this guide, we'll follow TeamFlow, a collaborative project management tool with 2,000 customers. Their product is sticky when teams actively use it, but customers who don't achieve full team adoption often churn at renewal. With only 4 CSMs, they can't personally manage every renewal.
 </Note>
 
-## Why Proactive Renewal Management Matters
+## Why proactive renewal management matters
 
-### The Renewal Reality
+### The renewal reality
 
 By the time a customer tells you they're not renewing, the decision was made weeks or months ago. The renewal conversation is just the notification—the actual decision happened during:
 
@@ -21,7 +21,7 @@ By the time a customer tells you they're not renewing, the decision was made wee
 
 Proactive renewal management means detecting these moments early enough to intervene.
 
-### The Cost of Reactive Renewal
+### The cost of reactive renewal
 
 | Approach | Detection Point | Intervention Success |
 |----------|----------------|---------------------|
@@ -31,13 +31,13 @@ Proactive renewal management means detecting these moments early enough to inter
 
 ---
 
-## Step 1: Define Your Renewal Window
+## Step 1: Define your renewal window
 
-### What You're Configuring
+### What you're configuring
 
 The renewal window determines how far in advance of a customer's renewal date they enter your renewal campaign.
 
-### How to Choose Your Window
+### How to choose your window
 
 Consider your typical "save" conversation timeline:
 
@@ -47,15 +47,15 @@ Consider your typical "save" conversation timeline:
 | **60 days** | Mid-market, moderate touch | Time for 1-2 intervention attempts |
 | **90+ days** | Enterprise, high-touch | Complex buying processes, multiple stakeholders |
 
-### Example: TeamFlow's Decision
+### Example: TeamFlow's decision
 
 TeamFlow chose 60 days because their typical "save" conversation requires:
 
 - **Week 1:** Identify the problem (usage drop, champion left, etc.)
 - **Week 2:** Diagnostic call with the customer
-- **Weeks 3-4:** Implement solution (training, configuration change)
-- **Weeks 5-6:** Verify the solution is working
-- **Weeks 7-8:** Buffer for delays
+- **Weeks 3 to 4:** Implement solution (training, configuration change)
+- **Weeks 5 to 6:** Verify the solution is working
+- **Weeks 7 to 8:** Buffer for delays
 
 ```
 Renewal Window: 60 days before renewal date
@@ -63,9 +63,9 @@ Renewal Window: 60 days before renewal date
 
 ---
 
-## Step 2: Set Your Entry Criteria
+## Step 2: Set your entry criteria
 
-### Example Configuration
+### Example configuration
 
 ```
 Entry Criteria:
@@ -80,9 +80,9 @@ Entry Criteria:
 
 ---
 
-## Step 3: Configure Renewal Health Assessment
+## Step 3: Configure renewal health assessment
 
-### Healthy Renewal Indicators
+### Healthy renewal indicators
 
 These signals indicate a customer is on track to renew without intervention:
 
@@ -94,7 +94,7 @@ These signals indicate a customer is on track to renew without intervention:
 | Support engagement | They ask questions, they care | Support tickets with positive resolution |
 | Champion engagement | Internal advocate is active | Champion user login frequency |
 
-### TeamFlow's Healthy Indicators
+### TeamFlow's healthy indicators
 
 ```
 Healthy Renewal Indicators:
@@ -104,7 +104,7 @@ Healthy Renewal Indicators:
 - Open escalated tickets: 0
 ```
 
-### At-Risk Renewal Indicators
+### At-risk renewal indicators
 
 These warning signs signal a customer may not renew:
 
@@ -116,7 +116,7 @@ These warning signs signal a customer may not renew:
 | Support frustration | Unresolved issues | Open tickets, negative sentiment |
 | Invoice issues | Financial friction | Late payments, billing disputes |
 
-### TeamFlow's At-Risk Indicators
+### TeamFlow's at-risk indicators
 
 ```
 At-Risk Renewal Indicators:
@@ -126,7 +126,7 @@ At-Risk Renewal Indicators:
 - Open support tickets: >2 unresolved for >14 days
 ```
 
-### Pattern Recognition
+### Pattern recognition
 
 TeamFlow identified four churn patterns from their data:
 
@@ -163,9 +163,9 @@ TeamFlow identified four churn patterns from their data:
 
 ---
 
-## Step 4: Configure At-Risk Renewal Interventions
+## Step 4: Configure at-risk renewal interventions
 
-### Trigger Configuration
+### Trigger configuration
 
 ```
 Trigger Condition:
@@ -180,9 +180,9 @@ Trigger Condition:
 
 ---
 
-## Step 5: Write Your Intervention Message
+## Step 5: Write your intervention message
 
-### Message Best Practices
+### Message best practices
 
 | Principle | Why It Works | Common Mistake |
 |-----------|--------------|----------------|
@@ -192,7 +192,7 @@ Trigger Condition:
 | Offer help, not sales | Reduces defensiveness | "Let's talk about your renewal" = instant delete |
 | Single ask | Clear next step | Multiple CTAs create paralysis |
 
-### Example Message
+### Example message
 
 <Tabs>
   <Tab title="Draft 1 (Rejected)">
@@ -252,7 +252,7 @@ Trigger Condition:
   </Tab>
 </Tabs>
 
-### Message Variants by Trigger
+### Message variants by trigger
 
 | Trigger | Message Focus |
 |---------|---------------|
@@ -263,7 +263,7 @@ Trigger Condition:
 
 ---
 
-## Step 6: Configure Sender Identity
+## Step 6: Configure sender identity
 
 ### Options
 
@@ -273,16 +273,16 @@ Trigger Condition:
 | CS Persona (static) | Accounts without assigned CSMs |
 | Functional Role | Transactional communications |
 
-### TeamFlow's Decision
+### TeamFlow's decision
 
 - **High-value accounts (>$25K):** Email from actual assigned CSM
 - **All other accounts:** Email from "Sarah Chen" — a shared persona that any team member can respond as
 
 ---
 
-## Step 7: Set Message Timing
+## Step 7: Set message timing
 
-### Timing Considerations
+### Timing considerations
 
 | Option | Trade-off |
 |--------|-----------|
@@ -291,7 +291,7 @@ Trigger Condition:
 | Next business day, specific time | Predictable, but less contextual |
 | Customer timezone optimised | Best of both, requires timezone data |
 
-### TeamFlow's Decision
+### TeamFlow's decision
 
 ```
 Message Timing:
@@ -302,9 +302,9 @@ Message Timing:
 
 ---
 
-## Step 8: Configure Internal Escalation
+## Step 8: Configure internal escalation
 
-### Tiered Escalation System
+### Tiered escalation system
 
 | Tier | Trigger | Channel | Action Expected |
 |------|---------|---------|-----------------|
@@ -312,7 +312,7 @@ Message Timing:
 | **2: High-Value** | $25K+ contracts | CSM DM + Manager | Same-day review, potential executive outreach |
 | **3: Critical** | Multiple at-risk signals, under 30 days | CS Manager + VP Sales | Executive intervention, discount authority |
 
-### Sample Slack Notification
+### Sample Slack notification
 
 ```
 🚨 At-Risk Renewal Alert
@@ -333,9 +333,9 @@ Subject: "Quick question about your team's projects"
 
 ---
 
-## Step 9: Configure Follow-Up Logic
+## Step 9: Configure follow-up logic
 
-### Follow-Up Sequence
+### Follow-up sequence
 
 | Day | Action |
 |-----|--------|
@@ -344,7 +344,7 @@ Subject: "Quick question about your team's projects"
 | Day 10 | If no response → Internal escalation |
 | Day 14 | If no response → Phone call attempt (high-value) |
 
-### Follow-Up Message
+### Follow-up message
 
 ```
 Subject: Re: Quick question about your team's projects
@@ -362,9 +362,9 @@ Sarah
 
 ---
 
-## Step 10: Define Success Metrics
+## Step 10: Define success metrics
 
-### Metrics to Track
+### Metrics to track
 
 | Metric | What It Measures |
 |--------|------------------|
@@ -385,12 +385,12 @@ Sarah
 
 ---
 
-## Summary Checklist
+## Summary checklist
 
-<Check>Renewal window defined (30-90 days based on sales cycle)</Check>
+<Check>Renewal window defined (30 to 90 days based on sales cycle)</Check>
 <Check>Entry criteria set (active, annual contracts)</Check>
-<Check>Healthy indicators defined (4-5 positive signals)</Check>
-<Check>At-risk indicators defined (4-5 warning signs)</Check>
+<Check>Healthy indicators defined (4 to 5 positive signals)</Check>
+<Check>At-risk indicators defined (4 to 5 warning signs)</Check>
 <Check>Trigger logic configured (OR vs AND)</Check>
 <Check>Plain text intervention message written</Check>
 <Check>Sender identity configured</Check>
@@ -401,7 +401,7 @@ Sarah
 
 ---
 
-## Next Steps
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Configure Onboarding Campaigns" icon="rocket" href="/use-cases/onboarding-campaigns">

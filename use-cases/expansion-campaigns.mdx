@@ -9,9 +9,9 @@ This guide walks you through configuring an expansion campaign in Trig, with det
 **Worked Example:** Throughout this guide, we'll follow TeamFlow, a collaborative project management tool with tiered pricing (Starter, Professional, Business, Enterprise). TeamFlow has identified that their most efficient revenue growth comes from existing customers expanding—but their small sales team can't monitor every customer for expansion signals.
 </Note>
 
-## Why Expansion Matters
+## Why expansion matters
 
-### The Economics of Expansion
+### The economics of expansion
 
 | Metric | New Customer Acquisition | Customer Expansion |
 |--------|-------------------------|-------------------|
@@ -21,9 +21,9 @@ This guide walks you through configuring an expansion campaign in Trig, with det
 | Relationship | Building trust | Trust already established |
 | Product knowledge | Starting from zero | Already using and loving |
 
-Expansion revenue is often 3-5x more efficient than new customer acquisition. A customer hitting their seat limit is pre-sold—they've already decided your product works.
+Expansion revenue is often 3 to 5x more efficient than new customer acquisition. A customer hitting their seat limit is pre-sold—they've already decided your product works.
 
-### The Timing Problem
+### The timing problem
 
 The challenge isn't identifying that expansion opportunities exist—it's identifying them at the right moment:
 
@@ -35,9 +35,9 @@ Trig solves the timing problem by monitoring expansion signals in real-time and 
 
 ---
 
-## Step 1: Define Your Expansion Stage
+## Step 1: Define your expansion stage
 
-### How to Think About Expansion Stage Boundaries
+### How to think about expansion stage boundaries
 
 **Entry considerations:**
 - Has the customer completed onboarding?
@@ -49,7 +49,7 @@ Trig solves the timing problem by monitoring expansion signals in real-time and 
 - They declined and shouldn't be asked again for X months
 - They churned (no longer relevant)
 
-### Example Configuration
+### Example configuration
 
 ```
 Stage Duration: Day 60 to ongoing (continuous monitoring)
@@ -68,9 +68,9 @@ Exit Criteria:
 
 ---
 
-## Step 2: Identify Your Expansion Signals
+## Step 2: Identify your expansion signals
 
-### Types of Expansion Signals
+### Types of expansion signals
 
 | Signal Category | What It Indicates | Examples |
 |-----------------|-------------------|----------|
@@ -80,7 +80,7 @@ Exit Criteria:
 | **Milestone-based** | Business growth | Team size increased, new department added |
 | **Time-based** | Natural expansion moments | Anniversary, renewal approaching (healthy customer) |
 
-### Example: TeamFlow's Expansion Signals
+### Example: TeamFlow's expansion signals
 
 | Signal | How We Detect It | Expansion Opportunity | Conversion Rate |
 |--------|------------------|----------------------|-----------------|
@@ -96,9 +96,9 @@ Exit Criteria:
 
 ---
 
-## Step 3: Define Expansion Ownership
+## Step 3: Define expansion ownership
 
-### Ownership Models
+### Ownership models
 
 | Model | How It Works | Best For |
 |-------|--------------|----------|
@@ -107,7 +107,7 @@ Exit Criteria:
 | **CSM-led** | CSM owns relationship + expansion | Enterprise, strategic accounts |
 | **Tiered hybrid** | Route based on signal type or customer value | Mixed customer base |
 
-### Example: TeamFlow's Tiered Routing
+### Example: TeamFlow's tiered routing
 
 | Signal Type | Owner | Motion |
 |-------------|-------|--------|
@@ -121,16 +121,16 @@ Exit Criteria:
 
 ---
 
-## Step 4: Configure Expansion Triggers
+## Step 4: Configure expansion triggers
 
-### Trigger Design Principles
+### Trigger design principles
 
 - **Specificity:** One trigger per expansion type (don't bundle seat expansion with tier upgrade)
 - **Confidence threshold:** Multiple signal instances or combined signals for higher confidence
 - **Cooldown logic:** Don't re-trigger if already in an expansion conversation
 - **Timing sensitivity:** Some signals are time-sensitive (blocked invite), others aren't
 
-### Example Trigger Configurations
+### Example trigger configurations
 
 <AccordionGroup>
   <Accordion title="Trigger A: Seat Expansion (Urgent)">
@@ -182,9 +182,9 @@ Exit Criteria:
 
 ---
 
-## Step 5: Write Your Expansion Messages
+## Step 5: Write your expansion messages
 
-### Message Philosophy
+### Message philosophy
 
 Expansion messages should feel like service, not sales.
 
@@ -194,7 +194,7 @@ Expansion messages should feel like service, not sales.
 | "Unlock premium features today!" | "I saw your team trying to connect Slack..." |
 | "Contact us to discuss pricing" | "Here's a quick link to add more seats" |
 
-### Example Messages
+### Example messages
 
 <Tabs>
   <Tab title="Seat Expansion (Urgent)">
@@ -305,9 +305,9 @@ Expansion messages should feel like service, not sales.
 
 ---
 
-## Step 6: Configure Internal Notifications
+## Step 6: Configure internal notifications
 
-### Routing Alerts
+### Routing alerts
 
 | Signal | Routing | SLA |
 |--------|---------|-----|
@@ -316,7 +316,7 @@ Expansion messages should feel like service, not sales.
 | Enterprise expansion signals | AE + CSM + Manager | 24 hours |
 | Declined expansion | Log for analysis | N/A |
 
-### Sample Alert
+### Sample alert
 
 ```
 🚀 Expansion Opportunity
@@ -337,9 +337,9 @@ Recommended Action: CSM outreach for Enterprise conversation
 
 ---
 
-## Step 7: Define Success Metrics
+## Step 7: Define success metrics
 
-### Metrics to Track
+### Metrics to track
 
 | Metric | What It Measures |
 |--------|------------------|
@@ -361,7 +361,7 @@ Recommended Action: CSM outreach for Enterprise conversation
 
 ---
 
-## Summary Checklist
+## Summary checklist
 
 <Check>Expansion stage defined (entry after onboarding + healthy)</Check>
 <Check>Expansion signals identified with conversion data</Check>
@@ -373,7 +373,7 @@ Recommended Action: CSM outreach for Enterprise conversation
 
 ---
 
-## Next Steps
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Configure Renewal Campaigns" icon="rotate" href="/use-cases/renewal-campaigns">

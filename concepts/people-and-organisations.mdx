@@ -18,7 +18,7 @@ People and Organisations are the foundational data objects in Trig. Everything e
 
 The relationship is hierarchical: **People belong to Organisations**. This mirrors how B2B SaaS works—you sell to companies, but individuals within those companies use your product.
 
-## Why This Structure Matters
+## Why this structure matters
 
 Trig is built for B2B SaaS, where the fundamental commercial relationship is with an organisation, not an individual:
 
@@ -31,7 +31,7 @@ Trig is built for B2B SaaS, where the fundamental commercial relationship is wit
 
 ## People
 
-### What People Represent
+### What people represent
 
 People are the individual humans who use your product:
 
@@ -40,7 +40,7 @@ People are the individual humans who use your product:
 - **Activity:** Events from product usage
 - **Attributes:** Properties from CRM and product data
 
-### People Attributes
+### People attributes
 
 Attributes on People come from multiple sources:
 
@@ -59,7 +59,7 @@ Attributes on People come from multiple sources:
 - Behaviour entry and completion
 - Calculated metrics
 
-### People as Campaign Targets
+### People as campaign targets
 
 When you create a campaign targeting People, the intervention goes to that specific person. Use individual-level campaigns when:
 
@@ -76,7 +76,7 @@ Message: "Hi Sarah, complete your profile to unlock collaboration features..."
 
 ## Organisations
 
-### What Organisations Represent
+### What organisations represent
 
 Organisations are the account-level entities—typically the companies or teams that are your customers:
 
@@ -85,7 +85,7 @@ Organisations are the account-level entities—typically the companies or teams 
 - **Container for users:** People belong to organisations
 - **Target for lifecycle tracking:** Onboarding, adoption, expansion happen at org level
 
-### Organisation Attributes
+### Organisation attributes
 
 **From CRM:**
 - Account/Company record fields
@@ -108,7 +108,7 @@ Organisations are the account-level entities—typically the companies or teams 
 - Campaign history
 - Health scores, risk flags
 
-### Roll-Ups: Aggregating People Data
+### Roll-ups: aggregating people data
 
 Trig can roll up individual-level data to the organisation level:
 
@@ -128,7 +128,7 @@ Organisation: Acme Corp
 └── power_users_count: 5
 ```
 
-### Organisations as Campaign Targets
+### Organisations as campaign targets
 
 When you create a campaign targeting Organisations, the intervention can go to:
 - The account owner (from CRM)
@@ -142,7 +142,7 @@ Audience: Orgs in Onboarding stage > 14 days, integrations_connected = 0
 Message to Account Owner: "Hi, your team at Acme Corp is ready for the next step..."
 ```
 
-### Lifecycle Stages and Organisations
+### Lifecycle stages and organisations
 
 Lifecycle stages operate at the Organisation level. Your customer journey is an account journey:
 
@@ -159,7 +159,7 @@ Organisation: Acme Corp
 
 Even though individuals complete objectives (Sarah created the first project), tracking happens at the org level (Acme Corp completed "First project created").
 
-## How People Connect to Organisations
+## How people connect to organisations
 
 Every Person in Trig should be associated with an Organisation:
 
@@ -175,9 +175,9 @@ The identifier that links them varies:
 - **CRM-based:** HubSpot Company ID, Salesforce Account ID
 - **Product-based:** Team ID, Workspace ID, Tenant ID
 
-## Data Sources
+## Data sources
 
-### CRM Integration
+### CRM integration
 
 The primary source for Organisation and People data:
 
@@ -188,7 +188,7 @@ The primary source for Organisation and People data:
 
 CRM integration provides commercial data (ARR, contract dates), relationship data (account owner), and firmographic data (industry, size).
 
-### Product Data Integration
+### Product data integration
 
 Product data typically comes from:
 - **Data warehouses:** Snowflake, BigQuery, Redshift
@@ -197,7 +197,7 @@ Product data typically comes from:
 
 Product data provides usage events, user properties, feature adoption signals, and engagement metrics.
 
-### Joining Data Sources
+### Joining data sources
 
 Trig needs to join CRM data with product data using a common identifier:
 - Email address matching
@@ -206,7 +206,7 @@ Trig needs to join CRM data with product data using a common identifier:
 
 Work with your implementation team to establish the join strategy.
 
-## Choosing the Right Target Level
+## Choosing the right target level
 
 | Scenario | Target | Why |
 |----------|--------|-----|
@@ -217,21 +217,21 @@ Work with your implementation team to establish the join strategy.
 | "Invite team members" | Person | Specific individual needs to act |
 | "Renew contract" | Organisation | Commercial decision |
 
-## Best Practices
+## Best practices
 
-### Data Quality
+### Data quality
 
 - **Clean identifiers:** Ensure consistent IDs across systems
 - **Complete associations:** Every Person should link to an Organisation
 - **Regular sync:** Keep CRM and product data flowing
 
-### Organisation Structure
+### Organisation structure
 
 - **Mirror commercial relationships:** Your org structure should reflect how you sell and manage accounts
 - **Consistent granularity:** Normalise to comparable units
 - **Think about lifecycle:** Ensure orgs represent the unit whose journey you're tracking
 
-### Campaign Targeting
+### Campaign targeting
 
 - **Match target to action:** If an individual needs to act, target People. If it's an account decision, target Organisations.
 - **Consider the recipient:** Org campaigns go to account owner by default

@@ -5,7 +5,7 @@ description: "Capture milestone moments in customer activity"
 
 Behaviours are defined patterns of customer activity that you want to track and potentially act upon. They capture the moment when a customer exhibits a specific combination of attributes or events that matters to your business.
 
-## What Are Behaviours?
+## What are behaviours?
 
 Think of behaviours as tripwires. You define the conditions, and when a customer crosses that threshold, Trig records it, can fire actions, and creates permanent metadata about when it happened.
 
@@ -15,7 +15,7 @@ Think of behaviours as tripwires. You define the conditions, and when a customer
 
 This makes behaviours ideal for tracking milestone moments—things that happen once and carry significance.
 
-## Behaviours vs Cohorts
+## Behaviours vs cohorts
 
 Understanding this distinction is critical:
 
@@ -34,9 +34,9 @@ A **"Super User" cohort** tracks who currently meets super user criteria. If usa
 
 Both have value. Behaviours give you historical milestones. Cohorts give you current state.
 
-## Why Behaviours Matter
+## Why behaviours matter
 
-### Capturing Milestone Moments
+### Capturing milestone moments
 
 Some customer actions are significant precisely because they happen once:
 
@@ -45,7 +45,7 @@ Some customer actions are significant precisely because they happen once:
 - Completing a critical setup step
 - Achieving "power user" criteria
 
-### Triggering Actions at the Right Time
+### Triggering actions at the right time
 
 When a customer exhibits a behaviour, you can immediately:
 - Notify your team via Slack or webhook
@@ -53,7 +53,7 @@ When a customer exhibits a behaviour, you can immediately:
 - Send a follow-up communication
 - Route them into a campaign
 
-### Building Customer Context
+### Building customer context
 
 Every behaviour creates metadata:
 
@@ -66,7 +66,7 @@ currently_member_of_[behaviour] — Whether they're currently in it
 
 This metadata is available for targeting, filtering, and analysis throughout the platform.
 
-### Qualifying Audiences for Campaigns
+### Qualifying audiences for campaigns
 
 Behaviours are often used as qualification criteria:
 
@@ -75,9 +75,9 @@ Target everyone who has completed "Setup Complete" behaviour
 but has NOT completed "First Project Created" behaviour
 ```
 
-## How Behaviours Work
+## How behaviours work
 
-### Entry Criteria (Audience)
+### Entry criteria (audience)
 
 Entry criteria define who qualifies to enter:
 
@@ -90,7 +90,7 @@ Audience:
 
 When someone matches these criteria and hasn't previously entered, they enter the behaviour.
 
-### Completion Criteria
+### Completion criteria
 
 Completion criteria define success:
 
@@ -103,11 +103,11 @@ Completion criteria:
 
 When someone in the behaviour meets these criteria, they complete. Completion is the positive outcome.
 
-### Exit Without Completion
+### Exit without completion
 
 If someone is in a behaviour and no longer matches entry criteria (or a time limit passes) without completing, they exit. Exit is the negative outcome.
 
-### The One-and-Done Rule
+### The one-and-done rule
 
 Once a customer has entered a behaviour—regardless of completion or exit—they cannot enter again.
 
@@ -120,9 +120,9 @@ This serves important purposes:
 If you need to track something that can happen repeatedly, use a cohort instead, or create multiple behaviours with different criteria.
 </Tip>
 
-## Configuring Behaviours
+## Configuring behaviours
 
-### Anatomy of a Behaviour
+### Anatomy of a behaviour
 
 | Field | Description | Example |
 |-------|-------------|---------|
@@ -133,7 +133,7 @@ If you need to track something that can happen repeatedly, use a cohort instead,
 | **Completion Actions** | What happens on completion | Send webhook, update CRM |
 | **Exit Actions** | What happens on exit without completion | Notify team of drop-off |
 
-### Building Entry Criteria
+### Building entry criteria
 
 Entry criteria use filter logic:
 
@@ -154,7 +154,7 @@ last_completed_[stage/behaviour/campaign] has any value
 **Important:** Attributes are evaluated historically—existing values are checked. Events are evaluated forward—only new events trigger.
 </Warning>
 
-### Entry, Completion, and Exit Actions
+### Entry, completion, and exit actions
 
 **Notify team:**
 - Send Slack message to a channel
@@ -168,9 +168,9 @@ last_completed_[stage/behaviour/campaign] has any value
 - Set an internal attribute
 - Flag status changes
 
-## Common Behaviour Patterns
+## Common behaviour patterns
 
-### Milestone Behaviours
+### Milestone behaviours
 
 Track significant first-time achievements:
 
@@ -187,7 +187,7 @@ Completion:
   - team_members >= 3
 ```
 
-### Funnel Stage Behaviours
+### Funnel stage behaviours
 
 Track progression through a conversion funnel:
 
@@ -207,7 +207,7 @@ Completion: return_visits >= 3
 
 Each behaviour's audience can depend on completing the previous one.
 
-### Alert Behaviours
+### Alert behaviours
 
 Track conditions that should trigger notification:
 
@@ -221,7 +221,7 @@ Completion:
 Entry Action: Notify sales team in Slack
 ```
 
-### Negative Behaviours
+### Negative behaviours
 
 Track concerning patterns:
 
@@ -236,7 +236,7 @@ Completion:
 Entry Action: Alert CSM
 ```
 
-## Behaviours as Objectives
+## Behaviours as objectives
 
 Within lifecycle stages, objectives are actually behaviours under the hood:
 
@@ -249,7 +249,7 @@ Lifecycle Stage: Onboarding
 
 The mechanics are identical—entry criteria, completion criteria, actions. Within a lifecycle stage context, they're called "objectives" and contribute to stage progression tracking.
 
-## Automatic Metadata
+## Automatic metadata
 
 When you create a behaviour, Trig generates attributes automatically:
 
@@ -262,7 +262,7 @@ When you create a behaviour, Trig generates attributes automatically:
 
 You don't need to create these manually.
 
-### Using Behaviour Metadata
+### Using behaviour metadata
 
 ```
 Campaign Audience:
@@ -272,9 +272,9 @@ Campaign Audience:
 
 This targets everyone who completed setup but hasn't reached their aha moment.
 
-## Best Practices
+## Best practices
 
-### Name Behaviours Clearly
+### Name behaviours clearly
 
 | Good | Bad |
 |------|-----|
@@ -282,7 +282,7 @@ This targets everyone who completed setup but hasn't reached their aha moment.
 | "Setup Moment Reached" | "Test" |
 | "Power User Threshold" | "PU" |
 
-### Keep Behaviours Focused
+### Keep behaviours focused
 
 Each behaviour should track one meaningful milestone.
 
@@ -301,22 +301,22 @@ Completion:
 - "Team Collaboration Started"
 - "Integration Connected"
 
-### Use Behaviours for "First Time" Tracking
+### Use behaviours for "first time" tracking
 
 The one-and-done nature makes behaviours perfect for first-time events.
 
-### Plan Sequences Carefully
+### Plan sequences carefully
 
 Because behaviours can't be re-entered, plan thoughtfully:
 1. Define each stage as a separate behaviour
 2. Use completion of previous as entry criteria for next
 3. Consider what happens to people who skip stages
 
-### Don't Duplicate Trig Metadata
+### Don't duplicate Trig metadata
 
 You don't need to create "entered_X = true" attributes manually—Trig creates them automatically.
 
-## Common Questions
+## Common questions
 
 <AccordionGroup>
   <Accordion title="Can I edit a behaviour after it's live?">
