@@ -104,9 +104,60 @@ th {
   color: var(--trig-text);
 }
 
-/* Callout/card refinements */
+/* Callout/card refinements - light backgrounds per design system */
+/* Design system rule: Never use outline-only containers or dark backgrounds */
+/* Use light background fills instead */
+
+/* Note callouts - info style */
+[class*="note"], [class*="Note"],
 .callout, [class*="callout"] {
-  border-color: var(--trig-rule);
+  background-color: var(--trig-blue-50) !important;
+  border: none !important;
+  border-left: 3px solid var(--trig-blue-500) !important;
+  color: var(--trig-text) !important;
+}
+
+[class*="note"] *, [class*="Note"] *,
+.callout *, [class*="callout"] * {
+  color: var(--trig-text) !important;
+}
+
+/* Tip callouts - success style */
+[class*="tip"], [class*="Tip"] {
+  background-color: #F0F5F1 !important;
+  border: none !important;
+  border-left: 3px solid var(--trig-green-500) !important;
+  color: var(--trig-text) !important;
+}
+
+[class*="tip"] *, [class*="Tip"] * {
+  color: var(--trig-text) !important;
+}
+
+/* Warning callouts */
+[class*="warning"], [class*="Warning"] {
+  background-color: #FDFBF5 !important;
+  border: none !important;
+  border-left: 3px solid var(--trig-yellow-500) !important;
+  color: var(--trig-text) !important;
+}
+
+[class*="warning"] *, [class*="Warning"] * {
+  color: var(--trig-text) !important;
+}
+
+/* Error/danger callouts */
+[class*="error"], [class*="Error"],
+[class*="danger"], [class*="Danger"] {
+  background-color: #FDF2F0 !important;
+  border: none !important;
+  border-left: 3px solid var(--trig-red-500) !important;
+  color: var(--trig-text) !important;
+}
+
+[class*="error"] *, [class*="Error"] *,
+[class*="danger"] *, [class*="Danger"] * {
+  color: var(--trig-text) !important;
 }
 
 /* Navigation refinements */
