@@ -5,21 +5,7 @@
   "colors": {
     "primary": "#5A7A99",
     "light": "#7392B0",
-    "dark": "#4A6580",
-    "background": {
-      "light": "#f7f7f7",
-      "dark": "#1a1a1a"
-    }
-  },
-  "font": {
-    "headings": {
-      "family": "Circular, -apple-system, BlinkMacSystemFont, sans-serif",
-      "weight": 600
-    },
-    "body": {
-      "family": "Circular, -apple-system, BlinkMacSystemFont, sans-serif",
-      "weight": 300
-    }
+    "dark": "#4A6580"
   },
   "favicon": "/favicon.svg",
   "navigation": {
