@@ -1,0 +1,332 @@
+/**
+ * Pavlov Design System - Custom Styles for Mintlify
+ *
+ * This stylesheet applies the Pavlov design system's muted, warm color palette
+ * and typography to the documentation site.
+ */
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+
+:root {
+  /* Primary brand colors - muted steel blue */
+  --primary: #5A7A99;
+  --primary-light: #7392B0;
+  --primary-dark: #4A6580;
+  --primary-darker: #3D5368;
+  --primary-darkest: #314250;
+
+  /* Background colors - warm off-whites */
+  --bg-default: #f7f7f7;
+  --bg-lighter: rgba(255, 255, 255, 0.6);
+  --bg-light: rgba(255, 255, 255, 0.8);
+  --bg-dark: rgba(0, 0, 0, 0.04);
+  --bg-darker: rgba(0, 0, 0, 0.08);
+
+  /* Text colors - muted charcoal tones */
+  --text-primary: #2D3339;
+  --text-secondary: #4B5563;
+  --text-tertiary: #6B7280;
+  --text-muted: #8B9298;
+
+  /* Border colors */
+  --border-default: #EDEEEC;
+  --border-subtle: rgba(255, 255, 255, 0.4);
+
+  /* Status colors - muted variants */
+  --success: #5A8A62;
+  --success-bg: #F3F7F4;
+  --success-light: #70A078;
+
+  --warning: #B87A52;
+  --warning-bg: #FDF7F3;
+  --warning-light: #CC9570;
+
+  --error: #C45D4A;
+  --error-bg: #FEF5F3;
+  --error-light: #D97A6F;
+
+  --info: #5A7A99;
+  --info-bg: #F4F6F8;
+  --info-light: #7392B0;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] {
+  --bg-default: #1a1a1a;
+  --bg-lighter: rgba(255, 255, 255, 0.08);
+  --bg-light: rgba(255, 255, 255, 0.12);
+
+  --text-primary: #E3EBE6;
+  --text-secondary: rgba(227, 235, 230, 0.8);
+  --text-tertiary: rgba(227, 235, 230, 0.65);
+  --text-muted: rgba(227, 235, 230, 0.5);
+
+  --border-default: rgba(255, 255, 255, 0.12);
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+
+/* Import Circular font if available, fallback to system fonts */
+@font-face {
+  font-family: 'Circular';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: local('Circular Light'), local('CircularStd-Light');
+}
+
+@font-face {
+  font-family: 'Circular';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: local('Circular Book'), local('CircularStd-Book');
+}
+
+@font-face {
+  font-family: 'Circular';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: local('Circular Medium'), local('CircularStd-Medium');
+}
+
+@font-face {
+  font-family: 'Circular';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: local('Circular Bold'), local('CircularStd-Bold');
+}
+
+/* Base typography */
+body {
+  font-family: 'Circular', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 300;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings - bold weight, tight tracking */
+h1, h2, h3, h4, h5, h6,
+.heading,
+[class*="heading"] {
+  font-family: 'Circular', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.032em;
+  color: var(--text-primary);
+}
+
+h1 {
+  letter-spacing: -0.048em;
+}
+
+h2 {
+  letter-spacing: -0.032em;
+}
+
+/* Body text */
+p, li, td, th {
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Strong emphasis */
+strong, b {
+  font-weight: 500;
+}
+
+/* Code blocks */
+code, pre {
+  font-family: 'SF Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+}
+
+/* ============================================
+   Component Overrides
+   ============================================ */
+
+/* Cards and containers */
+.card,
+[class*="card"],
+[class*="Card"] {
+  background-color: var(--bg-lighter);
+  border-color: var(--border-default);
+  border-radius: 8px;
+}
+
+/* Buttons - primary actions */
+.button-primary,
+[class*="primary-button"],
+button[class*="primary"] {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.button-primary:hover,
+[class*="primary-button"]:hover,
+button[class*="primary"]:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Links */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+/* ============================================
+   Callout Components
+   ============================================ */
+
+/* Info callouts */
+[class*="note"],
+[class*="info"] {
+  background-color: var(--info-bg);
+  border-left-color: var(--info);
+  color: var(--primary-darkest);
+}
+
+/* Success/tip callouts */
+[class*="tip"],
+[class*="success"] {
+  background-color: var(--success-bg);
+  border-left-color: var(--success);
+}
+
+/* Warning callouts */
+[class*="warning"],
+[class*="caution"] {
+  background-color: var(--warning-bg);
+  border-left-color: var(--warning);
+}
+
+/* Error/danger callouts */
+[class*="error"],
+[class*="danger"] {
+  background-color: var(--error-bg);
+  border-left-color: var(--error);
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+
+table {
+  border-color: var(--border-default);
+}
+
+th {
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--bg-light);
+}
+
+td {
+  color: var(--text-secondary);
+}
+
+tr:hover td {
+  background-color: var(--bg-lighter);
+}
+
+/* ============================================
+   Code Blocks
+   ============================================ */
+
+pre {
+  background-color: var(--bg-darker);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+}
+
+code:not(pre code) {
+  background-color: var(--bg-dark);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+
+/* Sidebar navigation */
+nav a {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+nav a:hover,
+nav a.active,
+nav a[aria-current="page"] {
+  color: var(--primary);
+  background-color: var(--info-bg);
+}
+
+/* ============================================
+   Form Elements
+   ============================================ */
+
+input, select, textarea {
+  background-color: white;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  color: var(--text-primary);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(90, 122, 153, 0.1);
+}
+
+/* ============================================
+   Spacing and Layout
+   ============================================ */
+
+/* Consistent section spacing */
+section, .section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Card padding */
+.card, [class*="card"] {
+  padding: 1rem;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+/* Text colors */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+
+/* Background colors */
+.bg-default { background-color: var(--bg-default); }
+.bg-light { background-color: var(--bg-light); }
+.bg-lighter { background-color: var(--bg-lighter); }
+
+/* Border colors */
+.border-default { border-color: var(--border-default); }
+
+/* Status colors */
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-error { color: var(--error); }
+.text-info { color: var(--info); }
