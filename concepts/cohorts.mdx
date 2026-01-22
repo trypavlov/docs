@@ -3,7 +3,7 @@ title: "Cohorts"
 description: "Reusable audience segments for targeting"
 ---
 
-Cohorts are saved audience segments that persist across your Trig instance. They represent groups of organisations or people who share common characteristics, defined by filters on attributes, behaviours, stage membership, or campaign history.
+Cohorts are saved audience segments that persist across your Trig instance. They represent groups of organisations or people who share common characteristics, defined by filters on attributes, behaviours, stage membership, or job history.
 
 ## What are cohorts?
 
@@ -23,11 +23,11 @@ Rather than recreating the same filters every time, you define a cohort once and
 
 ### Reusability
 
-Without cohorts, every campaign, behaviour, or lifecycle stage requires manual filter configuration. With cohorts, you define the audience once and reference it anywhere.
+Without cohorts, every job, behaviour, or stage requires manual filter configuration. With cohorts, you define the audience once and reference it anywhere.
 
 ### Consistency
 
-When filters are defined ad-hoc in multiple places, inconsistency creeps in. One campaign might define "enterprise" as ARR > £100K, another as ARR > £150K.
+When filters are defined ad-hoc in multiple places, inconsistency creeps in. One job might define "enterprise" as ARR > £100K, another as ARR > £150K.
 
 Cohorts enforce consistency. The definition lives in one place.
 
@@ -102,8 +102,8 @@ OR
 Navigate to **Audience > Cohorts** to create and manage.
 
 Once created, cohorts become available:
-- As audience filters in campaigns
-- As entry criteria for lifecycle stages
+- As audience filters in jobs
+- As entry criteria for stages
 - As targeting for behaviours
 - As filters when viewing data
 - As conditions in completion criteria
@@ -133,10 +133,10 @@ Once created, cohorts become available:
 - Product tier, subscription status
 
 **Trig-generated attributes:**
-- Last entered/exited/completed lifecycle stage
+- Last entered/exited/completed stage
 - Last entered/exited/completed behaviour
-- Last entered/exited/completed campaign
-- Current membership in stages, behaviours, campaigns
+- Last entered/exited/completed job
+- Current membership in stages, behaviours, jobs
 
 **Calculated attributes:**
 - Team size (count of people)
@@ -144,31 +144,31 @@ Once created, cohorts become available:
 
 ## Using cohorts
 
-### In campaign targeting
+### In job targeting
 
 ```
-Campaign: Enterprise Renewal Outreach
+Job: Enterprise Renewal Outreach
 Audience: Members of cohort "Enterprise Renewal Window"
 ```
 
-### In lifecycle stage entry
+### In stage entry
 
 ```
-Lifecycle Stage: Enterprise Onboarding
+Stage: Enterprise Onboarding
 Entry Criteria: Member of cohort "New Enterprise Customers"
 ```
 
 ### As exclusions
 
 ```
-Campaign: Self-Serve Activation
+Job: Self-Serve Activation
 Audience: All customers EXCEPT members of cohort "Sales-Led Accounts"
 ```
 
 ### In completion criteria
 
 ```
-Campaign Goal: Customer joins cohort "Power Users"
+Job Goal: Customer joins cohort "Power Users"
 ```
 
 ## Common cohort patterns
@@ -213,16 +213,16 @@ Filters:
   - contract_renewal within 60 days
 ```
 
-### Campaign outcome cohorts
+### Job outcome cohorts
 
 ```
-Cohort: Completed First Invoice Campaign
-Filter: last_completed_campaign_first_invoice has any value
+Cohort: Completed First Invoice Job
+Filter: last_completed_job_first_invoice has any value
 
-Cohort: Failed Onboarding Campaigns
+Cohort: Failed Onboarding Jobs
 Filters:
-  - last_exit_from_onboarding_campaign_1 has any value
-  - last_completed_onboarding_campaign_1 has no value
+  - last_exit_from_onboarding_job_1 has any value
+  - last_completed_onboarding_job_1 has no value
 ```
 
 ## Cohorts and Trig metadata
@@ -231,7 +231,7 @@ One of the most powerful aspects is using Trig-generated metadata as filter crit
 
 ### Stage membership attributes
 
-For every lifecycle stage:
+For every stage:
 ```
 currently_member_of_[stage]
 last_entered_[stage]
@@ -249,14 +249,14 @@ last_exited_[behaviour]
 last_completed_[behaviour]
 ```
 
-### Campaign membership attributes
+### Job membership attributes
 
-For every campaign:
+For every job:
 ```
-currently_member_of_[campaign]
-last_entered_[campaign]
-last_exited_[campaign]
-last_completed_[campaign]
+currently_member_of_[job]
+last_entered_[job]
+last_exited_[job]
+last_completed_[job]
 ```
 
 This metadata enables powerful cohort definitions that connect different parts of the customer journey.
@@ -318,8 +318,8 @@ The system interprets this and constructs appropriate filters. Useful for explor
   <Accordion title="Can I use a cohort in another cohort's definition?">
     Not directly. Use the underlying attributes or combine filter groups.
   </Accordion>
-  <Accordion title="What happens if I delete a cohort that's used in campaigns?">
-    Campaigns lose that targeting criteria. Check dependencies before deleting.
+  <Accordion title="What happens if I delete a cohort that's used in jobs?">
+    Jobs lose that targeting criteria. Check dependencies before deleting.
   </Accordion>
   <Accordion title="Can cohorts span both organisations and people?">
     No. A cohort is either organisation or people. Create separate cohorts for each type.
@@ -332,7 +332,7 @@ Cohorts are persistent, reusable audience segments:
 
 1. **Define once, use everywhere** — Eliminate redundant filter configuration
 2. **Dynamic membership** — Customers automatically join and leave based on criteria
-3. **Leverage Trig metadata** — Stage, behaviour, and campaign history become filterable
+3. **Leverage Trig metadata** — Stage, behaviour, and job history become filterable
 4. **Build for business segments** — Focus on audiences that drive different treatment
 5. **Name clearly** — Good names make cohorts self-documenting
 

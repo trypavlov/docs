@@ -1,13 +1,13 @@
 ---
-title: "Building Campaigns"
+title: "Building Jobs"
 description: "Create effective interventions that drive customer action"
 ---
 
-This guide walks you through building campaigns in Trig—from defining your goal to launching and measuring results.
+This guide walks you through building jobs in Trig—from defining your goal to launching and measuring results.
 
-## Campaign fundamentals
+## Job fundamentals
 
-Every campaign needs three things:
+Every job needs three things:
 
 <CardGroup cols={3}>
   <Card title="Goal" icon="bullseye">
@@ -32,7 +32,7 @@ Goals should be:
 
 ### Goal examples
 
-| Campaign Type | Goal |
+| Job Type | Goal |
 |--------------|------|
 | Onboarding nudge | `projects_created >= 1` |
 | Feature adoption | `feature_X_used >= 1` |
@@ -40,7 +40,7 @@ Goals should be:
 | Churn prevention | `engagement_restored = true` |
 
 <Warning>
-**Avoid compound goals.** If you need multiple actions, create separate campaigns.
+**Avoid compound goals.** If you need multiple actions, create separate jobs.
 </Warning>
 
 ## Step 2: Define your audience
@@ -62,12 +62,12 @@ Member of cohort "New Self-Serve Users"
 **Using Trig metadata:**
 ```
 last_completed_Onboarding_Stage has any value
-AND last_completed_First_Invoice_Campaign has no value
+AND last_completed_First_Invoice_Job has no value
 ```
 
 ### Exclusions
 
-Always consider who should NOT receive this campaign:
+Always consider who should NOT receive this job:
 
 ```
 Audience:
@@ -75,8 +75,8 @@ Audience:
 - invoices_created = 0
 
 Exclusions:
-- last_entered_[this_campaign] has any value  (already been through)
-- currently_member_of_[other_campaign] = true  (prevent overlap)
+- last_entered_[this_job] has any value  (already been through)
+- currently_member_of_[other_job] = true  (prevent overlap)
 ```
 
 ### Organisation vs people
@@ -90,7 +90,7 @@ Exclusions:
 
 ### Auto-exit timing
 
-Every campaign should have an auto-exit duration:
+Every job should have an auto-exit duration:
 
 | Action Complexity | Duration |
 |------------------|----------|
@@ -99,7 +99,7 @@ Every campaign should have an auto-exit duration:
 | Complex (invite team, integrate) | 14 to 30 days |
 
 <Tip>
-**Err shorter.** If someone hasn't responded in 14 days, another email in the same campaign probably won't help—try a different approach.
+**Err shorter.** If someone hasn't responded in 14 days, another email in the same job probably won't help—try a different approach.
 </Tip>
 
 ## Step 4: Configure entry actions
@@ -189,7 +189,7 @@ Lee
 - This is often your last automated touch
 
 <Note>
-**Most campaigns use 1 to 2 follow-ups.** More than that often means your campaign is too broad or goal is too ambitious.
+**Most jobs use 1 to 2 follow-ups.** More than that often means your job is too broad or goal is too ambitious.
 </Note>
 
 ## Step 6: Configure completion actions
@@ -202,19 +202,19 @@ When a customer achieves the goal:
 - Send congratulations message
 - Notify your team (Slack)
 - Update CRM field
-- Route to next campaign
+- Route to next job
 
 **Example:**
 ```
 Completion Actions:
 ├── Message Customer: "Great job sending your first invoice!"
 ├── Notify Team: "#wins - {organization_name} completed onboarding"
-└── Update Attribute: completed_onboarding_campaign = true
+└── Update Attribute: completed_onboarding_job = true
 ```
 
 ### Silent completion
 
-Not every campaign needs a completion message. For feature adoption campaigns, silent completion is often appropriate.
+Not every job needs a completion message. For feature adoption jobs, silent completion is often appropriate.
 
 ## Step 7: Configure exit actions
 
@@ -225,22 +225,22 @@ When a customer exits without completing:
 **Options:**
 - Notify team for manual follow-up
 - Update attribute for tracking
-- Route to alternative campaign
+- Route to alternative job
 
 **Example:**
 ```
 Exit Actions:
 ├── Notify Team: "@{csm_email} - {organization_name} failed onboarding, needs follow-up"
-└── Update Attribute: failed_onboarding_campaign = true
+└── Update Attribute: failed_onboarding_job = true
 ```
 
-### Chaining to alternate campaigns
+### Chaining to alternate jobs
 
 Use exit actions to create branching journeys:
 
 ```
-Campaign: Onboarding Nudge v1
-├── Completed → Route to "Feature Adoption" campaign
+Job: Onboarding Nudge v1
+├── Completed → Route to "Feature Adoption" job
 └── Exited → Route to "Onboarding Nudge v2" (different approach)
 ```
 
@@ -256,7 +256,7 @@ Campaign: Onboarding Nudge v1
 <Check>Completion and exit actions configured</Check>
 <Check>Exclusions prevent re-entry and overlap</Check>
 
-### Launch the campaign
+### Launch the job
 
 <Steps>
   <Step title="Review configuration">
@@ -273,26 +273,26 @@ Campaign: Onboarding Nudge v1
   </Step>
 </Steps>
 
-## Campaign chaining patterns
+## Job chaining patterns
 
 ### Success path
 
-After completing Campaign 1, move to Campaign 2:
+After completing Job 1, move to Job 2:
 
 ```
-Campaign 2 Audience:
-- last_completed_Campaign_1 has any value
+Job 2 Audience:
+- last_completed_Job_1 has any value
 - [next action criteria]
 ```
 
 ### Failure path
 
-After failing Campaign 1, try Campaign 1B:
+After failing Job 1, try Job 1B:
 
 ```
-Campaign 1B Audience:
-- last_exited_Campaign_1 has any value
-- last_completed_Campaign_1 has no value
+Job 1B Audience:
+- last_exited_Job_1 has any value
+- last_completed_Job_1 has no value
 ```
 
 ### Progressive journey
@@ -303,7 +303,7 @@ Welcome → Onboarding → Feature Adoption → Expansion
 Retry A    Retry B        CSM Outreach
 ```
 
-## Measuring campaign effectiveness
+## Measuring job effectiveness
 
 ### Key metrics
 
@@ -322,7 +322,7 @@ Retry A    Retry B        CSM Outreach
 | High exit at specific point | Focus messaging there |
 | Certain segments complete more | Target them specifically |
 
-## Common campaign patterns
+## Common job patterns
 
 ### Onboarding nudge
 
@@ -333,7 +333,7 @@ Duration: 10 days
 Entry: Plain text email with steps
 Follow-up: Day 3, Day 7
 Completion: Notify team
-Exit: Route to "Onboarding Stalled" campaign
+Exit: Route to "Onboarding Stalled" job
 ```
 
 ### Feature adoption
@@ -362,9 +362,9 @@ Exit: Escalate to sales
 
 ## Troubleshooting
 
-### "Campaign isn't sending emails"
+### "Job isn't sending emails"
 
-- Is the campaign live (not paused)?
+- Is the job live (not paused)?
 - Are there customers matching the audience?
 - Is email integration configured?
 - Is the sender verified?
@@ -384,7 +384,7 @@ Exit: Escalate to sales
 
 ## Summary
 
-Building effective campaigns:
+Building effective jobs:
 
 1. **Clear goal** — Single, measurable action
 2. **Right audience** — Specific targeting with exclusions
@@ -394,4 +394,4 @@ Building effective campaigns:
 6. **Complete the loop** — Actions on both completion and exit
 7. **Chain thoughtfully** — Build progressive journeys
 
-Well-designed campaigns turn insight into action and create measurable impact on customer success.
+Well-designed jobs turn insight into action and create measurable impact on customer success.

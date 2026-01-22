@@ -34,14 +34,14 @@ Signals automate the detection:
 - Continuously evaluate all customers against criteria
 - Surface those who are underperforming
 - Quantify the revenue impact
-- Enable immediate action via campaigns
+- Enable immediate action via jobs
 
 Instead of "go find problems," Signals say "here are the problems—what do you want to do about them?"
 
 ### The insight to action loop
 
 ```
-Lifecycle Stage → Objectives defined
+Stage → Objectives defined
                         ↓
               Trig calculates averages
                         ↓
@@ -49,7 +49,7 @@ Lifecycle Stage → Objectives defined
                         ↓
               Surfaces as Signal
                         ↓
-              User creates Campaign from Signal
+              User creates Job from Signal
                         ↓
               Measures intervention impact
 ```
@@ -58,7 +58,7 @@ Lifecycle Stage → Objectives defined
 
 ### The foundation: objectives and averages
 
-Signals build on lifecycle stages and objectives. When you configure objectives, Trig tracks:
+Signals build on stages and objectives. When you configure objectives, Trig tracks:
 - How many customers complete each objective
 - How long it takes on average
 - Which customers are still pending
@@ -154,11 +154,11 @@ These customers: 8+ days pending
 
 1. **Quantity:** How many Signals? Where's the biggest problem?
 2. **Clarity:** Click into a Signal to see exactly which customers and why
-3. **Activity:** Create a campaign directly from the Signal
+3. **Activity:** Create a job directly from the Signal
 
 ### Stage-level view
 
-Within a lifecycle stage:
+Within a stage:
 - Objectives and completion status
 - Signals associated with each objective
 - Quick stats: how many at risk, revenue impact
@@ -168,11 +168,11 @@ Within a lifecycle stage:
 Drilling into an objective:
 - All members in this objective
 - Toggle to view only flagged customers
-- Create campaign targeting Signal audience
+- Create job targeting Signal audience
 
 ## Acting on signals
 
-### Creating campaigns from signals
+### Creating jobs from signals
 
 From any Signal, you can:
 
@@ -180,7 +180,7 @@ From any Signal, you can:
   <Step title="View affected audience">
     See exactly which customers are flagged
   </Step>
-  <Step title="Create a campaign">
+  <Step title="Create a job">
     Launch with audience pre-populated from Signal
   </Step>
   <Step title="Define intervention">
@@ -188,7 +188,7 @@ From any Signal, you can:
   </Step>
 </Steps>
 
-### Campaign strategy for signals
+### Job strategy for signals
 
 **Message relevance:** These customers are stuck on a specific objective. Address that blocker.
 
@@ -198,10 +198,10 @@ From any Signal, you can:
 
 ### Iterative intervention
 
-Once you've created a campaign from a Signal:
-- Customers in the campaign are being addressed
+Once you've created a job from a Signal:
+- Customers in the job are being addressed
 - New customers falling behind appear in future Signal refreshes
-- Add new customers to existing campaign or create new ones
+- Add new customers to existing job or create new ones
 
 ## Configuring for signals
 
@@ -252,7 +252,7 @@ Slow Completers - Complete Profile Setup
 - Mix of industries
 
 **Action:**
-Create campaign targeting these 12:
+Create job targeting these 12:
 - Goal: profile_complete = true
 - Entry: "Here's why your profile matters and how to do it in 2 minutes..."
 - Auto-exit: 7 days
@@ -269,9 +269,9 @@ Create campaign targeting these 12:
 | **Behaviours** | Track when customers achieve milestones (historical) |
 | **Signals** | Alert when customers are failing to achieve milestones (ongoing) |
 | **Cohorts** | Static/dynamic audience segments |
-| **Campaigns** | Intervention mechanisms |
+| **Jobs** | Intervention mechanisms |
 
-Signals detect problems. Campaigns address them.
+Signals detect problems. Jobs address them.
 
 ## Best practices
 
@@ -286,7 +286,7 @@ Don't Signal everything. Focus on:
 
 Signals surface customers already behind. Delay compounds the problem:
 1. Review same day
-2. Create campaign if warranted
+2. Create job if warranted
 3. Don't wait for perfect message
 
 ### Review signal patterns
@@ -302,11 +302,11 @@ Recurring Signals may indicate systemic issues.
 
 - Customers shouldn't receive too many automated messages
 - Some slowness may be acceptable (enterprise moves slower)
-- Use exclusions to prevent campaign overlap
+- Use exclusions to prevent job overlap
 
-### Measure campaign impact
+### Measure job impact
 
-Track whether Signal-driven campaigns improve outcomes:
+Track whether Signal-driven jobs improve outcomes:
 - Do recipients complete faster than non-recipients?
 - Does intervention reduce Signal population over time?
 - What message content works best?
@@ -330,7 +330,7 @@ Track whether Signal-driven campaigns improve outcomes:
     Summed from ARR/contract value of affected customers (from CRM data).
   </Accordion>
   <Accordion title="What happens when customers complete the objective?">
-    They're removed from the Signal. Campaign tracks this as completion.
+    They're removed from the Signal. Job tracks this as completion.
   </Accordion>
 </AccordionGroup>
 
@@ -338,10 +338,10 @@ Track whether Signal-driven campaigns improve outcomes:
 
 Signals transform Trig from observation to action:
 
-1. **Built on objectives** — Require lifecycle stages and objectives as foundation
+1. **Built on objectives** — Require stages and objectives as foundation
 2. **Automated detection** — Continuously evaluate all customers against thresholds
 3. **Quantified impact** — Revenue at risk makes prioritisation clear
-4. **Direct to action** — Create campaigns directly from Signals
+4. **Direct to action** — Create jobs directly from Signals
 5. **Iterative** — New customers surfaced as they fall behind
 
 Signals show you which customers need help before it's too late.

@@ -58,13 +58,13 @@ Click on a Signal to see:
 1. **Which customers** are affected (list with key attributes)
 2. **How long** each has been pending
 3. **Revenue** associated with each
-4. **Quick action** to create a campaign
+4. **Quick action** to create a job
 
 ## Acting on signals
 
 ### Reviewing the signal
 
-Before creating a campaign, review:
+Before creating a job, review:
 
 | Question | What to Look For |
 |----------|-----------------|
@@ -72,7 +72,7 @@ Before creating a campaign, review:
 | Why are they stuck? | Common attributes, patterns |
 | What intervention makes sense? | Email, CSM outreach, different approach |
 
-### Creating a campaign from a signal
+### Creating a job from a signal
 
 <Steps>
   <Step title="Click the Signal">
@@ -81,10 +81,10 @@ Before creating a campaign, review:
   <Step title="Review affected customers">
     Check the list to understand who's included
   </Step>
-  <Step title="Click 'Create Campaign'">
+  <Step title="Click 'Create Job'">
     This pre-populates the audience with the Signal's customers
   </Step>
-  <Step title="Configure the campaign">
+  <Step title="Configure the job">
     Set goal, duration, and messaging specific to this issue
   </Step>
   <Step title="Launch">
@@ -92,7 +92,7 @@ Before creating a campaign, review:
   </Step>
 </Steps>
 
-### Campaign strategy for signals
+### Job strategy for signals
 
 **Address the specific blocker:**
 These customers are stuck on a specific objective. Your message should directly address that issue.
@@ -145,10 +145,10 @@ Average: 3 days | These customers: 8+ days
 **Step 2: Decide**
 Worth intervening? Yes—profile completion is a key onboarding step, and £34K revenue is significant.
 
-**Step 3: Create Campaign**
+**Step 3: Create Job**
 
 ```
-Campaign: Profile Completion Nudge
+Job: Profile Completion Nudge
 Goal: profile_complete = true
 Audience: [Pre-populated from Signal]
 Duration: 7 days
@@ -192,14 +192,14 @@ Signals show customers already behind. Delay compounds the problem.
 | Timing | Recommendation |
 |--------|----------------|
 | Same day | Review new Signals |
-| Within 24 hours | Create campaign if warranted |
-| Within 48 hours | Campaign should be live |
+| Within 24 hours | Create job if warranted |
+| Within 48 hours | Job should be live |
 
 ### Don't over-intervene
 
 - Customers shouldn't receive too many automated messages
 - Some slowness may be acceptable (enterprise often moves slower)
-- Use exclusions to prevent campaign overlap
+- Use exclusions to prevent job overlap
 
 ### Review recurring signals
 
@@ -213,9 +213,9 @@ If the same Signal keeps appearing:
 
 Recurring Signals may indicate systemic issues, not just individual customer problems.
 
-### Measure campaign impact
+### Measure job impact
 
-After running Signal-driven campaigns:
+After running Signal-driven jobs:
 
 - Did recipients complete faster than non-recipients?
 - Did the intervention reduce the Signal population?
@@ -245,19 +245,19 @@ If you have segments that matter more (enterprise, high-value), prioritise Signa
 
 ## Advanced: Signal-driven workflows
 
-### Automated campaign triggers
+### Automated job triggers
 
-Instead of manually creating campaigns from Signals, you can set up campaigns that automatically target slow completers:
+Instead of manually creating jobs from Signals, you can set up jobs that automatically target slow completers:
 
 ```
-Campaign: Onboarding Objective 3 Nudge
+Job: Onboarding Objective 3 Nudge
 Audience:
 - currently_member_of_onboarding_stage = true
 - days_in_stage >= 14
 - objective_3_completed = false
 ```
 
-This creates a standing campaign that catches customers as they become slow completers.
+This creates a standing job that catches customers as they become slow completers.
 
 ### Combining signals with cohorts
 
@@ -271,7 +271,7 @@ Cohort: Stuck in Onboarding
 ```
 
 Then use this cohort for multiple purposes:
-- Campaign targeting
+- Job targeting
 - CSM alerts
 - Executive reporting
 
@@ -288,7 +288,7 @@ Then use this cohort for multiple purposes:
     Thresholds are configured by your Trig implementation team. Future versions may expose configuration in the UI.
   </Accordion>
   <Accordion title="What happens when customers complete?">
-    They're removed from the Signal. If they completed via campaign, the campaign tracks this as completion.
+    They're removed from the Signal. If they completed via job, the job tracks this as completion.
   </Accordion>
   <Accordion title="Can I see historical Signals?">
     Current version shows active Signals. Historical tracking is planned for future releases.
@@ -299,16 +299,16 @@ Then use this cohort for multiple purposes:
 
 ### "No Signals appearing"
 
-- Are lifecycle stages configured and live?
+- Are stages configured and live?
 - Are there objectives with completion criteria?
 - Are customers in the stages?
 - Are there enough completions for averages?
 
-### "Signal customers not entering campaign"
+### "Signal customers not entering job"
 
-- Does the campaign audience match the Signal criteria?
+- Does the job audience match the Signal criteria?
 - Are there exclusions blocking entry?
-- Is the campaign live?
+- Is the job live?
 
 ### "Intervention not working"
 

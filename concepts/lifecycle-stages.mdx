@@ -1,24 +1,24 @@
 ---
-title: "Lifecycle Stages"
+title: "Stages"
 description: "Define the phases of your customer journey"
 ---
 
 Lifecycle stages represent defined periods of time during which your customers progress through sets of desirable behaviours. They are the foundational framework that enables Trig to understand the path customers take through your product.
 
-## What are lifecycle stages?
+## What are stages?
 
-Think of lifecycle stages as chapters in your customer's journey. Each chapter has:
+Think of stages as chapters in your customer's journey. Each chapter has:
 - A beginning (entry criteria)
 - Things you expect to happen (objectives)
 - An end point (exit criteria)
 
 By tracking progression through these chapters, Trig builds a picture of what "normal" looks like—and identifies who is ahead of normal, who is behind, and what patterns exist among each group.
 
-## Why lifecycle stages matter
+## Why stages matter
 
 Lifecycle stages are the foundation that enables all other Trig capabilities:
 
-| Without Lifecycle Stages | With Lifecycle Stages |
+| Without Stages | With Stages |
 |--------------------------|----------------------|
 | Each analysis requires separate configuration | One configuration enables multiple value drivers |
 | No unified view of customer journey | Complete journey visibility across all customers |
@@ -27,7 +27,7 @@ Lifecycle stages are the foundation that enables all other Trig capabilities:
 | Manual identification of at-risk customers | Automatic pattern detection and early warning |
 
 <Note>
-**The compounding effect:** Once lifecycle stages are configured, every new customer automatically progresses, data accumulates for pattern discovery, and the system continuously improves.
+**The compounding effect:** Once stages are configured, every new customer automatically progresses, data accumulates for pattern discovery, and the system continuously improves.
 </Note>
 
 ## Standard stages
@@ -66,11 +66,11 @@ Pre-renewal health monitoring and risk identification. Typically 60-90 days befo
 - Are there risk signals?
 - What's the renewal likelihood?
 
-## How lifecycle stages work
+## How stages work
 
 ### Entry and exit criteria
 
-Every lifecycle stage needs clear boundaries:
+Every stage needs clear boundaries:
 
 **Entry criteria** define when an organisation enters:
 - First seen date within X days
@@ -99,7 +99,7 @@ Every lifecycle stage needs clear boundaries:
 Objectives are the specific milestones that indicate healthy progression. See [Objectives](/concepts/objectives) for details.
 
 ```
-Lifecycle Stage: Onboarding
+Stage: Onboarding
 ├── Objective 1: Created First Project
 ├── Objective 2: Invited Team Member
 ├── Objective 3: Connected Integration
@@ -109,7 +109,7 @@ Lifecycle Stage: Onboarding
 
 ## Understanding "normal"
 
-The primary purpose of lifecycle stages is to establish what normal progression looks like, then identify deviations.
+The primary purpose of stages is to establish what normal progression looks like, then identify deviations.
 
 ### How normal is calculated
 
@@ -150,7 +150,7 @@ Objective 2: Payment Gateway Connected
 └── Status: BEHIND (currently Day 21, 7 days overdue)
 ```
 
-## Configuring lifecycle stages
+## Configuring stages
 
 ### Planning questions
 
@@ -204,9 +204,9 @@ Before creating stages, answer these for each stage:
 
 **Consider parallel stages.** Enterprise and self-serve customers may need different stage configurations.
 
-## What lifecycle stages enable
+## What stages enable
 
-Once properly configured, lifecycle stages become the foundation for:
+Once properly configured, stages become the foundation for:
 
 ### Pattern discovery
 - Which objective completion patterns predict retention?
@@ -219,18 +219,18 @@ Once properly configured, lifecycle stages become the foundation for:
 - What revenue is at risk?
 
 ### Automated interventions
-- Trigger campaigns when objectives are overdue
+- Trigger jobs when objectives are overdue
 - Send contextual messages based on stage and objective status
 - Notify internal teams when high-value accounts are at risk
 
 ### Impact measurement
 - Did the intervention improve completion?
-- Are campaign recipients completing faster?
+- Are job recipients completing faster?
 - Which messaging is most effective?
 
 ## Multiple concurrent stages
 
-Organisations can be in multiple lifecycle stages at once, though this requires careful design. Common use cases:
+Organisations can be in multiple stages at once, though this requires careful design. Common use cases:
 
 - Different stages for different products
 - Parallel tracks for different user types within the same organisation
@@ -247,7 +247,7 @@ Organisations can be in multiple lifecycle stages at once, though this requires 
   <Accordion title="Can I change objectives after the stage is live?">
     Yes. Adding new objectives is straightforward. Modifying existing ones may affect historical comparisons.
   </Accordion>
-  <Accordion title="Do lifecycle stages work for B2C?">
+  <Accordion title="Do stages work for B2C?">
     The platform is optimised for B2B where organisations are the primary unit. For B2C, the "organisation" becomes the individual user.
   </Accordion>
 </AccordionGroup>
@@ -261,4 +261,4 @@ Lifecycle stages are the foundational data structure in Trig that enables everyt
 3. **Build "normal"** — Establish baselines for comparison
 4. **Enable everything** — Pattern discovery, early warning, interventions, and measurement all depend on stages
 
-**Configure lifecycle stages first. Everything else builds on top.**
+**Configure stages first. Everything else builds on top.**

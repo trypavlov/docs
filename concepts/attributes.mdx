@@ -10,7 +10,7 @@ Attributes are data points that describe your customers. They're the building bl
 Think of attributes as facts you know about each customer:
 - Who they are (name, email, role)
 - What they've done (signup date, invoices created, login count)
-- Where they are in their journey (lifecycle stage, campaign membership)
+- Where they are in their journey (stage, job membership)
 - What Trig has observed (days in stage, objectives completed)
 
 Every filter, audience, and criteria in Trig is built from attributes.
@@ -36,7 +36,7 @@ Pulled from external systems into Trig.
 
 Created automatically as customers interact with Trig objects.
 
-For every campaign, behaviour, stage, and objective:
+For every job, behaviour, stage, and objective:
 ```
 currently_member_of_[object_name]  — Are they currently in?
 last_entry_to_[object_name]        — When did they enter?
@@ -47,11 +47,11 @@ last_completion_of_[object_name]   — When did they complete?
 **Examples:**
 ```
 currently_member_of_onboarding_stage = true
-last_entry_to_poc_1_campaign = 2024-10-15
+last_entry_to_poc_1_job = 2024-10-15
 last_completion_of_create_first_invoice = 2024-10-18
 ```
 
-These attributes persist forever—you can always look back at which campaigns and stages a customer has been through.
+These attributes persist forever—you can always look back at which jobs and stages a customer has been through.
 
 ### Rolled-up attributes
 
@@ -80,11 +80,11 @@ Derived from other attributes through computation.
 
 ### Action-created attributes
 
-Set by campaign actions when customers complete or exit.
+Set by job actions when customers complete or exit.
 
 **Example:**
 ```
-Campaign completion action: Set completed_onboarding_campaign = true
+Job completion action: Set completed_onboarding_job = true
 ```
 
 ## Person vs organisation attributes
@@ -95,7 +95,7 @@ Describe individual users:
 - Identity: email, user_id, name
 - Role: job_title, permissions, admin_status
 - Behaviour: last_login, feature_usage, session_count
-- Trig activity: campaign membership, behaviour completion
+- Trig activity: job membership, behaviour completion
 
 ### Organisation attributes
 
@@ -104,7 +104,7 @@ Describe accounts/companies:
 - Commercial: arr, contract_value, plan_type
 - Relationship: customer_since, renewal_date, csm_owner
 - Aggregated: total_users, active_user_count
-- Trig activity: lifecycle stage, campaign outcomes
+- Trig activity: stage, job outcomes
 
 ### Choosing the right level
 
@@ -153,16 +153,16 @@ currently_member_of_onboarding_stage equals true
 AND days_in_stage is greater than 30
 ```
 
-**Completed campaign but not next step:**
+**Completed job but not next step:**
 ```
-last_completion_of_campaign_1 has any value
-AND last_entry_to_campaign_2 has no value
+last_completion_of_job_1 has any value
+AND last_entry_to_job_2 has no value
 ```
 
 ## Attributes vs events
 
 <Warning>
-Understanding this difference is critical for building effective campaigns.
+Understanding this difference is critical for building effective jobs.
 </Warning>
 
 ### Attributes
@@ -179,11 +179,11 @@ Understanding this difference is critical for building effective campaigns.
 
 ### Critical distinction
 
-**Attributes are evaluated historically:** When you create a campaign with audience `signup_date after 30 days ago`, Trig checks existing values and immediately includes matching customers.
+**Attributes are evaluated historically:** When you create a job with audience `signup_date after 30 days ago`, Trig checks existing values and immediately includes matching customers.
 
-**Events are evaluated forward-only:** When you create completion criteria `invoice_created at least 1 time`, Trig only counts NEW events from when the campaign goes live—not historical events.
+**Events are evaluated forward-only:** When you create completion criteria `invoice_created at least 1 time`, Trig only counts NEW events from when the job goes live—not historical events.
 
-### Implication for campaign design
+### Implication for job design
 
 If you want to exclude customers who have already done something:
 - **Use an attribute** (e.g., `first_invoice_date has no value`)
@@ -197,28 +197,28 @@ For every Trig object, you get:
 
 | Attribute | Meaning | Use Case |
 |-----------|---------|----------|
-| `currently_member_of_[X]` | Currently in this object | Exclude from other campaigns |
+| `currently_member_of_[X]` | Currently in this object | Exclude from other jobs |
 | `last_entry_to_[X]` | When they entered | Time-based targeting |
 | `last_exit_from_[X]` | When they failed | Target failed customers |
 | `last_completion_of_[X]` | When they succeeded | Target successful customers |
 
-### Using for campaign chaining
+### Using for job chaining
 
-**Campaign 1: Initial Nudge**
+**Job 1: Initial Nudge**
 - On completion: Customer has `last_completion_of_initial_nudge`
 
-**Campaign 2: Follow-Up for Completers**
+**Job 2: Follow-Up for Completers**
 - Audience: `last_completion_of_initial_nudge` has any value
 
-**Campaign 3: Rescue for Non-Completers**
+**Job 3: Rescue for Non-Completers**
 - Audience: `last_exit_from_initial_nudge` has any value
 
 ### Timing-based targeting
 
 ```
-last_entry_to_onboarding_campaign is after 5 days ago
-AND last_entry_to_onboarding_campaign is before 3 days ago
-AND last_completion_of_onboarding_campaign has no value
+last_entry_to_onboarding_job is after 5 days ago
+AND last_entry_to_onboarding_job is before 3 days ago
+AND last_completion_of_onboarding_job has no value
 ```
 
 This targets customers who entered 3 to 5 days ago but haven't completed—perfect for reminders.
@@ -226,7 +226,7 @@ This targets customers who entered 3 to 5 days ago but haven't completed—perfe
 ### Persistence is powerful
 
 These attributes never disappear. Years later, you can still query:
-- "Show me everyone who completed Campaign X in Q3 2024"
+- "Show me everyone who completed Job X in Q3 2024"
 - "How many customers who failed Behaviour Y eventually churned?"
 
 ## Viewing attributes
@@ -292,9 +292,9 @@ days_as_customer
 ### Trig-generated attributes
 
 ```
-currently_member_of_[stage/campaign/behaviour]
-last_entry_to_[stage/campaign/behaviour]
-last_completion_of_[stage/campaign/behaviour]
+currently_member_of_[stage/job/behaviour]
+last_entry_to_[stage/job/behaviour]
+last_completion_of_[stage/job/behaviour]
 days_in_[stage]
 objectives_completed_count
 ```
@@ -306,7 +306,7 @@ objectives_completed_count
 | Good | Bad |
 |------|-----|
 | `first_invoice_created_date` | `fic_dt` |
-| `completed_onboarding_campaign` | `flag_1` |
+| `completed_onboarding_job` | `flag_1` |
 
 ### Keep source of truth clear
 
@@ -317,13 +317,13 @@ objectives_completed_count
 ### Use Trig attributes liberally
 
 The auto-generated attributes are extremely valuable:
-- Use for progressive campaign targeting
+- Use for progressive job targeting
 - Build exclusion logic
 - Analyse intervention outcomes
 
 ### Test your filters
 
-Before launching campaigns:
+Before launching jobs:
 - Build the filter in Audience view
 - Check the resulting count
 - Spot-check individual records
@@ -344,7 +344,7 @@ Before launching campaigns:
 
 ### "Trig activity attributes not appearing"
 
-- Has the campaign/stage/behaviour been set live?
+- Has the job/stage/behaviour been set live?
 - Has anyone entered the object yet?
 - Attributes only appear after first use
 
@@ -352,10 +352,10 @@ Before launching campaigns:
 
 Attributes are the foundation of everything in Trig:
 
-1. **Three sources** — Ingested (external systems), Trig-generated (platform activity), action-created (campaign outcomes)
+1. **Three sources** — Ingested (external systems), Trig-generated (platform activity), action-created (job outcomes)
 2. **Two levels** — Person (individual users) and Organisation (accounts)
-3. **Attributes = historical, Events = forward** — Critical for campaign design
-4. **Trig activity attributes are powerful** — Entry/exit/completion tracking enables progressive campaigns
+3. **Attributes = historical, Events = forward** — Critical for job design
+4. **Trig activity attributes are powerful** — Entry/exit/completion tracking enables progressive jobs
 5. **Roll-ups aggregate up** — Person data flows to organisation level
 6. **Persist forever** — Historical record enables long-term analysis
 

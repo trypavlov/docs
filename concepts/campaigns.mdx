@@ -1,25 +1,25 @@
 ---
-title: "Campaigns"
+title: "Jobs"
 description: "Orchestrate interventions to drive customer success"
 ---
 
-Campaigns are the intervention layer of Trig. They orchestrate outreach to customers who meet specific criteria, with the goal of driving them toward a desired behaviour.
+Jobs are the intervention layer of Trig. They orchestrate outreach to customers who meet specific criteria, with the goal of driving them toward a desired behaviour.
 
-## What are campaigns?
+## What are jobs?
 
-Unlike lifecycle stages (which observe) and behaviours (which track milestones), campaigns actively intervene—sending messages, notifying teams, and measuring whether the intervention worked.
+Unlike stages (which observe) and behaviours (which track milestones), jobs actively intervene—sending messages, notifying teams, and measuring whether the intervention worked.
 
 <Note>
-**Key principle:** Campaigns are goal-oriented and time-bounded. You define who to target, what you want them to do, how you'll encourage them, and how long you'll wait.
+**Key principle:** Jobs are goal-oriented and time-bounded. You define who to target, what you want them to do, how you'll encourage them, and how long you'll wait.
 </Note>
 
-Think of campaigns as targeted nudges. You've identified customers who should do something but haven't. The campaign reaches out, encourages the action, and measures results.
+Think of jobs as targeted nudges. You've identified customers who should do something but haven't. The job reaches out, encourages the action, and measures results.
 
-## Why campaigns matter
+## Why jobs matter
 
 ### Closing the gap between insight and action
 
-Lifecycle stages and behaviours tell you what's happening. Campaigns let you do something about it.
+Lifecycle stages and behaviours tell you what's happening. Jobs let you do something about it.
 
 The insight that "47 customers haven't completed onboarding objective 3" becomes actionable when you can immediately target those 47 with a relevant message.
 
@@ -36,7 +36,7 @@ The closer an intervention arrives to the moment of need, the more effective it 
 
 ### Measurable impact
 
-Every campaign tracks:
+Every job tracks:
 - How many entered
 - How many completed (achieved the goal)
 - How many exited (didn't achieve the goal)
@@ -45,9 +45,9 @@ Every campaign tracks:
 
 This creates clear attribution for intervention effectiveness.
 
-## How campaigns work
+## How jobs work
 
-### The campaign lifecycle
+### The job lifecycle
 
 ```
 Audience Match → Entry → Intervention → Outcome
@@ -71,15 +71,15 @@ Audience Match → Entry → Intervention → Outcome
 
 Both create permanent metadata:
 ```
-last_completed_[campaign]  — Timestamp if completed
-last_exited_[campaign]     — Timestamp if exited without completing
-last_entered_[campaign]    — When they entered
+last_completed_[job]  — Timestamp if completed
+last_exited_[job]     — Timestamp if exited without completing
+last_entered_[job]    — When they entered
 ```
 
 ### Time-bounded by design
 
 <Warning>
-Campaigns should have an auto-exit duration. Without one, customers who never achieve the goal remain indefinitely—breaking your ability to analyse and iterate.
+Jobs should have an auto-exit duration. Without one, customers who never achieve the goal remain indefinitely—breaking your ability to analyse and iterate.
 </Warning>
 
 **Duration guidelines:**
@@ -87,9 +87,9 @@ Campaigns should have an auto-exit duration. Without one, customers who never ac
 - Moderate actions (complete setup step): 7 to 14 days
 - Complex actions (invite team, integrate system): 14 to 30 days
 
-## Configuring campaigns
+## Configuring jobs
 
-### Anatomy of a campaign
+### Anatomy of a job
 
 | Component | Description | Example |
 |-----------|-------------|---------|
@@ -99,7 +99,7 @@ Campaigns should have an auto-exit duration. Without one, customers who never ac
 | **Entry Actions** | What happens when they enter | Send initial email |
 | **Intervention** | Follow-up messages/actions | Follow-up email after 3 days |
 | **Completion Actions** | What happens on success | Notify team, update CRM |
-| **Exit Actions** | What happens on failure | Flag for follow-up campaign |
+| **Exit Actions** | What happens on failure | Flag for follow-up job |
 
 ### Defining the goal
 
@@ -124,7 +124,7 @@ last_completed_[behaviour] has any value
 ```
 
 <Tip>
-Keep goals focused on a single, clear action. Multiple actions = separate campaigns.
+Keep goals focused on a single, clear action. Multiple actions = separate jobs.
 </Tip>
 
 ### Defining the audience
@@ -146,14 +146,14 @@ Audience: Members of cohort "New Self-Serve Users"
 ```
 Audience:
 - last_completed_Onboarding_Stage has any value
-- last_completed_First_Invoice_Campaign has no value
+- last_completed_First_Invoice_Job has no value
 ```
 
 **Important considerations:**
 - **Relative vs absolute dates:** Relative dates mean audience constantly refreshes
-- **Exclusions:** Use `last_entered_[campaign] has any value` to exclude customers who've already been through
+- **Exclusions:** Use `last_entered_[job] has any value` to exclude customers who've already been through
 
-## Campaign actions
+## Job actions
 
 See [Actions](/concepts/actions) for detailed action configuration.
 
@@ -173,7 +173,7 @@ Wait 3 days → Send follow-up email
 Wait 7 days → Send second follow-up
 ```
 
-Most campaigns use 1 to 2 follow-ups. More often indicates the campaign is too broad.
+Most jobs use 1 to 2 follow-ups. More often indicates the job is too broad.
 
 ### Completion actions
 
@@ -181,14 +181,14 @@ When goal is achieved:
 - Celebratory message
 - Notify team
 - Update CRM
-- Route to next campaign
+- Route to next job
 
 ### Exit actions
 
 When customer exits without completing:
 - Notification to team
 - Update attribute to mark failure
-- Route to alternate campaign
+- Route to alternate job
 
 ## Email best practices
 
@@ -240,24 +240,24 @@ The good example is contextual, specific, actionable, and personal.
 - Offer help if needed
 - Sign off personally
 
-## Chaining campaigns
+## Chaining jobs
 
-One of Trig's powerful capabilities is chaining campaigns based on outcomes.
+One of Trig's powerful capabilities is chaining jobs based on outcomes.
 
 ### Success path
 
 ```
-Campaign 2 Audience:
-- last_completed_Campaign_1 has any value
+Job 2 Audience:
+- last_completed_Job_1 has any value
 - [next action criteria]
 ```
 
 ### Failure path
 
 ```
-Campaign 1B Audience:
-- last_exited_Campaign_1 has any value
-- last_completed_Campaign_1 has no value
+Job 1B Audience:
+- last_exited_Job_1 has any value
+- last_completed_Job_1 has no value
 ```
 
 ### Progressive context
@@ -265,25 +265,25 @@ Campaign 1B Audience:
 ```
 Customer: Acme Corp
 
-Campaign History:
-├── Completed: Welcome Campaign (Day 2)
-├── Completed: First Invoice Campaign (Day 4)
-├── Exited: Gateway Connection Campaign (Day 12)
-└── Currently in: Gateway Connection Retry Campaign
+Job History:
+├── Completed: Welcome Job (Day 2)
+├── Completed: First Invoice Job (Day 4)
+├── Exited: Gateway Connection Job (Day 12)
+└── Currently in: Gateway Connection Retry Job
 ```
 
 This history enables highly targeted messaging.
 
 ## Targeting: organisations vs people
 
-### Organisation-level campaigns
+### Organisation-level jobs
 
 Target the account:
 - Intervention goes to contacts associated with the organisation
 - Useful for account-based actions
 - Multiple people may receive messages
 
-### Individual-level campaigns
+### Individual-level jobs
 
 Target specific people:
 - Intervention goes to that individual
@@ -305,13 +305,13 @@ Choose based on what action you're driving. "Invite team members" targets indivi
 
 ### Iteration
 
-Use campaign data to improve:
+Use job data to improve:
 - Low completion rate → Adjust messaging, timing, or goal
 - Long time to completion → Intervention may be too early
 - High exit at specific point → Focus messaging there
 - Certain segments complete more → Target them specifically
 
-## Common campaign patterns
+## Common job patterns
 
 ### Onboarding nudge
 
@@ -324,7 +324,7 @@ Audience:
 Duration: 10 days
 Entry: Plain text email with steps
 Follow-up: Day 3, Day 7
-Exit: Route to "Onboarding Stalled" campaign
+Exit: Route to "Onboarding Stalled" job
 ```
 
 ### Feature adoption
@@ -356,17 +356,17 @@ Exit: Escalate to sales
 ## Common questions
 
 <AccordionGroup>
-  <Accordion title="How long should campaigns run?">
-    Keep campaigns short and focused. 7 to 14 days for most use cases. If no response in 14 days, try a different approach in a new campaign.
+  <Accordion title="How long should jobs run?">
+    Keep jobs short and focused. 7 to 14 days for most use cases. If no response in 14 days, try a different approach in a new job.
   </Accordion>
-  <Accordion title="Can a customer be in multiple campaigns?">
+  <Accordion title="Can a customer be in multiple jobs?">
     Yes, but be careful about message volume. Use exclusion criteria to prevent overlap.
   </Accordion>
-  <Accordion title="What happens if I pause a campaign?">
+  <Accordion title="What happens if I pause a job?">
     No new customers enter. Existing customers can still complete or exit normally.
   </Accordion>
   <Accordion title="How do I prevent re-sending to previous recipients?">
-    Use `last_entered_[campaign] has any value` in exclusion criteria.
+    Use `last_entered_[job] has any value` in exclusion criteria.
   </Accordion>
   <Accordion title="Should I use Trig's email or external systems?">
     Either works. Trig sends directly for speed and simplicity. For complex requirements, trigger external systems via webhooks.
@@ -375,13 +375,13 @@ Exit: Escalate to sales
 
 ## Summary
 
-Campaigns are Trig's intervention engine:
+Jobs are Trig's intervention engine:
 
-1. **Goal-oriented** — Every campaign has clear completion criteria
-2. **Time-bounded** — Set auto-exit to keep campaigns focused
+1. **Goal-oriented** — Every job has clear completion criteria
+2. **Time-bounded** — Set auto-exit to keep jobs focused
 3. **Plain text, personal** — Messages should feel human
 4. **Timely** — Intervene as close to the trigger as possible
 5. **Measurable** — Track completion rate and iterate
 6. **Chainable** — Use outcomes to route customers through progressive journeys
 
-Well-designed campaigns create a virtuous cycle: insight informs targeting, campaigns drive action, outcomes create more insight.
+Well-designed jobs create a virtuous cycle: insight informs targeting, jobs drive action, outcomes create more insight.

@@ -7,7 +7,7 @@ Actions are the things Trig does in response to customer activity. They're the "
 
 ## What are actions?
 
-Every campaign, behaviour, and lifecycle stage can trigger actions at key moments. Actions turn insight into intervention.
+Every job, behaviour, and stage can trigger actions at key moments. Actions turn insight into intervention.
 
 **Core principle:** Trig observes customer behaviour, identifies when intervention is needed, and actions execute that intervention.
 
@@ -17,7 +17,7 @@ Actions fire at specific moments:
 
 ### Entry actions
 
-Fire when a customer enters a campaign, behaviour, or lifecycle stage.
+Fire when a customer enters a job, behaviour, or stage.
 
 **Use for:**
 - Sending initial outreach
@@ -32,7 +32,7 @@ Fire when a customer achieves the goal.
 - Congratulating customers
 - Notifying team of success
 - Recording completion in CRM
-- Triggering next-stage campaigns
+- Triggering next-stage jobs
 
 ### Exit actions (fallback)
 
@@ -41,7 +41,7 @@ Fire when a customer exits without completing.
 **Use for:**
 - Notifying team of intervention failure
 - Recording failure in CRM
-- Triggering escalation or alternative campaigns
+- Triggering escalation or alternative jobs
 - Alerting CSMs for manual follow-up
 
 ## Action types
@@ -103,7 +103,7 @@ Send a notification to your internal team via Slack.
 ```
 Channel: #customer-alerts
 Message: @{case_owner_email} - {organization_name} has entered
-the "At Risk" campaign. They haven't logged in for 30+ days.
+the "At Risk" job. They haven't logged in for 30+ days.
 ```
 
 <Tip>
@@ -121,7 +121,7 @@ Set or update an attribute value on the customer record.
 
 **Example:**
 ```
-Attribute: completed_onboarding_campaign
+Attribute: completed_onboarding_job
 Value: true
 ```
 
@@ -154,7 +154,7 @@ Thanks,
 Any attribute on the customer record:
 - **Person attributes:** first_name, email, role
 - **Organisation attributes:** organization_name, industry, arr
-- **Trig-generated:** last_entry_to_campaign, days_in_stage
+- **Trig-generated:** last_entry_to_job, days_in_stage
 - **CRM attributes:** case_owner_email, account_manager
 
 ### Handling missing values
@@ -218,26 +218,26 @@ Slack messages support:
 - @-mentions using email addresses
 - Basic formatting
 
-## Using attributes to chain campaigns
+## Using attributes to chain jobs
 
-Actions that update attributes enable campaign chaining:
-
-```
-Campaign 1: Try to get customer to do X
-├── On completion: Set "completed_campaign_1" = true
-└── On exit: Set "failed_campaign_1" = true
-
-Campaign 2: Target completers
-└── Audience: "completed_campaign_1" = true
-
-Campaign 1B: Alternative for failures
-└── Audience: "failed_campaign_1" = true
-```
-
-## Campaign action flow example
+Actions that update attributes enable job chaining:
 
 ```
-Campaign: Onboarding Nudge
+Job 1: Try to get customer to do X
+├── On completion: Set "completed_job_1" = true
+└── On exit: Set "failed_job_1" = true
+
+Job 2: Target completers
+└── Audience: "completed_job_1" = true
+
+Job 1B: Alternative for failures
+└── Audience: "failed_job_1" = true
+```
+
+## Job action flow example
+
+```
+Job: Onboarding Nudge
 ├── Entry Actions
 │   ├── Message Customer: Welcome email with steps
 │   └── Update Attribute: entered_onboarding_nudge = true
@@ -306,7 +306,7 @@ That's it—you'll get a notification when they pay.
 ### Attribute management
 
 **Name clearly:**
-- `completed_onboarding_campaign` not `flag_1`
+- `completed_onboarding_job` not `flag_1`
 - `last_intervention_date` not `date`
 
 **Don't overwrite CRM fields:**
@@ -334,7 +334,7 @@ Check:
 - Email integration configured?
 - Sender verified?
 - DNS records in place?
-- Campaign active (not paused)?
+- Job active (not paused)?
 
 ### Slack notifications not appearing
 
@@ -359,5 +359,5 @@ Actions are how Trig turns insight into intervention:
 1. **Three trigger points** — Entry, completion, and exit each serve different purposes
 2. **Four action types** — Message customer, send reminder, notify team, update attribute
 3. **Plain text wins** — Simple, personal emails outperform branded marketing
-4. **Chain with attributes** — Use attribute updates to create progressive campaign sequences
+4. **Chain with attributes** — Use attribute updates to create progressive job sequences
 5. **Right action, right moment** — Entry for initial outreach, completion for celebration, exit for escalation

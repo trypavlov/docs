@@ -51,7 +51,7 @@ When a customer exhibits a behaviour, you can immediately:
 - Notify your team via Slack or webhook
 - Update an attribute in your system
 - Send a follow-up communication
-- Route them into a campaign
+- Route them into a job
 
 ### Building customer context
 
@@ -66,7 +66,7 @@ currently_member_of_[behaviour] — Whether they're currently in it
 
 This metadata is available for targeting, filtering, and analysis throughout the platform.
 
-### Qualifying audiences for campaigns
+### Qualifying audiences for jobs
 
 Behaviours are often used as qualification criteria:
 
@@ -146,8 +146,8 @@ attribute has any value
 
 **Trig metadata:**
 ```
-currently_member_of_[stage/behaviour/campaign]
-last_completed_[stage/behaviour/campaign] has any value
+currently_member_of_[stage/behaviour/job]
+last_completed_[stage/behaviour/job] has any value
 ```
 
 <Warning>
@@ -238,16 +238,16 @@ Entry Action: Alert CSM
 
 ## Behaviours as objectives
 
-Within lifecycle stages, objectives are actually behaviours under the hood:
+Within stages, objectives are actually behaviours under the hood:
 
 ```
-Lifecycle Stage: Onboarding
+Stage: Onboarding
 ├── Objective: Created First Invoice (behaviour)
 ├── Objective: Connected Gateway (behaviour)
 ├── Objective: Invited Team Member (behaviour)
 ```
 
-The mechanics are identical—entry criteria, completion criteria, actions. Within a lifecycle stage context, they're called "objectives" and contribute to stage progression tracking.
+The mechanics are identical—entry criteria, completion criteria, actions. Within a stage context, they're called "objectives" and contribute to stage progression tracking.
 
 ## Automatic metadata
 
@@ -265,7 +265,7 @@ You don't need to create these manually.
 ### Using behaviour metadata
 
 ```
-Campaign Audience:
+Job Audience:
   - last_completed_Setup_Moment has any value
   - last_completed_Aha_Moment has no value
 ```
@@ -329,7 +329,7 @@ You don't need to create "entered_X = true" attributes manually—Trig creates t
     Use threshold behaviours: "First time", "5+ times", "10+ times" as separate behaviours. Or use cohorts for current state.
   </Accordion>
   <Accordion title="What's the difference between a behaviour and an objective?">
-    Objectives are behaviours within lifecycle stages. Same mechanics, but objectives carry additional meaning for stage progression.
+    Objectives are behaviours within stages. Same mechanics, but objectives carry additional meaning for stage progression.
   </Accordion>
   <Accordion title="Do behaviour actions fire immediately?">
     Yes. Entry, completion, and exit actions fire as soon as the condition is met.
