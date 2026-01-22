@@ -109,17 +109,65 @@ th {
 /* Use light background fills instead */
 
 /* Note callouts - info style */
+/* Design system: Light background fill with subtle left border accent */
 [class*="note"], [class*="Note"],
 .callout, [class*="callout"] {
   background-color: var(--trig-blue-50) !important;
   border: none !important;
-  border-left: 3px solid var(--trig-blue-500) !important;
+  border-left: 4px solid var(--trig-blue-500) !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
   color: var(--trig-text) !important;
 }
 
 [class*="note"] *, [class*="Note"] *,
 .callout *, [class*="callout"] * {
   color: var(--trig-text) !important;
+}
+
+/* Override any framework defaults that might conflict */
+[class*="note"]:not([class*="icon"]),
+[class*="Note"]:not([class*="icon"]) {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Mintlify-specific Note component overrides */
+aside[class*="Note"],
+aside[class*="note"],
+div[class*="Note"],
+div[class*="note"] {
+  background-color: var(--trig-blue-50) !important;
+  border: none !important;
+  border-left: 4px solid var(--trig-blue-500) !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
+  box-shadow: none !important;
+}
+
+/* Remove any icon container backgrounds */
+aside[class*="Note"] > div:first-child,
+aside[class*="note"] > div:first-child,
+div[class*="Note"] > div:first-child,
+div[class*="note"] > div:first-child {
+  background-color: transparent !important;
+}
+
+/* Ensure all text within Note uses proper colors */
+aside[class*="Note"] *:not(svg),
+aside[class*="note"] *:not(svg),
+div[class*="Note"] *:not(svg),
+div[class*="note"] *:not(svg) {
+  color: var(--trig-text) !important;
+}
+
+/* Icon color for Note */
+aside[class*="Note"] svg,
+aside[class*="note"] svg,
+div[class*="Note"] svg,
+div[class*="note"] svg {
+  color: var(--trig-blue-500) !important;
+  fill: currentColor !important;
 }
 
 /* Tip callouts - success style */
