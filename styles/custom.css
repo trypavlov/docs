@@ -110,13 +110,14 @@ th {
 
 /* Note callouts - info style */
 /* Design system: Light background fill with subtle left border accent */
+/* Border radius: rounded-md (6px) to match Card component pattern */
 [class*="note"], [class*="Note"],
 .callout, [class*="callout"] {
   background-color: var(--trig-blue-50) !important;
   border: none !important;
-  border-left: 4px solid var(--trig-blue-500) !important;
-  border-radius: 8px !important;
-  padding: 16px 20px !important;
+  border-left: 3px solid var(--trig-blue-500) !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
   color: var(--trig-text) !important;
 }
 
@@ -139,9 +140,9 @@ div[class*="Note"],
 div[class*="note"] {
   background-color: var(--trig-blue-50) !important;
   border: none !important;
-  border-left: 4px solid var(--trig-blue-500) !important;
-  border-radius: 8px !important;
-  padding: 16px 20px !important;
+  border-left: 3px solid var(--trig-blue-500) !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
   box-shadow: none !important;
 }
 
@@ -175,6 +176,8 @@ div[class*="note"] svg {
   background-color: #F0F5F1 !important;
   border: none !important;
   border-left: 3px solid var(--trig-green-500) !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
   color: var(--trig-text) !important;
 }
 
@@ -187,6 +190,8 @@ div[class*="note"] svg {
   background-color: #FDFBF5 !important;
   border: none !important;
   border-left: 3px solid var(--trig-yellow-500) !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
   color: var(--trig-text) !important;
 }
 
@@ -200,6 +205,8 @@ div[class*="note"] svg {
   background-color: #FDF2F0 !important;
   border: none !important;
   border-left: 3px solid var(--trig-red-500) !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
   color: var(--trig-text) !important;
 }
 
