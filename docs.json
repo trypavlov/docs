@@ -8,7 +8,7 @@
     "dark": "#4A6580"
   },
   "css": "/styles/custom.css",
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "navigation": {
     "global": {
       "anchors": [
