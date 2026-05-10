@@ -45,6 +45,37 @@
             ]
           },
           {
+            "group": "Integrations",
+            "pages": [
+              {
+                "group": "CRM",
+                "pages": [
+                  "integrations/crm/overview",
+                  "integrations/crm/hubspot",
+                  "integrations/crm/salesforce"
+                ]
+              },
+              {
+                "group": "Data Lake",
+                "pages": [
+                  "integrations/data-lake/overview",
+                  "integrations/data-lake/bigquery",
+                  "integrations/data-lake/databricks",
+                  "integrations/data-lake/snowflake"
+                ]
+              },
+              {
+                "group": "Events",
+                "pages": [
+                  "integrations/events/overview",
+                  "integrations/events/amplitude",
+                  "integrations/events/mixpanel",
+                  "integrations/events/segment"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Guides",
             "pages": [
               "guides/configuring-lifecycle-stages",

@@ -1,0 +1,107 @@
+---
+title: "Salesforce"
+description: "Connect Trig to Salesforce to sync contacts, accounts, opportunities, and custom fields"
+---
+
+## What it does
+
+Trig connects to Salesforce to pull in your contacts and accounts as people and organisations in Trig and keep them in sync as records change in Salesforce. Once connected, anything you've stored on a Salesforce record (owner, custom fields, related opportunities) is available for cohorts, signals, and campaign personalisation. Trig can also write field updates back to Salesforce, but only when an explicit Trig Job is configured to do so. Actions within a Job are the things that perform the update.
+
+## Before you start
+
+You'll need:
+
+- **A Salesforce user who can authorise the Trig Connected App**, with read access to Contact, Account, Opportunity, and Lead objects (plus any custom objects you want imported). We strongly recommend using a dedicated integration user rather than a real person's account, so the connection doesn't break when someone leaves or changes role (see Permissions & scopes).
+- **The right Salesforce environment.** Production logs in via `login.salesforce.com` (or your My Domain URL, for example `mycompany.my.salesforce.com`). Sandboxes log in via `test.salesforce.com` (or `mycompany--sandbox.sandbox.my.salesforce.com`). Each requires its own connection.
+- A list of any **custom fields or objects** you want Trig to import. You can adjust this later.
+
+You don't need to build a Connected App yourself. Trig provides one and authorisation is via Salesforce's OAuth flow.
+
+## Connect Salesforce
+
+1. In Trig, go to **Settings → Integrations → CRM**.
+2. Click **Add a CRM integration** and choose **Salesforce**.
+3. Click **Connect**. You'll be redirected to Salesforce to authorise Trig.
+
+   {/* TODO: screenshot — Salesforce OAuth consent screen */}
+
+4. Sign in to the Salesforce org you want to connect, review the requested scopes (`api` and `refresh_token`), and click **Allow**.
+5. You'll be redirected back to Trig. Your integration is now connected.
+
+   {/* TODO: screenshot — Trig CRM integration list with Salesforce connected */}
+
+By default, the first **full import** runs on the next scheduled cycle (within 24 hours). If you'd like to bring data in immediately, ask your Trig contact to trigger an initial sync.
+
+## What data flows
+
+### Imported from Salesforce
+
+**Contacts** become **People** in Trig. By default Trig imports:
+
+- `Id`, `FirstName`, `LastName`, `Email`, `Phone`, `MailingCountry`, `Title`
+- `HasOptedOutOfEmail` (used to respect opt-outs in Trig sends)
+- `OwnerId` (mapped to Trig owners)
+- `AccountId` (links the person to their org in Trig)
+- Any **custom fields** included in your import configuration
+
+**Accounts** become **Organisations** in Trig. Default fields:
+
+- `Id`, `Name`, `Website`, `Industry`, `OwnerId`
+- Any custom fields included in your import configuration
+
+`Website` is the matching key Trig uses to link organisations across data sources, so it's always pulled by default.
+
+**Opportunities** and **Leads** are also imported and typically used to build signals (for example, "opportunity moved to Closed Won", or "new inbound lead in target segment"). Related objects on a Contact (such as Cases) can be configured to flow through too.
+
+### Written back to Salesforce
+
+Trig does **not** automatically update Salesforce when campaigns run or other state changes in Trig. Writeback only happens when you configure a Trig **Job** with an Action that updates a Salesforce field. For example, an Action that stamps a custom date field after an email is sent. If you want Trig to keep a Salesforce field in sync with something in Trig, set it up as a Job.
+
+Trig does not create or delete records in Salesforce. Only specified fields on existing records can be updated by configured Jobs.
+
+## Sync schedule
+
+| Sync type | Frequency | What it pulls |
+|---|---|---|
+| Full | Every 24 hours | All contacts and accounts |
+| Recent changes | Periodically throughout the day | Records modified since the last sync |
+| Manual | On request | Triggered by your Trig contact |
+
+The recent-changes sync uses Salesforce's `LastModifiedDate` to fetch only modified records, keeping API usage well within Salesforce's limits.
+
+## Customising what's imported
+
+The set of Salesforce fields Trig imports (including custom fields, related objects, filters, and any field-level transforms) is configured for you when the integration is set up. To add a new field, expand to a custom object, or change a mapping, **contact your Trig representative**. We'll adjust the configuration on your behalf and confirm the timing with you.
+
+## Permissions & scopes
+
+Trig requests these Salesforce OAuth scopes:
+
+- `api`: read and write access to standard and custom objects, scoped by the connecting user's profile and permission set.
+- `refresh_token` (sometimes shown in Salesforce as `offline_access`, which is an alias of the same scope): keeps the connection alive without re-authorising.
+
+The connecting user's **profile and permission set** determines exactly which objects and fields Trig can see. We recommend creating a dedicated integration user with read access to Contact, Account, Opportunity, Lead, and any custom objects you want imported. This avoids the integration breaking when a real person changes role or leaves. Salesforce now offers free Integration User licences for most editions; check with your Salesforce admin on availability.
+
+Write scopes are granted at install via the `api` scope so writeback Jobs don't need a re-authorisation later. They're only used when a Job with a Salesforce-update Action runs. Trig does not create or delete records in Salesforce; only specified fields on existing records can be updated by configured Jobs.
+
+## Limits & gotchas
+
+- **Sandbox vs production** are separate connections. If you move from sandbox to production, you'll connect a new integration rather than swapping the underlying org. **My Domain** is now mandatory in Salesforce, so the connecting user will most likely sign in via your My Domain URL rather than the generic login URL.
+- **Field-level security** in Salesforce is respected. If the connecting user can't see a field, neither can Trig, even if it's listed in your import config.
+- **Custom objects** are supported via SOQL configuration. Reach out if you want a custom object available in Trig.
+- **Large filter expressions** (very long lists of IDs in `WHERE` clauses) are split automatically. No action needed on your side, though it can make initial imports take longer.
+- **API limits**: Trig's syncs are designed to stay well within Salesforce's daily API request limits, but if you have other heavy integrations consuming the same quota, monitor it during the initial full import.
+
+## Troubleshooting
+
+**The integration shows "connected" but no data is appearing.**
+The first full import runs on the next scheduled cycle (within 24 hours). If you need data sooner, ask your Trig contact to trigger an initial sync.
+
+**A field I added in Salesforce isn't showing up in Trig.**
+New custom fields aren't picked up automatically. Contact your Trig representative and we'll add the field to your import.
+
+**Trig isn't writing updates back to Salesforce.**
+Writeback only happens via Trig Jobs. Check whether a Job with a Salesforce-update Action has been configured for that field, or get in touch and we'll help set one up.
+
+**I'm seeing "INVALID_SESSION_ID" or repeated auth errors.**
+Trig refreshes tokens automatically. The most common cause is the original authorising user being deactivated, or their permissions changing. If you used a real person's account, switch to a dedicated integration user when you reconnect. If you already use an integration user, reconnect with one that has the appropriate permissions.

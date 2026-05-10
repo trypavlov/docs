@@ -1,0 +1,77 @@
+---
+title: "Amplitude"
+description: "Stream Amplitude events into Trig in real time via webhook"
+---
+
+## What it does
+
+Trig connects to Amplitude to receive a real-time stream of events as they happen in your product. Each event is matched to a Person in Trig (by email on the event's user properties) and becomes available for cohorts, signals, and campaign triggers. Choose Amplitude if it's your primary analytics tool and you want event-driven Trig automations to fire as soon as user behaviour occurs.
+
+If your Amplitude setup identifies users by an internal `user_id` and deliberately keeps email off events for PII reasons, contact your Trig representative before setting up the integration. Email-based matching is the default; we can discuss alternatives.
+
+## Before you start
+
+You'll need:
+
+- **Admin access** to the Amplitude project you want to connect.
+- The ability to **configure a webhook destination** in Amplitude (a project-level setting).
+
+## Connect Amplitude
+
+1. In Trig, go to **Settings → Integrations → Events**.
+2. Click **Add an events integration** and choose **Amplitude**.
+3. Trig will display the **webhook URL** to use in Amplitude.
+
+   {/* TODO: screenshot — Amplitude integration setup form with webhook URL */}
+
+4. In Amplitude, go to **Data → Destinations → Add Destination → Webhook** and configure:
+   - **URL**: the webhook URL Trig provided.
+   - **Events to forward**: pick a focused set rather than all events. Forwarding everything from a high-volume Amplitude project produces noise in Trig and may incur Amplitude egress costs. Choose the events that drive cohorts, signals, or campaigns.
+5. Save the destination in Amplitude. Within a few seconds, Trig should start receiving events.
+
+If you want help with the Amplitude-side configuration, contact your Trig representative.
+
+## What data flows
+
+Amplitude forwards each event to Trig with the full payload, including:
+
+- `event_type` (event name)
+- `event_time`
+- `$insert_id` (used for deduplication)
+- `user_properties` (including `email`, used to match the event to a Person in Trig)
+- All other event and user properties
+
+Trig matches incoming events to People using **email** on the event's user properties. If no match exists and email is present, Trig creates a new Person. Events without an email on user properties are dropped.
+
+Trig does not send data back to Amplitude.
+
+## Sync schedule
+
+Events are received in **real time** as Amplitude forwards them, typically within a few seconds of the original event firing.
+
+## Customising what's imported
+
+Filter at the source: configure the Amplitude destination to forward only the event types you care about. To map specific Amplitude properties to Trig attributes, or to apply transforms, contact your Trig representative.
+
+## Permissions & scopes
+
+Trig only receives webhook payloads from Amplitude. There are no API credentials and no read access to your Amplitude project; Amplitude pushes data, Trig doesn't pull.
+
+Webhook payloads are received via a Trig-generated URL. Treat the URL as a secret. If your security policy requires additional webhook authentication (such as HMAC signing or IP allowlisting), contact your Trig representative.
+
+## Limits & gotchas
+
+- **Email is required** in `user_properties` for an event to be attached to a Person in Trig. Events without an email will be dropped. If your Amplitude setup deliberately keeps email off events, talk to your Trig representative about alternatives.
+- **Deduplication** is based on Amplitude's `$insert_id` per event. If you replay events with new IDs, they'll be treated as new events.
+- **Webhook delivery** depends on Amplitude's delivery guarantees. Occasional retries may produce slight duplicates if `$insert_id` differs across attempts.
+
+## Troubleshooting
+
+**Events aren't arriving in Trig.**
+Check the Amplitude destination's delivery logs. Common causes: the webhook URL was copied incorrectly, or the destination was paused.
+
+**Some events arrive but others don't.**
+Verify the destination's event filters in Amplitude. Anything excluded there won't reach Trig. Also check whether the events have an email in `user_properties`. Events without an email are dropped.
+
+**A user appears multiple times in Trig.**
+Usually this means the same person has events with different emails (for example, work email versus personal). Trig matches strictly on email; if you want stronger identity stitching, contact your Trig representative.

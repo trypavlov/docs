@@ -1,0 +1,99 @@
+---
+title: "BigQuery"
+description: "Connect Trig to BigQuery for event ingestion and attribute sync from your warehouse"
+---
+
+## What it does
+
+Trig connects to your BigQuery project to pull data into Trig. Both **event data** (user actions, transactions, feature usage) and **person/organisation attributes** (customer data you maintain in your warehouse) are supported. One BigQuery connection can power either or both. Choose BigQuery if it's your warehouse for product analytics (for example, Firebase Analytics or GA4 exports) or customer data, and you want Trig to operate on it directly.
+
+## Before you start
+
+You'll need:
+
+- **A Google Cloud project** containing the dataset(s) Trig should read from.
+- **A service account** in that GCP project with read access to the relevant BigQuery datasets (see Permissions & scopes below).
+- **The service account's JSON key file** to upload to Trig.
+
+If your GCP organisation policy enforces `iam.disableServiceAccountKeyCreation` and blocks downloadable keys, contact your Trig representative before starting setup. We'll work with you on an alternative connection path.
+
+## Connect BigQuery
+
+1. In Trig, go to **Settings → Integrations** and choose **BigQuery**.
+2. Upload the **service account JSON key**. Trig extracts the project ID automatically.
+3. Click **Test connection**. Trig will validate access by listing accessible datasets.
+
+   {/* TODO: screenshot — BigQuery connection setup form */}
+
+4. Once the connection is verified, your Trig representative will work with you to configure which tables to import (see below).
+
+## What data flows
+
+A single BigQuery connection can power two pipelines.
+
+### Events ingestion
+
+Trig pulls events from a table or view you specify. The table must have:
+
+- An **event name** column
+- An **event timestamp** column
+- An **event ID** column (used for deduplication)
+- A **user identifier** column. We recommend an external user ID over email, since email is PII and many event pipelines deliberately pseudonymise it. Email is also accepted.
+
+Optional: extra property columns, a timezone hint, and a `WHERE` clause to restrict the rows imported.
+
+### Attribute sync
+
+Trig pulls person and organisation attributes from a table or view you specify. The table must have:
+
+- An **ID** column
+- A **name** column
+
+Optional: include or exclude lists for other columns.
+
+Both pipelines pull data from BigQuery into Trig. Trig does not write data back to BigQuery, and does not create or delete records.
+
+## Sync schedule
+
+| Pipeline | Frequency | What it pulls |
+|---|---|---|
+| Events | Every 15 minutes | New events since the last sync |
+| Attributes | Every 24 hours | Recently changed records |
+| Manual | On request | Full refresh, triggered by your Trig contact |
+
+The events sync is incremental. Trig tracks the latest event timestamp seen and fetches only newer rows on subsequent runs. Events that arrive in the warehouse with a timestamp earlier than the current watermark may be missed; if late-arriving events are common in your pipeline, ask your Trig representative about using an ingestion-time column rather than the event timestamp as the watermark.
+
+## Customising what's imported
+
+Table choice, column mapping, filters, and transforms are configured for you when the integration is set up. To change tables, add columns, or adjust filters, contact your Trig representative.
+
+For long-lived integrations we recommend pointing Trig at a **stable view layer** rather than the underlying source tables. Your data team owns the contract behind the view, which keeps schema changes in your warehouse from breaking Trig's import.
+
+## Permissions & scopes
+
+The simplest setup is to grant the service account two predefined roles:
+
+- **BigQuery Data Viewer** on the relevant datasets
+- **BigQuery Job User** at the project level
+
+If your GCP admin prefers granular permissions, the underlying ones Trig needs are `bigquery.datasets.get`, `bigquery.tables.get`, `bigquery.tables.getData`, and `bigquery.jobs.create` (the last one at project level).
+
+The service account does **not** need write or admin permissions.
+
+## Limits & gotchas
+
+- **BigQuery has two pricing models.** On the **on-demand** model you're billed per query based on bytes scanned, and partitioning the source tables on the event timestamp column dramatically reduces sync costs. On **BigQuery Editions** (capacity pricing) you pay for slot capacity, so partitioning still helps performance but doesn't reduce dollar cost the same way.
+- **Initial backfills** of very large tables can be expensive in scan costs on the on-demand model. Coordinate with your Trig representative if you want to bound the historical window.
+- **Schema changes** (renaming or dropping columns Trig reads) will break the import. Pointing Trig at a stable view layer (see above) avoids this.
+- **Dataset locations**: BigQuery datasets are pinned to a single location (for example, `US`, `EU`, `asia-northeast1`). Queries must run in the same location as the dataset. If your datasets span multiple locations, each one is configured separately in Trig.
+
+## Troubleshooting
+
+**The connection test fails.**
+Check that the service account JSON is valid, and that the service account has both `bigquery.jobs.create` (project-level) and dataset-level read access. These are two separate grants.
+
+**Events stopped arriving.**
+Verify the source table still exists, hasn't been renamed, and that the schema hasn't changed. If the table is partitioned, confirm the partitioning column hasn't been altered.
+
+**Scan costs are higher than expected.**
+Make sure the source table is partitioned on the event timestamp column. Without partitioning, every sync rescans the full table on the on-demand pricing model. You can see Trig's query patterns by filtering `INFORMATION_SCHEMA.JOBS` on the service account.

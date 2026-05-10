@@ -1,0 +1,121 @@
+---
+title: "HubSpot"
+description: "Connect Trig to HubSpot to sync contacts, companies, deals, and custom properties"
+---
+
+## What it does
+
+Trig connects to HubSpot to pull in your contacts and companies as people and organisations in Trig and keep them in sync as records change in HubSpot. Once connected, anything you've stored as a HubSpot property (owner, lifecycle stage, custom fields) is available for cohorts, signals, and campaign personalisation. Trig can also write field updates back to HubSpot, but only when an explicit Trig Job is configured to do so. Actions within a Job are the things that perform the update.
+
+## Before you start
+
+You'll need:
+
+- **A HubSpot Super Admin** to install the Trig app the first time. After install, day-to-day re-authorisation can be done by any user with read access to the relevant objects, but we recommend authorising via a dedicated integration user (see Permissions & scopes).
+- Access to the HubSpot portal you want to connect. If you manage multiple portals, you'll pick the right one from the picker shown during the OAuth flow.
+- A list of the **custom properties** you want Trig to import. You can change this later, but it's helpful to know in advance.
+
+You don't need to create a private app or generate API keys. Trig uses HubSpot's OAuth flow.
+
+## Connect HubSpot
+
+1. In Trig, go to **Settings → Integrations → CRM**.
+2. Click **Add a CRM integration** and choose **HubSpot**.
+3. Click **Connect**. You'll be redirected to HubSpot to authorise Trig.
+
+   {/* TODO: screenshot — HubSpot OAuth consent screen */}
+
+4. Select the HubSpot account to connect, review the requested scopes, and click **Connect app**.
+5. You'll be redirected back to Trig. Your integration is now connected.
+
+   {/* TODO: screenshot — Trig CRM integration list with HubSpot connected */}
+
+By default, the first **full import** runs on the next scheduled cycle (within 24 hours). If you'd like to bring data in immediately, ask your Trig contact to trigger an initial sync.
+
+## What data flows
+
+### Imported from HubSpot
+
+**Contacts** become **People** in Trig. By default Trig imports:
+
+- `firstname`, `lastname`, `email`, `country`, `jobtitle`
+- `hs_email_optout` (used to respect opt-outs in Trig sends)
+- `hubspot_owner_id`, `hubspot_team_id` (mapped to Trig owners/teams)
+- `associatedcompanyid` (links the person to their org in Trig)
+- Any **custom properties** included in your import configuration
+
+**Companies** become **Organisations** in Trig. Default fields:
+
+- `name`, `domain`, `industry`, `numberofemployees`, `hubspot_owner_id`
+- Any custom properties included in your import configuration
+
+`domain` is the matching key Trig uses to link organisations across data sources, so it's always pulled by default.
+
+**Deals**, **Quotes**, and **Custom Objects** are accessible too, typically used to build signals (for example, "deal moved to closed-won"). **Leads** is a HubSpot Sales Hub feature available on Pro and Enterprise tiers; if your portal has it enabled, Trig can pull it in too.
+
+### Written back to HubSpot
+
+Trig does **not** automatically update HubSpot when campaigns run or lifecycle stages change in Trig. Writeback only happens when you configure a Trig **Job** that updates a HubSpot field. Actions within a Job are the things that perform the update (for example, an Action that stamps `last_outreach_at` after an email is sent). If you want Trig to keep a HubSpot field in sync with something in Trig, set it up as a Job with the appropriate Action.
+
+Trig does not create or delete records in HubSpot. Only specified fields on existing records can be updated by configured Jobs.
+
+## Sync schedule
+
+| Sync type | Frequency | What it pulls |
+|---|---|---|
+| Full | Every 24 hours | All contacts and companies |
+| Recent changes | Periodically throughout the day | Records modified since the last sync |
+| Manual | On request | Triggered by your Trig contact |
+
+The recent-changes sync uses HubSpot's standard last-modified property for each object (`lastmodifieddate` for contacts, `hs_lastmodifieddate` for companies and deals) to fetch only modified records, which keeps API usage well within HubSpot's limits.
+
+## Customising what's imported
+
+The set of HubSpot properties Trig imports (including custom properties, filters, and any field-level transforms) is configured for you when the integration is set up. To add a new property, narrow the import to a subset of contacts (for example, only `lifecyclestage = "customer"`), or change how a field is mapped, **contact your Trig representative**. We'll adjust the configuration on your behalf and confirm the timing with you.
+
+## Permissions & scopes
+
+Trig requests these HubSpot OAuth scopes.
+
+**Read scopes (always requested):**
+
+- `crm.objects.contacts.read`
+- `crm.objects.companies.read`
+- `crm.objects.deals.read`
+- `crm.objects.quotes.read`
+- `crm.objects.owners.read`
+- `crm.objects.custom.read`
+- `settings.users.read`
+
+**Write scopes (requested at install so writeback Jobs don't need a re-authorisation later):**
+
+- `crm.objects.contacts.write`
+- `crm.objects.companies.write`
+- `crm.objects.custom.write`
+
+Write scopes are only used when a Job with a HubSpot-update Action runs. Trig does not create or delete records in HubSpot; only specified fields on existing records can be updated by configured Jobs.
+
+If your portal has the Sales Hub Leads object enabled, `crm.objects.leads.read` is also requested.
+
+Trig **cannot** read engagement records (emails, calls, notes), workflows, or marketing email content. If you need any of these, get in touch.
+
+## Limits & gotchas
+
+- **Rate limits**: HubSpot's standard limit for OAuth apps is 100 requests per 10 seconds (150 per 10 seconds on Pro and Enterprise tiers), with a daily cap (250,000 calls/day on most tiers, 500,000 on Enterprise). Trig's syncs stay well under both. For very large contact volumes (over 500k), the initial full import may take longer to complete.
+- **Owner resolution** (mapping HubSpot owner IDs to user details) happens on the daily full sync.
+- **Custom objects** are supported but need to be configured per-account. Reach out to your Trig representative if you want a custom object available in Trig.
+- **Sandboxes**: HubSpot test accounts work the same way; you'll authorise against the sandbox portal during OAuth.
+
+## Troubleshooting
+
+**The integration shows "connected" but no data is appearing.**
+By default the first full import runs on the next scheduled cycle (within 24 hours). If you need data sooner, ask your Trig contact to trigger an initial sync.
+
+**A property I added in HubSpot isn't showing up in Trig.**
+New custom properties aren't picked up automatically. Contact your Trig representative and we'll add the property to your import.
+
+**Trig isn't writing updates back to HubSpot.**
+Writeback only happens via Trig Jobs. Check whether a Job with a HubSpot-update Action has been configured for that field, or get in touch and we'll help set one up.
+
+**My OAuth token keeps expiring.**
+Trig refreshes tokens automatically. If you're seeing repeated auth errors, the most common cause is the original authorising user being deactivated. Reconnect the integration via your designated integration user. If you didn't set one up at install, this is a good moment to create one so the connection isn't tied to a real person's account.

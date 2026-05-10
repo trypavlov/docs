@@ -1,0 +1,102 @@
+---
+title: "Databricks"
+description: "Connect Trig to Databricks SQL warehouses for event ingestion and attribute sync"
+---
+
+## What it does
+
+Trig connects to your Databricks workspace to pull data into Trig. Both **event data** and **person/organisation attributes** are supported, using the SQL warehouses (formerly SQL endpoints) feature. One Databricks connection can power either or both pipelines. Choose Databricks if it's where your product and customer data lives in Unity Catalog and you want Trig to operate on it directly.
+
+## Before you start
+
+You'll need:
+
+- **A Databricks workspace** with a SQL warehouse running.
+- **A workspace URL.** The format depends on your cloud:
+  - AWS: `dbc-xxxxxxxx-xxxx.cloud.databricks.com`
+  - Azure: `adb-xxxxxxxxxxxxxxxx.xx.azuredatabricks.net`
+  - GCP: `<workspace-id>.gcp.databricks.com`
+- **A SQL warehouse HTTP path** (found in the warehouse's connection details).
+- **A service principal token** with read access to the relevant catalogs and schemas (recommended). A personal access token is also supported but ties the integration to a real user account, so we discourage it for long-lived integrations (see Permissions & scopes below).
+
+## Connect Databricks
+
+1. In Trig, go to **Settings → Integrations** and choose **Databricks**.
+2. Enter:
+   - **Workspace URL**
+   - **HTTP path** (from your SQL warehouse)
+   - **Access token**
+   - Optional: **default catalog**
+3. Click **Test connection**. Trig will validate access by listing available catalogs.
+
+   {/* TODO: screenshot — Databricks connection setup form */}
+
+4. Once the connection is verified, your Trig representative will work with you to configure which tables to import (see below).
+
+## What data flows
+
+A single Databricks connection can power two pipelines.
+
+### Events ingestion
+
+Trig pulls events from a table or view you specify. The table must have:
+
+- An **event name** column
+- An **event timestamp** column
+- An **event ID** column (used for deduplication)
+- A **user identifier** column. We recommend an external user ID over email, since email is PII and many event pipelines deliberately pseudonymise it. Email is also accepted.
+
+Optional: extra property columns, a timezone hint, and a `WHERE` clause.
+
+### Attribute sync
+
+Trig pulls person and organisation attributes from a table or view you specify, with an **ID** column and a **name** column required, plus optional include/exclude lists.
+
+Both pipelines pull data from Databricks into Trig. Trig does not write data back to Databricks, and does not create or delete records.
+
+## Sync schedule
+
+| Pipeline | Frequency | What it pulls |
+|---|---|---|
+| Events | Every 15 minutes | New events since the last sync |
+| Attributes | Every 24 hours | Recently changed records |
+| Manual | On request | Full refresh, triggered by your Trig contact |
+
+Syncs are incremental and use the event timestamp column to fetch only new rows. Events that arrive in the warehouse with a timestamp earlier than the current watermark may be missed; if late-arriving events are common in your pipeline, ask your Trig representative about using an ingestion-time column rather than the event timestamp as the watermark.
+
+## Customising what's imported
+
+Table choice, column mapping, filters, and transforms are configured for you when the integration is set up. Contact your Trig representative to change configuration.
+
+For long-lived integrations we recommend pointing Trig at a **stable view layer** rather than the underlying source tables. Your data team owns the contract behind the view, which keeps schema changes from breaking Trig's import.
+
+## Permissions & scopes
+
+The Databricks principal Trig uses needs:
+
+- `USE CATALOG` on the catalog containing the relevant tables
+- `USE SCHEMA` on the schema(s) containing the relevant tables
+- `SELECT` on the specific tables or views Trig reads
+- `CAN USE` on the SQL warehouse
+
+It does **not** need write, manage, or admin permissions on the workspace.
+
+We recommend a **service principal** with a dedicated token rather than a personal access token tied to a user account. PATs expire based on workspace policy, and they break when the user changes role or leaves; a service principal keeps the integration independent of any individual.
+
+## Limits & gotchas
+
+- **The SQL warehouse must be running** for syncs to succeed. By default, SQL warehouses auto-start when they receive a query, so scheduled syncs will wake the warehouse if it's been auto-stopped. If your warehouse is configured to start manually only, scheduled syncs will fail when the warehouse is stopped.
+- **Compute is billed by warehouse uptime.** A small warehouse with a short auto-stop is usually the right choice for Trig's workload.
+- **Personal access tokens expire** based on workspace policy. If your tokens have a short lifetime, use a service principal instead.
+- **Schema changes** (renaming or dropping columns Trig reads) will break the import. Pointing Trig at a stable view layer (see above) avoids this.
+
+## Troubleshooting
+
+**The connection test fails.**
+Check the HTTP path matches the SQL warehouse you intend to use, and that the access token has not expired. The token must also belong to a principal with `CAN USE` permission on that warehouse.
+
+**Events stopped arriving.**
+Check the SQL warehouse is running (or set to auto-start on query). Also check whether the source table's schema has changed.
+
+**"Permission denied" errors after working previously.**
+Token rotation or principal permission changes are the usual cause. For service principals, confirm the token is still valid in the workspace's identity settings. If you used a personal access token tied to a real user, switch to a service principal when you reconnect.
