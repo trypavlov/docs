@@ -1,0 +1,16 @@
+---
+title: "Data Lake integrations"
+description: "Connect Trig directly to your data warehouse for events ingestion and attribute sync"
+---
+
+If your data warehouse is your source of truth for product analytics, customer data, or both, Trig can connect directly to it rather than duplicating your pipeline. A single warehouse connection can power two pipelines simultaneously: **events ingestion** (user actions, transactions, feature usage) and **attribute sync** (person and organisation fields).
+
+Trig supports:
+
+- **Snowflake**: key pair (JWT) is the recommended authentication method. Programmatic Access Tokens (PAT) are also supported.
+- **BigQuery**: service account authentication via a JSON key. If your GCP organisation policy blocks the creation of downloadable service account keys, contact your Trig representative.
+- **Databricks**: workspace URL plus SQL warehouse, authenticated via a service principal token (recommended). Personal access tokens are also supported but tend to be tied to a real user, so we discourage them for long-lived integrations.
+
+All three are **pull-only**. Trig queries your warehouse on a schedule, with incremental syncs based on event timestamps. Trig does not write data back to the warehouse.
+
+You'll set up the connection yourself in Trig settings. The table mapping (which tables, which columns, what filters) is configured for you by your Trig representative when the integration is enabled.

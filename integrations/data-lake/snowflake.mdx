@@ -1,0 +1,106 @@
+---
+title: "Snowflake"
+description: "Connect Trig to Snowflake for event ingestion and attribute sync from your warehouse"
+---
+
+## What it does
+
+Trig connects to your Snowflake account to pull data into Trig. Both **event data** (user actions, transactions, feature usage) and **person/organisation attributes** (custom fields you maintain in your warehouse) are supported. One Snowflake connection can power either or both. Choose Snowflake if your warehouse is your source of truth for product analytics or customer data, and you want Trig to operate on the same data without duplicating it elsewhere.
+
+## Before you start
+
+You'll need:
+
+- **A Snowflake account** with a warehouse. Account identifiers come in two formats: the modern org-account format (e.g. `myorg-myaccount`) and the legacy account locator format (e.g. `xy12345.us-east-1`). Either works; if you're not sure which to use, ask your Snowflake admin.
+- **A service user** that Trig will use to query your data. We recommend a dedicated user with minimal permissions (see Permissions & scopes below).
+- **Authentication credentials** in one of the supported forms. In order of preference:
+  - **Key pair (JWT)** is recommended. Trig generates the public key; you create a Snowflake service user with that key.
+  - **Programmatic Access Token (PAT)** issued by Snowflake, suitable if your org standardises on PATs.
+  - **Username and password** is supported but strongly discouraged. Snowflake is in the process of phasing out single-factor password authentication and most compliance regimes will flag it in review.
+
+## Connect Snowflake
+
+1. In Trig, go to **Settings → Integrations** and choose **Snowflake**.
+2. Enter your **account identifier** and **warehouse name**.
+3. Choose an **authentication method**:
+   - **Key pair**: Trig will display a public key. Run the SQL Trig provides in your Snowflake account to create the service user with that key. Snowflake supports two simultaneous public keys per user (`RSA_PUBLIC_KEY` and `RSA_PUBLIC_KEY_2`), so you can rotate keys without downtime.
+   - **PAT**: paste in the token issued by Snowflake.
+4. Click **Test connection**. Trig will validate access by running a `SELECT 1` against the configured warehouse.
+
+   {/* TODO: screenshot — Snowflake connection setup form */}
+
+5. Once the connection is verified, your Trig representative will work with you to configure which tables to import (see below).
+
+## What data flows
+
+A single Snowflake connection can power two pipelines.
+
+### Events ingestion
+
+Trig pulls events from a table or view you specify. The table must have:
+
+- An **event name** column
+- An **event timestamp** column
+- An **event ID** column (used for deduplication)
+- A **user identifier** column. We recommend an external user ID over email, since email is PII and many event pipelines deliberately pseudonymise it. Email is also accepted.
+
+Optional: extra property columns, a timezone hint, and a `WHERE` clause to restrict the rows imported.
+
+### Attribute sync
+
+Trig pulls person and organisation attributes from a table or view you specify. The table must have:
+
+- An **ID** column (e.g. account ID, contact ID)
+- A **name** column
+
+Optional: include or exclude lists for which other columns to import.
+
+Both pipelines pull data from Snowflake into Trig. Trig does not write data back to Snowflake, and does not create or delete records.
+
+## Sync schedule
+
+| Pipeline | Frequency | What it pulls |
+|---|---|---|
+| Events | Every 15 minutes | New events since the last sync |
+| Attributes | Every 24 hours | Recently changed records |
+| Manual | On request | Full refresh, triggered by your Trig contact |
+
+The events sync is incremental. Trig tracks the latest event timestamp seen and fetches newer rows on subsequent runs. Events that arrive in the warehouse with a timestamp earlier than the current watermark (for example, late-arriving mobile events) may be missed. If this is a risk for your data, ask your Trig representative about using an ingestion-time column rather than the event timestamp as the watermark.
+
+## Customising what's imported
+
+Table choice, column mapping, filters, and any transforms are configured for you by your Trig representative when the integration is set up. To change which table Trig reads from, add columns, or adjust filters, get in touch.
+
+For long-lived integrations we recommend pointing Trig at a **stable view layer** rather than the underlying source tables. Your data team owns the contract behind the view, which keeps schema changes in your warehouse from breaking Trig's import.
+
+## Permissions & scopes
+
+The Snowflake service user needs:
+
+- `USAGE` on the warehouse Trig connects to
+- `USAGE` on the database and schema containing the relevant tables
+- `SELECT` on the specific tables or views Trig reads
+
+For views that read from tables in other schemas, the service user also needs `USAGE` on those underlying schemas.
+
+It does **not** need write permissions, account-level admin, or access to other databases.
+
+We recommend creating a dedicated role (e.g. `TRIG_ROLE`) with these grants and assigning it to a dedicated service user.
+
+## Limits & gotchas
+
+- **Trig pulls in batches** to keep query costs predictable. Initial backfills of very large event tables can take time; manual full refreshes have the same characteristic.
+- **Snowflake bills by warehouse-second**, with a 60-second minimum each time the warehouse resumes from suspended state. A small dedicated warehouse with a short auto-suspend is the right setup for Trig's workload.
+- **Schema changes** (renaming or dropping columns Trig reads) will break the import. Pointing Trig at a stable view layer (see above) avoids this.
+- **Non-prod environments** (a separate Snowflake account or a dedicated non-prod database) are connected as separate Trig integrations. Trig doesn't move between Snowflake accounts on the same integration.
+
+## Troubleshooting
+
+**The connection test fails.**
+The most common causes are an incorrect account identifier (try the alternate format, since both org-account and the legacy account locator are valid) and missing `USAGE` grants on the warehouse. Re-run the SQL Trig provided to verify the service user has the right grants.
+
+**Events stopped arriving.**
+Check whether the source table or view has changed schema, or whether the warehouse has been suspended without auto-resume configured. Both will cause silent failures in the sync.
+
+**Costs are higher than expected.**
+Move Trig's queries onto a small dedicated warehouse with auto-suspend enabled. You can see Trig's query patterns by filtering `QUERY_HISTORY` on the service user or role. Contact your Trig representative if you'd like us to reduce sync frequency.

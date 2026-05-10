@@ -1,0 +1,16 @@
+---
+title: "Event integrations"
+description: "Connect Trig to your event tracking source for real-time behavioural data"
+---
+
+Trig responds to your users' behaviour in real time (feature usage, conversions, signups, churn signals) by ingesting events from wherever you already track them. Once events are flowing, they power cohorts ("users who did X in the last 7 days"), signals ("trial about to expire"), and campaign triggers.
+
+Trig supports three native event sources:
+
+- **Segment**: recommended if Segment is your tracking layer. Real-time, webhook-driven, with auto-configured destination.
+- **Amplitude**: real-time, webhook-driven. Configure the destination on Amplitude's side using the URL Trig provides.
+- **Mixpanel**: pulled periodically via service account credentials. The Mixpanel sync runs on a slower cadence than Segment or Amplitude due to the constraints of Mixpanel's Export API.
+
+If your events live in a data warehouse (Snowflake, BigQuery, Databricks), see the **Data Lake** integrations. A single warehouse connection can ingest events as well as customer attributes.
+
+All event sources need an **email** to create a new Person in Trig. Some sources (notably Segment) can match an event to an existing Person by user ID without seeing email on every event. See the per-source docs for details. Events that can't be matched to a Person are dropped.

@@ -1,0 +1,83 @@
+---
+title: "Mixpanel"
+description: "Sync events and user profiles from Mixpanel into Trig via service account"
+---
+
+## What it does
+
+Trig connects to Mixpanel to pull your event history and user profiles into Trig on a periodic basis. Events become available for cohorts, signals, and campaign triggers; user profile attributes become person attributes in Trig. Choose Mixpanel if it's already your primary product analytics tool and you want Trig to use the same source of truth.
+
+The Mixpanel sync runs on a slower cadence than the Segment or Amplitude integrations because Mixpanel's Export API is designed for periodic bulk exports rather than real-time streaming. If you need near-real-time event flow, consider Segment as a tee from Mixpanel, or use the Data Lake integration if your Mixpanel data is already replicated to a warehouse.
+
+## Before you start
+
+You'll need:
+
+- **A Mixpanel project** for the events you want to sync.
+- **Service account credentials**: a username and secret with read access to the project's events and engagement data. Created under **Project Settings → Service Accounts** (or **Organization Settings → Service Accounts** for org-scoped accounts) in Mixpanel. Assign the service account a role of **Member** or higher so it can query the Export and Engage APIs.
+- **Your Mixpanel project ID** and **data residency region** (US, EU, or India). The region determines which Mixpanel API endpoint Trig uses.
+
+## Connect Mixpanel
+
+1. In Trig, go to **Settings → Integrations → Events**.
+2. Click **Add an events integration** and choose **Mixpanel**.
+3. Enter:
+   - **Region**: US, EU, or India
+   - **Project ID**
+   - **Service account username**
+   - **Service account secret**
+4. Click **Save**.
+
+   {/* TODO: screenshot — Mixpanel integration setup form */}
+
+Trig will validate the credentials immediately. Once saved, scheduled syncs will pull events and user profiles automatically.
+
+## What data flows
+
+Trig pulls two streams from Mixpanel:
+
+- **Events** via Mixpanel's Export API. Each event's name, timestamp, and properties are imported.
+- **User profiles** via Mixpanel's Engage API. Profile properties become person attributes in Trig.
+
+Trig matches Mixpanel users to People in Trig by **email**. The user profile sync runs first so that email is available before events are attached.
+
+Trig does not send data back to Mixpanel.
+
+## Sync schedule
+
+| Sync type | Frequency | What it pulls |
+|---|---|---|
+| Events | Every 4 hours | New events since the last sync |
+| User profiles | Every 4 hours | Modified profiles |
+| Manual | On request | One-off backfill from a specific date, triggered by your Trig contact |
+
+## Customising what's imported
+
+Trig imports all events and profile properties from the configured project by default. If you want to filter to specific event names, restrict to a subset of users, or apply transforms to property values, contact your Trig representative.
+
+## Permissions & scopes
+
+The service account Trig uses needs:
+
+- Access to the **Export API** (for events)
+- Access to the **Engage API** (for user profiles)
+
+In Mixpanel terms, this is typically achieved by assigning the service account a project role of **Member** or higher. It does not need write access. We recommend creating a dedicated service account for Trig rather than reusing one.
+
+## Limits & gotchas
+
+- **Email is required** for an event to be attached to a Person in Trig. Events from anonymous users (no email on profile) won't be linked.
+- **Mixpanel's Export API** has daily query quotas per project and is designed for bulk historical export rather than continuous polling. Trig stays within the quota by syncing in batches; very high-volume projects may see longer end-to-end latency than the table above implies.
+- **Property name collisions** can occur if the same property name has different shapes across events. Mixpanel preserves the raw values; Trig stores them as-is.
+- **Region changes**: US, EU, and India use different API hosts. If your project moves regions, the integration must be reconfigured.
+
+## Troubleshooting
+
+**Events aren't appearing in Trig.**
+Check that the user profile sync has run successfully. If a Mixpanel user has no email on their profile, their events won't be matched to a Person in Trig.
+
+**Some events are missing.**
+Mixpanel's Export API returns events in time-ordered batches. If you suspect gaps, contact your Trig representative; we can re-run a window of imports.
+
+**"Authentication failed" errors.**
+Service account credentials can be revoked or rotated in Mixpanel. Generate a new service account secret and update it in the Trig integration settings.

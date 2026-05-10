@@ -1,0 +1,87 @@
+---
+title: "Segment"
+description: "Stream Segment events into Trig in real time with auto-configured destination"
+---
+
+## What it does
+
+Trig connects to Segment to receive a real-time stream of events from your product (page views, feature usage, conversions) along with `identify` and `group` calls. Each event is matched to a Person in Trig (by Segment `userId`, or by email when no `userId` match exists) and becomes available for cohorts, signals, and campaign triggers. Segment is the recommended event source if you already use it as your tracking layer.
+
+## Before you start
+
+You'll need:
+
+- **Permission to create a destination and subscriptions** in your Segment workspace. This is typically a Workspace Owner, but a Workspace Admin or a custom role with destination-management rights is also enough.
+- **A Segment access token** with permissions to create destinations and subscriptions in your workspace. Generated under **Workspace Settings → Access Management → Tokens** in Segment.
+- **A shared secret**: any random string you generate. Trig uses this to verify webhook signatures from Segment.
+
+## Connect Segment
+
+1. In Trig, go to **Settings → Integrations → Events**.
+2. Click **Add an events integration** and choose **Segment**.
+3. Enter:
+   - **Destination name**: what the destination will be called in your Segment workspace.
+   - **Shared secret**: the random string you generated above.
+   - **Segment access token**: from your Segment workspace.
+4. Click **Save**.
+
+   {/* TODO: screenshot — Segment integration setup form */}
+
+When you save, Trig will automatically create a destination in your Segment workspace and wire up subscriptions for `identify`, `group`, and `track` calls. Within a few minutes events should start flowing into Trig.
+
+If your workspace also uses `page` or `screen` calls and you want those forwarded to Trig, contact your Trig representative. We'll add the appropriate subscriptions on your behalf.
+
+If you'd rather configure the destination manually in Segment, contact your Trig representative. We can provide the webhook URL and shared secret for you to paste in.
+
+## What data flows
+
+Segment forwards three call types to Trig by default:
+
+| Call type | What Trig does with it |
+|---|---|
+| `identify` | Creates or updates a Person in Trig. Email is required to create a new Person. Traits become person attributes. |
+| `group` | Creates or updates an Organisation in Trig and associates the user with it. |
+| `track` | Records the event against the matching Person, with all properties retained. |
+
+Trig matches incoming calls to existing People using your Segment `userId`. If no `userId` match exists, Trig creates a new Person from the `identify` traits, which must include `email`.
+
+`page` and `screen` calls aren't subscribed by default. If you use them, see the note in **Connect Segment** above.
+
+Trig does not send data back to Segment.
+
+## Sync schedule
+
+Events are received in **real time** as Segment forwards them. There's no polling or batch; once the destination is wired up, latency is typically a few seconds.
+
+## Customising what's imported
+
+By default Trig accepts the `identify`, `group`, and `track` calls forwarded to it. If you want to filter events at the source (for example, to exclude staging traffic or specific event names), configure that in the Segment destination's filters in your workspace.
+
+To map a Segment trait to a specific Trig attribute, or to apply transforms, contact your Trig representative.
+
+## Permissions & scopes
+
+The Segment access token Trig uses is scoped to your workspace and grants permission to:
+
+- Create and manage the **destination** that forwards events to Trig
+- Create and manage the **subscriptions** that route `identify`, `group`, and `track` calls to that destination
+
+It does not grant access to any other Segment configuration.
+
+## Limits & gotchas
+
+- **`identify` calls without an email** can't be used to create a new Person in Trig. The event is still attached to a Person matched by `userId` where one exists.
+- **`userId` consistency matters.** If the same user appears under different `userId` values in Segment, they'll show up as multiple People in Trig. Stitching anonymous-to-known users in Segment before forwarding is recommended.
+- **Webhook signature verification** uses HMAC-SHA1 with your shared secret. If you rotate the secret in Segment, update it in Trig at the same time. There's a brief window during rotation where mismatched events can drop, so coordinate the change.
+- **Replays** from Segment are supported but may create duplicate events if the original `messageId` differs.
+
+## Troubleshooting
+
+**Events aren't arriving in Trig.**
+Check the Segment destination's delivery logs in your workspace. They'll show whether events are being attempted and any failure reasons. The most common cause is a mismatched shared secret.
+
+**Some events arrive but others don't.**
+Look at the Segment destination's filters. If you've restricted event types or names in Segment, those will be silently dropped before reaching Trig. Also check whether you're sending `page` or `screen` calls; those aren't forwarded by default (see Connect Segment above).
+
+**A user appears multiple times in Trig.**
+Usually this means the same person has been tracked under multiple `userId` values. Resolve in Segment by aliasing or merging IDs at source.

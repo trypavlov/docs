@@ -1,0 +1,12 @@
+---
+title: "CRM integrations"
+description: "Connect Trig to your CRM to bring contacts, companies, and deals in as people, organisations, and signals"
+---
+
+Connecting Trig to your CRM brings your contacts, companies, and deals into Trig as people, organisations, and signals. Once connected, anything you've stored in your CRM (owner, lifecycle stage, custom fields, deal state) is available to use in Trig cohorts, signals, and campaign personalisation.
+
+Trig supports **Salesforce** and **HubSpot** as native CRM integrations, both connected via OAuth. There are no API keys to manage, and you don't need to build a Connected App or private app yourself; Trig provides one. We do recommend authorising the integration via a dedicated integration user rather than a real person's account, so the connection doesn't break when someone leaves. See the per-CRM docs for the specifics.
+
+CRM integrations are **read-first**. Trig keeps your CRM as the source of truth. If you want Trig to update fields back in your CRM (for example, stamping a "last contacted" date), you'll configure that as a Trig **Job**, with Actions inside the Job performing the update. Writeback is opt-in by design.
+
+If your CRM data lives in a data warehouse rather than Salesforce or HubSpot, see the **Data Lake** integrations instead.
