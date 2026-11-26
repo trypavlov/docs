@@ -21,7 +21,37 @@
     },
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Assignments",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "assignments/overview",
+              "assignments/quickstart"
+            ]
+          },
+          {
+            "group": "Concepts",
+            "pages": [
+              "assignments/connections",
+              "assignments/accounts",
+              "assignments/books",
+              "assignments/metrics",
+              "assignments/assignments",
+              "assignments/needs-you",
+              "assignments/ask-trig"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "assignments/glossary"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Classic",
         "groups": [
           {
             "group": "Getting Started",
