@@ -1,0 +1,123 @@
+---
+title: "Starter assignments"
+description: "Seven assignments ready to adapt, starting with two that only read"
+---
+
+Each of these is ready to adapt. Replace everything in square brackets with your own table, field and event names. Run each one once on a small Book, and read the plan before you approve it. See [Write an assignment that works](/assignments/guides/write-an-assignment).
+
+<Tip>
+Start with the first two. They only read, so they are the safest way to confirm Trig sees your data correctly.
+</Tip>
+
+<AccordionGroup>
+  <Accordion title="1. Book summary" icon="table">
+    **Run weekly. Reads only.**
+
+    ```text
+    For every account in this Book, show the account name, owner,
+    [contract value field], [renewal date field], [seats purchased field]
+    and the number of distinct active users in [usage events table] in
+    the last 30 days.
+    Show seat use as active users divided by seats purchased.
+    Then summarise the whole Book: number of accounts, total contract
+    value, accounts renewing in the next 90 days, and accounts with seat
+    use below 50%.
+    If an account has no usage rows, say "no usage found".
+    ```
+  </Accordion>
+
+  <Accordion title="2. Falling usage" icon="arrow-trend-down">
+    **Run weekly. Reads only.**
+
+    ```text
+    For every account in this Book, read [usage events table] and count
+    distinct active users in the last 30 days and in the 30 days before
+    that. Ignore deactivated users.
+    Flag the account if active users fell by more than 25%, or fell to
+    zero. Mark the account out of scope if it was created in the last
+    60 days.
+    For each flagged account show both counts, the percentage change,
+    and a two-sentence reason using what else is known about the account.
+    ```
+  </Accordion>
+
+  <Accordion title="3. Unused seats" icon="users">
+    **Run weekly.**
+
+    ```text
+    For every account in this Book, compare the number of distinct active
+    users in [usage events table] in the last 30 days with
+    [seats purchased field].
+    List the accounts where active users are below 60% of seats
+    purchased. For each, show seats purchased, active users, seat use as
+    a percentage and [renewal date field].
+    Order the list by number of unused seats, highest first.
+    ```
+  </Accordion>
+
+  <Accordion title="4. Renewals coming up" icon="calendar">
+    **Run weekly, or when a renewal date comes within the window.**
+
+    ```text
+    For every account in this Book with [renewal date field] in the next
+    120 days, read its usage from [usage events table], its open support
+    tickets from [support tool], and its most recent call from
+    [call recording tool].
+    Classify each renewal as one of: on track, needs attention, at risk,
+    or not enough known. Give the reason in two sentences and name the
+    single most useful next step.
+    Flag accounts classified at risk for review. If a source isn't
+    connected, say "unknown, source not connected" for that part.
+    ```
+  </Accordion>
+
+  <Accordion title="5. Re-engage quiet users" icon="envelope">
+    **Run daily on a small Book first. Drafts only.**
+
+    Trig reads the users at each account from your connected tools when it runs. This needs a source that holds each user's name and email address. The drafts are sent from your own address, so connect your email address in **Your emails** first. See [Review results and approve emails](/assignments/guides/review-results#approve-drafted-emails).
+
+    ```text
+    For every account in this Book, read its users from [users table].
+    Ignore deactivated users and users created in the last 14 days.
+    For each user with no [key event] in [usage events table] in the
+    last 30 days, draft a plain email of at most 120 words, addressed
+    to the user by first name. Point to one next step in the product that
+    fits how the account uses it. Don't mention scores or that their
+    usage is being tracked.
+    Don't draft for a user who already has a draft or a sent message
+    from this assignment in the last 14 days. If a user has no email
+    address, list them under "no email found" and don't draft.
+    ```
+  </Accordion>
+
+  <Accordion title="6. Prepare for a customer call" icon="phone">
+    **Run once, on request, on a Book that holds the account.**
+
+    ```text
+    For this account, prepare a one-page brief for the account owner:
+    contract value and renewal date, usage over the last 90 days and
+    whether it is rising, flat or falling, open support tickets, the main
+    points from the last call in [call recording tool], and any open
+    actions.
+    Finish with three suggested questions to ask on the call.
+    ```
+  </Accordion>
+
+  <Accordion title="7. Hand to the account owner" icon="hand">
+    **Run weekly, once the re-engagement assignment has been live for at least two weeks.**
+
+    ```text
+    For every account in this Book, find users who got a message from
+    the re-engagement assignment more than 10 days ago and still have
+    no [key event] since.
+    For each account produce a handoff note: the account name, the users
+    concerned, what was sent and when, and one suggested next step for a
+    person to take. Flag the account for review and notify the account
+    owner.
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## After the first run
+
+Read the result and spot check every group. See [Review results and approve emails](/assignments/guides/review-results). If the result isn't what you wanted, see [Fix an assignment](/assignments/guides/fix-an-assignment).

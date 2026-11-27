@@ -19,9 +19,11 @@
         }
       ]
     },
-    "tabs": [
+    "products": [
       {
-        "tab": "Documentation",
+        "product": "Classic",
+        "description": "Trig before assignments: stages, jobs and signals",
+        "icon": "layer-group",
         "groups": [
           {
             "group": "Getting Started",
@@ -101,13 +103,50 @@
         ]
       },
       {
-        "tab": "API Reference",
-        "hidden": true,
+        "product": "Assignments",
+        "description": "Books, metrics and assignments",
+        "icon": "briefcase",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Getting started",
             "pages": [
-              "api-reference/introduction"
+              "assignments/overview",
+              "assignments/quickstart"
+            ]
+          },
+          {
+            "group": "Concepts",
+            "pages": [
+              "assignments/connections",
+              "assignments/accounts",
+              "assignments/books",
+              "assignments/metrics",
+              "assignments/assignments",
+              "assignments/needs-you",
+              "assignments/ask-trig"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "assignments/guides/connect-your-crm",
+              "assignments/guides/connect-agent-toolkits",
+              "assignments/guides/build-a-book",
+              "assignments/guides/write-an-assignment",
+              "assignments/guides/review-results",
+              "assignments/guides/fix-an-assignment"
+            ]
+          },
+          {
+            "group": "Use cases",
+            "pages": [
+              "assignments/use-cases/starter-assignments"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "assignments/glossary"
             ]
           }
         ]

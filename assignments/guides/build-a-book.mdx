@@ -1,0 +1,124 @@
+---
+title: "Build a Book"
+description: "Define a Book that holds exactly the accounts you mean"
+---
+
+Accounts come first. Books are built from accounts, and metrics and assignments run on Books. Get the Book right and everything built on it starts from the right accounts.
+
+## Check your accounts first
+
+<Steps>
+  <Step title="Open an account">
+    Open **Audience**, choose **Accounts**, search for an account by name and open it. The page shows a summary at the top and every attribute Trig holds for the account below.
+  </Step>
+  <Step title="Compare it with your CRM">
+    Open three or four accounts you know well. Check owner, segment, region, plan, contract value and renewal date against your CRM.
+  </Step>
+  <Step title="Report anything wrong">
+    If a value is wrong or missing, send your Trig contact the account name and the field.
+  </Step>
+</Steps>
+
+<Warning>
+Unchecked data is the most common cause of a Book that looks right and isn't.
+</Warning>
+
+### Two kinds of data
+
+| | Imported attributes | Data read when an assignment runs |
+| --- | --- | --- |
+| Where it lives | On the account in Trig | In your connected tools: data warehouse, CRM, support desk, call recordings, billing |
+| How it gets there | A scheduled import from your CRM or data warehouse | An agent toolkit that Trig queries when it needs an answer |
+| Examples | Owner, segment, region, plan, contract value, renewal date | Product usage events, support tickets, call transcripts, invoices |
+| Defines a Book | Yes | No |
+| Used in an assignment | Yes | Yes |
+
+If you want to define a Book by a field and can't find it in the filter list, it hasn't been imported yet. Tell your Trig contact the field and where it lives, and it can be added to the import.
+
+## Decide what the Book is for
+
+Answer three questions before you open the filters.
+
+1. **Who is in it?** Write the definition as a sentence, such as "Paying customers in the mid-market segment, owned by Sarah, not in onboarding."
+2. **What will run on it?** A Book you only measure can be large. A Book that will get drafted messages should be small enough to review.
+3. **How many accounts do you expect?** Get a number from your CRM so you can tell whether the Book is right.
+
+### Common kinds of Book
+
+| Kind | Defined by | Suits |
+| --- | --- | --- |
+| Owner Book | The customer success or account owner field | Teams where each person manages named accounts |
+| Segment Book | Segment, plan, region or size | Scaled or pooled teams with no named owner |
+| Lifecycle Book | A date or status, such as renewal within 90 days or onboarding not complete | Work tied to a moment in the customer's life |
+| Named list | A list of accounts you choose {/* review: how a customer builds a named list today */} | A pilot, or a group no attribute describes |
+
+You can combine them. "Mid-market, owned by Sarah, renewing within 90 days" is a valid Book.
+
+## Build the filter
+
+<Steps>
+  <Step title="Open the filters">
+    Go to **Audience** › **Accounts** and open **Filters**.
+  </Step>
+  <Step title="Add the first filter">
+    Describe the accounts you want in plain English, or choose **Organization attributes** and pick a field and a value.
+  </Step>
+  <Step title="Click away to apply it">
+    The count of matching accounts updates after you click away from the filter.
+  </Step>
+  <Step title="Add filters one at a time">
+    Watch the count after each one. A count that drops to zero, or doesn't move, tells you which filter is wrong.
+  </Step>
+  <Step title="Create the Book">
+    When the count matches what you expect, create a Book from the filter and name it.
+  </Step>
+</Steps>
+
+### Relative dates
+
+Date filters count back or forward from today, then look before or after that point.
+
+| You want | Set the filter to |
+| --- | --- |
+| The last 90 days | is after 90 days ago |
+| Between 91 and 180 days ago | is before 90 days ago, and is after 180 days ago |
+| More than a year ago | is before 365 days ago |
+| Renewing in the next 90 days | is after today, and is before 90 days from now |
+
+### Add your exclusions
+
+Most Books need exclusions so Trig doesn't overlap with work other teams are doing. Add each one as another filter.
+
+| Commonly excluded | Why |
+| --- | --- |
+| Accounts still in onboarding | The onboarding team is already in touch with them. |
+| Accounts with an open escalation or retention case | A person is handling them. |
+| Accounts with an open sales opportunity | Sales are in conversation with them. |
+| Accounts already in another program or campaign | Two messages about different things confuse the customer. |
+| Test, internal and free accounts | They distort counts and should never be contacted. |
+
+<Tip>
+Books update as accounts change. An account that matches an exclusion next week leaves the Book, and assignments stop running for it.
+</Tip>
+
+### Keep it small enough to check
+
+While you're testing, keep each Book that gets drafted messages under about 200 accounts. If a segment is larger, split it by a second attribute such as region, plan or tenure, or start with a named list. Books you only measure can be as large as the segment.
+
+### Name it so anyone can read it
+
+Use the pattern purpose, segment, qualifier, such as "Pilot Mid-market EMEA" or "Measure Enterprise all". For an owner Book, the owner's name is enough. Avoid names that describe how the Book was built, such as "Filter test 3", or that will go out of date, such as "November list".
+
+## Check the Book
+
+<Check>The count is close to the number you expected.</Check>
+<Check>Three accounts you know should be in it are in it.</Check>
+<Check>Three accounts you know shouldn't be in it aren't.</Check>
+<Check>Test and internal accounts are excluded.</Check>
+<Check>The name says what the Book is for.</Check>
+
+<Warning>
+Changing a Book's filters changes which accounts every assignment on it runs against. If a live assignment uses the Book, create a new Book.
+</Warning>
+
+Next, [measure the Book](/assignments/metrics) or [write an assignment](/assignments/guides/write-an-assignment) for it.
