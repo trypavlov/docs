@@ -1,0 +1,10 @@
+{
+  "targets": {
+    "default": {
+      "on": "trig/docs-preview",
+      "name": "trig-docs-v1",
+      "branch": "ron/docs-preview-box",
+      "private": true
+    }
+  }
+}
