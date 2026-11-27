@@ -144,6 +144,21 @@
             ]
           },
           {
+            "group": "Guides",
+            "pages": [
+              "assignments/guides/build-a-book",
+              "assignments/guides/write-an-assignment",
+              "assignments/guides/review-results",
+              "assignments/guides/fix-an-assignment"
+            ]
+          },
+          {
+            "group": "Use cases",
+            "pages": [
+              "assignments/use-cases/starter-assignments"
+            ]
+          },
+          {
             "group": "Reference",
             "pages": [
               "assignments/glossary"

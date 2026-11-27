@@ -1,0 +1,107 @@
+---
+title: "Write an assignment that works"
+description: "How to write an ask that runs cleanly every week, and how to check the plan before you approve it"
+---
+
+An assignment is a standing instruction. It runs again next week, on accounts you haven't looked at, with nobody there to explain what you meant. Write it so it still makes sense on its fiftieth run.
+
+## The four parts
+
+| Part | Question it answers | Example |
+| --- | --- | --- |
+| The ask | What should Trig look for and produce? | Find accounts whose active users fell in the last 30 days and explain why |
+| The Books | Which accounts? | Sarah's Book |
+| The schedule | When? | Every Monday morning, or when a renewal date comes within 90 days |
+| The output | What comes out, and where does it go? | A flagged list in Trig, a drafted email waiting for approval, or a message in Slack |
+
+## Create an assignment
+
+<Steps>
+  <Step title="Add an assignment">
+    Go to **Assignments** and add a new assignment.
+  </Step>
+  <Step title="Choose the Books">
+    Pick the Book or Books it runs on. An assignment is as good as the Book it runs on, so check the Book first. See [Build a Book](/assignments/guides/build-a-book).
+  </Step>
+  <Step title="Choose when it runs">
+    Once, on a schedule, or when something changes. Start with **Once** while you are testing.
+  </Step>
+  <Step title="Write the ask">
+    Follow the rules and the template below.
+  </Step>
+  <Step title="Click Plan it out">
+    Trig shows the plan: which data it will read, what it will work out, and what it will do at the end.
+  </Step>
+  <Step title="Read the plan">
+    If it's wrong, change the ask and plan it again.
+  </Step>
+  <Step title="Approve the plan">
+    Approving the plan makes the assignment live.
+  </Step>
+</Steps>
+
+<Note>
+An assignment runs with the access of the person who created it. If it needs a connection you can't reach, the plan says so.
+</Note>
+
+## Read the plan before you approve it
+
+The plan is your check on what Trig understood. Look for four things.
+
+<Check>**The right source.** It names the table or tool you expected.</Check>
+<Check>**The right accounts.** It runs on the Book you chose and nothing wider.</Check>
+<Check>**The right condition.** The values, dates and thresholds match what you wrote.</Check>
+<Check>**The right ending.** If you asked for a draft, the plan says draft. If it says it will send and you didn't intend that, don't approve it.</Check>
+
+## Seven rules for writing the ask
+
+1. **Name the source.** Say where to read from, such as "from the [usage events] table in our warehouse" or "from the renewal deal in the CRM". If you leave it out, Trig chooses, and it may choose differently from you.
+2. **Use exact names and values.** Write field names, event names and status values exactly as they appear in your data. Avoid words like "disengaged", "quiet" or "at risk" unless you define them in the same ask.
+3. **Carry your own definitions.** Assignments don't share what they know with each other. If two assignments both depend on what "active" means, both have to say it.
+4. **Give each assignment one goal.** Finding falling accounts and reporting weekly movement are two assignments. Combined, the results get muddled and neither can be judged.
+5. **Say what to leave out.** "Ignore deactivated users." "Leave out accounts created in the last 30 days."
+6. **Say what the output looks like.** A list, a table with named columns, a two-sentence reason, or a drafted email of at most 120 words.
+7. **Say what to do when data is missing.** Ask for "unknown, source not connected" for that account. A blank or a "No" reads as a finding about the account.
+
+Two more rules apply to anything that reaches a customer:
+
+- **Write "draft an email".** Every drafted email waits in Your emails until someone on your team approves it.
+- **Stop it repeating.** "Don't draft for a contact who already has a draft or a sent message from the last 14 days."
+
+<Tip>
+When a definition has to match a number your business already reports, ask your data team to express it as a table or a query, and point the assignment at that. The definition then lives in one place, and your team can change it without rewriting the assignment.
+</Tip>
+
+## A template
+
+Replace everything in square brackets with your own table, field and value.
+
+```text
+For every account in this Book, read [what] from [table or source].
+Find [the condition, using exact field names and values].
+Leave out [exclusions].
+For each account found, produce [the output, with its shape].
+[Where it goes: flag for review, report, or draft an email for approval.]
+If [data] isn't available for an account, say "unknown, source not
+connected" for that account.
+```
+
+## Weak and strong asks
+
+| Weak | Why it fails | Strong |
+| --- | --- | --- |
+| "Find at-risk customers and reach out." | It has no source, no definition of at risk and no stated output, and it implies sending. | "For every account in this Book, count distinct active users in [usage events] for the last 30 days and the 30 days before. Flag the account if the count fell by more than 25%. For each flagged account show both counts and give a two-sentence reason." |
+| "Tell me who isn't using the product." | "Using" is undefined, and there's no time period. | "List accounts in this Book with no [key event] in [usage events] in the last 30 days." |
+| "Email admins about unused seats." | It sends, has no guidance on content, and repeats every run. | "Draft an email of at most 120 words to each account's primary contact where seats in use are below 60% of seats paid for. Don't draft for a contact with a draft or sent message in the last 30 days." |
+
+## Before you approve, check
+
+<Check>The ask names the source.</Check>
+<Check>Field names and values match the data exactly.</Check>
+<Check>It says what to leave out.</Check>
+<Check>It says what the output looks like and where it goes.</Check>
+<Check>If a message is involved, it says "draft" and has a rule against repeating.</Check>
+<Check>The plan matches what you meant.</Check>
+<Check>It's set to run once, on a small Book, for its first run.</Check>
+
+Next, try one of the [starter assignments](/assignments/use-cases/starter-assignments).
