@@ -1,0 +1,96 @@
+---
+title: "Connect your CRM or data warehouse"
+description: "Bring your accounts into Trig, choose the fields you need, and start a Book for each account owner"
+---
+
+Your CRM is where your accounts come from. Books, metrics and assignments all start there, so connect it first. Some teams keep their accounts in a data warehouse instead, and Trig can import from that too.
+
+Trig imports **accounts** and their fields. It doesn't import contacts.
+
+## Which sources you can connect
+
+| Source | How it connects |
+| --- | --- |
+| HubSpot | Sign in to HubSpot from Trig |
+| Salesforce | Sign in to Salesforce from Trig |
+| Attio, Snowflake, BigQuery, Databricks, ClickHouse | Ask your Trig contact to turn it on for your workspace. You then enter the connection details in Trig. |
+
+<Tip>
+Connect with a dedicated integration user rather than a real person's account. The connection then keeps working when someone leaves or changes role.
+</Tip>
+
+## Connect it
+
+<Steps>
+  <Step title="Open Settings › Integrations">
+    The first section is **CRM integrations**.
+  </Step>
+  <Step title="Add the integration">
+    Click **Add a CRM integration**, choose your CRM and click **Create integration**.
+  </Step>
+  <Step title="Sign in or enter the details">
+    For HubSpot or Salesforce, you're sent to sign in and approve Trig's access, then back to Trig. For a data warehouse, fill in the connection form.
+  </Step>
+  <Step title="Wait for the first import">
+    The integration shows **Recent imports** and how many records each one brought in. Your Trig contact can start the first import straight away if you don't want to wait for the schedule.
+  </Step>
+</Steps>
+
+## Choose the fields you need
+
+Trig always imports a few fields, such as the account name and, for HubSpot, the owner. You choose the rest.
+
+<Steps>
+  <Step title="Open the integration">
+    On **Settings › Integrations**, open your CRM.
+  </Step>
+  <Step title="Choose imported fields">
+    In **Fields**, click **Choose imported fields**. Fields marked **Imported by default** can't be unticked.
+  </Step>
+  <Step title="Tick what your Books and assignments need">
+    Ticked fields import from the next sync. Think about what defines your Books, such as owner, segment, region, plan, contract value and renewal date.
+  </Step>
+</Steps>
+
+A field you don't import can't define a Book. An assignment can still read it from your CRM if the CRM is also connected as an [agent toolkit](/assignments/guides/connect-agent-toolkits).
+
+## Map your core attributes
+
+Core attributes are the fields Trig uses everywhere, whichever CRM you have: account manager name and email, revenue, number of seats, contract start and end dates, and plan type.
+
+Click **Configure Core Attributes** on **Settings › Integrations** and pick the CRM field that holds each one. Trig suggests a match for most of them. Check **Account Manager Email** in particular, because owner Books depend on it.
+
+## Start a Book for each owner
+
+On the core attributes page, the **Books** section has an **Ownership field**. Trig starts a Book for each email address in that field, holding the accounts that person owns. Each Book is named after the teammate with that email, or after the email when no teammate matches.
+
+- The field has to hold email addresses. An owner your CRM stores only as an ID gets no Book.
+- Teammates are matched by their Trig or Slack email, ignoring case.
+- You can change these Books or add your own under **Books**. See [Build a Book](/assignments/guides/build-a-book).
+
+## How often Trig syncs
+
+| Source | Schedule |
+| --- | --- |
+| HubSpot, Attio | A full import daily, and changes hourly |
+| Salesforce, data warehouses | A schedule set up with your Trig contact {/* review: confirm the Salesforce and warehouse schedule */} |
+
+You can't start a sync yourself. Ask your Trig contact if you need one sooner.
+
+## What Trig writes back
+
+The import only reads. Trig changes your CRM only when an assignment does it through the CRM's agent toolkit, with the tools you allowed. See [Connect agent toolkits](/assignments/guides/connect-agent-toolkits).
+
+## Troubleshooting
+
+**The integration is connected but there are no accounts.**
+The first import hasn't run yet. Check **Recent imports**, or ask your Trig contact to start one.
+
+**A field isn't in the Book filters.**
+It isn't imported. Tick it in **Choose imported fields** and wait for the next sync.
+
+**An owner has no Book.**
+Check that the ownership field holds an email address for that account, not an ID.
+
+**The integration shows Disconnected.**
+Reconnect it with a user who can still see your accounts. If the person who connected it has left, use an integration user this time.

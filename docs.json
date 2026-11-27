@@ -129,6 +129,8 @@
           {
             "group": "Guides",
             "pages": [
+              "assignments/guides/connect-your-crm",
+              "assignments/guides/connect-agent-toolkits",
               "assignments/guides/build-a-book",
               "assignments/guides/write-an-assignment",
               "assignments/guides/review-results",

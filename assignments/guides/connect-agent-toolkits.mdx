@@ -1,0 +1,86 @@
+---
+title: "Connect agent toolkits"
+description: "Give Trig's agents your other tools, choose who can use each connection, and decide which tools it allows"
+---
+
+Agent toolkits let Trig's agents use your other tools, such as a support desk, meeting transcripts or Google Docs. Assignments use them to do their work, and Trig can measure metrics from them.
+
+Your CRM can be a toolkit too. Connect it as one when you want assignments to read fields you don't import, or to update records.
+
+## Connect a toolkit
+
+<Steps>
+  <Step title="Open Settings › Integrations">
+    The second section is **Agent toolkits**. Click **Browse toolkits** to see what's available, or **Add toolkit**.
+  </Step>
+  <Step title="Select a provider">
+    Search for the tool. If you can't find it, ask your Trig contact.
+  </Step>
+  <Step title="Choose who the connection is for">
+    See [Shared or personal](#shared-or-personal) below.
+  </Step>
+  <Step title="Sign in or enter the details">
+    Most tools ask you to sign in and approve access. Some ask for an API key.
+  </Step>
+</Steps>
+
+## Shared or personal
+
+When you connect a toolkit, Trig asks **Who is this connection for**.
+
+| Choice | What it means |
+| --- | --- |
+| **Your whole workspace** | Everyone can use it, as one shared connection. |
+| **Just you** | Only you, and the assignments you run, can use it. It acts as you. |
+
+Some tools only connect for one person because they hold that person's own data, such as Gmail, Google Calendar and Outlook. Tools that connect with an API key are always shared.
+
+On **Settings › Integrations**, **Your toolkits** lists your personal connections and **Workspace toolkits** lists the shared ones.
+
+## Which connection an assignment uses
+
+An assignment runs as the person who created it. It uses that person's own connection to a tool first, and the shared one when they don't have their own.
+
+So if you start an assignment a teammate created, it still uses your teammate's connections. Before an assignment that sends email or updates records goes live, check whose connections it will use.
+
+## Choose which tools it allows
+
+Each toolkit is a set of tools, such as "search tickets" or "update a company". Every tool is on when you connect.
+
+<Steps>
+  <Step title="Open the toolkit">
+    Click it in **Your toolkits** or **Workspace toolkits**.
+  </Step>
+  <Step title="Turn tools off">
+    The **Tools** section shows how many are enabled. Switch off anything you don't want assignments to use, such as tools that delete or change records.
+  </Step>
+  <Step title="Refresh after changes in the tool">
+    If the tool adds new actions, click **Refresh tools**.
+  </Step>
+</Steps>
+
+<Tip>
+Start read-only. Turn on the tools that change records once you trust the assignments that use them.
+</Tip>
+
+Emails drafted through Gmail wait for approval in **Your emails** before they send. See [Review results and approve emails](/assignments/guides/review-results).
+
+## Measure metrics from a toolkit
+
+Open a toolkit to set it up for metrics in three steps:
+
+1. **Match accounts.** Tell Trig how the tool's records match your accounts.
+2. **Approve tools.** Choose the tools Trig can use to measure.
+3. **Choose what to track.** Trig previews the metrics it can find. This can take a few minutes.
+
+See [Metrics](/assignments/metrics).
+
+## When a connection stops working
+
+A connection can expire, or someone can revoke Trig's access in the tool. Trig checks connections every few hours. When one stops working:
+
+- The toolkit shows **Expired**, **Failed** or **Access revoked**.
+- A **Connection lost** item appears in [Needs you](/assignments/needs-you), with a **Reconnect** button.
+- Assignments that use the toolkit skip it until it's reconnected.
+
+You can't change a toolkit's tools until it's reconnected.
