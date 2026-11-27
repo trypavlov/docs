@@ -23,98 +23,81 @@
       {
         "product": "Classic",
         "description": "Trig before assignments: stages, jobs and signals",
-        "icon": "layers",
-        "tabs": [
+        "icon": "layer-group",
+        "groups": [
           {
-            "tab": "Documentation",
-            "groups": [
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "concepts/people-and-organisations",
+              "concepts/lifecycle-stages",
+              "concepts/objectives",
+              "concepts/behaviours",
+              "concepts/cohorts",
+              "concepts/campaigns",
+              "concepts/actions",
+              "concepts/signals",
+              "concepts/attributes"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
               {
-                "group": "Getting Started",
+                "group": "CRM",
                 "pages": [
-                  "index",
-                  "quickstart"
+                  "integrations/crm/overview",
+                  "integrations/crm/hubspot",
+                  "integrations/crm/salesforce"
                 ]
               },
               {
-                "group": "Core Concepts",
+                "group": "Data Lake",
                 "pages": [
-                  "concepts/people-and-organisations",
-                  "concepts/lifecycle-stages",
-                  "concepts/objectives",
-                  "concepts/behaviours",
-                  "concepts/cohorts",
-                  "concepts/campaigns",
-                  "concepts/actions",
-                  "concepts/signals",
-                  "concepts/attributes"
+                  "integrations/data-lake/overview",
+                  "integrations/data-lake/bigquery",
+                  "integrations/data-lake/databricks",
+                  "integrations/data-lake/snowflake"
                 ]
               },
               {
-                "group": "Integrations",
+                "group": "Events",
                 "pages": [
-                  {
-                    "group": "CRM",
-                    "pages": [
-                      "integrations/crm/overview",
-                      "integrations/crm/hubspot",
-                      "integrations/crm/salesforce"
-                    ]
-                  },
-                  {
-                    "group": "Data Lake",
-                    "pages": [
-                      "integrations/data-lake/overview",
-                      "integrations/data-lake/bigquery",
-                      "integrations/data-lake/databricks",
-                      "integrations/data-lake/snowflake"
-                    ]
-                  },
-                  {
-                    "group": "Events",
-                    "pages": [
-                      "integrations/events/overview",
-                      "integrations/events/amplitude",
-                      "integrations/events/mixpanel",
-                      "integrations/events/segment"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Guides",
-                "pages": [
-                  "guides/configuring-lifecycle-stages",
-                  "guides/building-campaigns",
-                  "guides/using-signals"
-                ]
-              },
-              {
-                "group": "Use Cases",
-                "pages": [
-                  "use-cases/onboarding-campaigns",
-                  "use-cases/adoption-campaigns",
-                  "use-cases/expansion-campaigns",
-                  "use-cases/renewal-campaigns"
-                ]
-              },
-              {
-                "group": "Resources",
-                "pages": [
-                  "faqs"
+                  "integrations/events/overview",
+                  "integrations/events/amplitude",
+                  "integrations/events/mixpanel",
+                  "integrations/events/segment"
                 ]
               }
             ]
           },
           {
-            "tab": "API Reference",
-            "hidden": true,
-            "groups": [
-              {
-                "group": "API Documentation",
-                "pages": [
-                  "api-reference/introduction"
-                ]
-              }
+            "group": "Guides",
+            "pages": [
+              "guides/configuring-lifecycle-stages",
+              "guides/building-campaigns",
+              "guides/using-signals"
+            ]
+          },
+          {
+            "group": "Use Cases",
+            "pages": [
+              "use-cases/onboarding-campaigns",
+              "use-cases/adoption-campaigns",
+              "use-cases/expansion-campaigns",
+              "use-cases/renewal-campaigns"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "faqs"
             ]
           }
         ]
